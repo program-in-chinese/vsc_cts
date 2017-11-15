@@ -1,0 +1,49 @@
+{
+  "name": "typescript",
+  "version": "0.10.1",
+  "lockfileVersion": 1,
+  "requires": true,
+  "dependencies": {
+    "@types/node": {
+      "version": "8.0.33",
+      "resolved": "http://registry.npm.taobao.org/@types/node/download/@types/node-8.0.33.tgz",
+      "integrity": "sha1-ESbpQ3QBTlRHgJKDBwT26onfBM0=",
+      "dev": true
+    },
+    "@types/semver": {
+      "version": "5.4.0",
+      "resolved": "http://registry.npm.taobao.org/@types/semver/download/@types/semver-5.4.0.tgz",
+      "integrity": "sha1-82WFNa9/H1AqzW2n2vQF/+sffuQ=",
+      "dev": true
+    },
+    "applicationinsights": {
+      "version": "0.18.0",
+      "resolved": "http://registry.npm.taobao.org/applicationinsights/download/applicationinsights-0.18.0.tgz",
+      "integrity": "sha1-Fi67SKODQIvE3kTbMrQXMH9Fu8E="
+    },
+    "semver": {
+      "version": "4.3.6",
+      "resolved": "http://registry.npm.taobao.org/semver/download/semver-4.3.6.tgz",
+      "integrity": "sha1-MAvG4OhjdPe6YQaLWx7NV/xlMto="
+    },
+    "vscode-extension-telemetry": {
+      "version": "0.0.7",
+      "resolved": "http://registry.npm.taobao.org/vscode-extension-telemetry/download/vscode-extension-telemetry-0.0.7.tgz",
+      "integrity": "sha1-CS6VCuQaWHrUO8BCyHXkcoh9/fw=",
+      "requires": {
+        "applicationinsights": "0.18.0",
+        "winreg": "1.2.3"
+      }
+    },
+    "vscode-nls": {
+      "version": "2.0.1",
+      "resolved": "http://registry.npm.taobao.org/vscode-nls/download/vscode-nls-2.0.1.tgz",
+      "integrity": "sha1-eFOGbjP5xQykFeUblkDQgYAONsY="
+    },
+    "winreg": {
+      "version": "1.2.3",
+      "resolved": "http://registry.npm.taobao.org/winreg/download/winreg-1.2.3.tgz",
+      "integrity": "sha1-k60RayaW2ofVj3JlqPzqUlSpZdU="
+    }
+  }
+}
