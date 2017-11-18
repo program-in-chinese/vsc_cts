@@ -4,38 +4,38 @@
  *--------------------------------------------------------------------------------------------*/
 
 export class Kind {
-	public static readonly alias = 'alias';
-	public static readonly callSignature = 'call';
-	public static readonly class = 'class';
-	public static readonly const = 'const';
-	public static readonly constructorImplementation = 'constructor';
-	public static readonly constructSignature = 'construct';
-	public static readonly directory = 'directory';
-	public static readonly enum = 'enum';
-	public static readonly externalModuleName = 'external module name';
-	public static readonly file = 'file';
-	public static readonly function = 'function';
-	public static readonly indexSignature = 'index';
-	public static readonly interface = 'interface';
-	public static readonly keyword = 'keyword';
-	public static readonly let = 'let';
-	public static readonly localFunction = 'local function';
-	public static readonly localVariable = 'local var';
-	public static readonly memberFunction = 'method';
-	public static readonly memberGetAccessor = 'getter';
-	public static readonly memberSetAccessor = 'setter';
-	public static readonly memberVariable = 'property';
-	public static readonly module = 'module';
-	public static readonly primitiveType = 'primitive type';
-	public static readonly script = 'script';
-	public static readonly type = 'type';
-	public static readonly variable = 'var';
-	public static readonly warning = 'warning';
+	public static readonly alias = '别名';
+	public static readonly callSignature = '调用';
+	public static readonly class = '类别';
+	public static readonly const = '常量';
+	public static readonly constructorImplementation = '构造方法';
+	public static readonly constructSignature = '构造签名';
+	public static readonly directory = '目录';
+	public static readonly enum = '枚举';
+	public static readonly externalModuleName = '外部模块名称';
+	public static readonly file = '文件';
+	public static readonly function = '函数';
+	public static readonly indexSignature = '索引';
+	public static readonly interface = '接口';
+	public static readonly keyword = '关键字';
+	public static readonly let = '变量';
+	public static readonly localFunction = '本地函数';
+	public static readonly localVariable = '本地变量';
+	public static readonly memberFunction = '方法';
+	public static readonly memberGetAccessor = '获取';
+	public static readonly memberSetAccessor = '设置';
+	public static readonly memberVariable = '属性';
+	public static readonly module = '模块';
+	public static readonly primitiveType = '原始类型';
+	public static readonly script = '脚本';
+	public static readonly type = '类型';
+	public static readonly variable = '值量';
+	public static readonly warning = '警告';
 }
 
 
 export class DiagnosticCategory {
-	public static readonly error = 'error';
+	public static readonly error = '错误';
 
-	public static readonly warning = 'warning';
+	public static readonly warning = '警告';
 }

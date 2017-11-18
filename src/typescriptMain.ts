@@ -39,6 +39,8 @@ import * as languageConfigurations from './utils/languageConfigurations';
 import { CommandManager, Command } from './utils/commandManager';
 import DiagnosticsManager from './features/diagnostics';
 
+import {源码转换命令} from "./features/中文插件/源码转换/源码转换命令"
+
 interface LanguageDescription {
 	id: string;
 	diagnosticSource: string;
@@ -49,20 +51,15 @@ interface LanguageDescription {
 
 const standardLanguageDescriptions: LanguageDescription[] = [
 	{
-		id: 'typescript',
+		id: 'ctsscript',
 		diagnosticSource: 'ts',
-		modeIds: [languageModeIds.typescript, languageModeIds.typescriptreact],
+		modeIds: [languageModeIds.ctsscript, languageModeIds.ctsscriptreact],
 		configFile: 'tsconfig.json'
-	}, {
-		id: 'javascript',
-		diagnosticSource: 'js',
-		modeIds: [languageModeIds.javascript, languageModeIds.javascriptreact],
-		configFile: 'jsconfig.json'
 	}
 ];
 
 class ReloadTypeScriptProjectsCommand implements Command {
-	public readonly id = 'typescript.reloadProjects';
+	public readonly id = 'ctsscript.reloadProjects';
 
 	public constructor(
 		private readonly lazyClientHost: () => TypeScriptServiceClientHost
@@ -73,20 +70,9 @@ class ReloadTypeScriptProjectsCommand implements Command {
 	}
 }
 
-class ReloadJavaScriptProjectsCommand implements Command {
-	public readonly id = 'javascript.reloadProjects';
-
-	public constructor(
-		private readonly lazyClientHost: () => TypeScriptServiceClientHost
-	) { }
-
-	public execute() {
-		this.lazyClientHost().reloadProjects();
-	}
-}
 
 class SelectTypeScriptVersionCommand implements Command {
-	public readonly id = 'typescript.selectTypeScriptVersion';
+	public readonly id = 'ctsscript.selectTypeScriptVersion';
 
 	public constructor(
 		private readonly lazyClientHost: () => TypeScriptServiceClientHost
@@ -98,7 +84,7 @@ class SelectTypeScriptVersionCommand implements Command {
 }
 
 class OpenTsServerLogCommand implements Command {
-	public readonly id = 'typescript.openTsServerLog';
+	public readonly id = 'ctsscript.openTsServerLog';
 
 	public constructor(
 		private readonly lazyClientHost: () => TypeScriptServiceClientHost
@@ -110,7 +96,7 @@ class OpenTsServerLogCommand implements Command {
 }
 
 class RestartTsServerCommand implements Command {
-	public readonly id = 'typescript.restartTsServer';
+	public readonly id = 'ctsscript.restartTsServer';
 
 	public constructor(
 		private readonly lazyClientHost: () => TypeScriptServiceClientHost
@@ -122,7 +108,7 @@ class RestartTsServerCommand implements Command {
 }
 
 class TypeScriptGoToProjectConfigCommand implements Command {
-	public readonly id = 'typescript.goToProjectConfig';
+	public readonly id = 'ctsscript.goToProjectConfig';
 
 	public constructor(
 		private readonly lazyClientHost: () => TypeScriptServiceClientHost,
@@ -136,20 +122,6 @@ class TypeScriptGoToProjectConfigCommand implements Command {
 	}
 }
 
-class JavaScriptGoToProjectConfigCommand implements Command {
-	public readonly id = 'javascript.goToProjectConfig';
-
-	public constructor(
-		private readonly lazyClientHost: () => TypeScriptServiceClientHost,
-	) { }
-
-	public execute() {
-		const editor = window.activeTextEditor;
-		if (editor) {
-			this.lazyClientHost().goToProjectConfig(false, editor.document.uri);
-		}
-	}
-}
 
 export function activate(context: ExtensionContext): void {
 	const plugins = getContributedTypeScriptServerPlugins();
@@ -178,14 +150,14 @@ export function activate(context: ExtensionContext): void {
 	})();
 
 	commandManager.register(new ReloadTypeScriptProjectsCommand(lazyClientHost));
-	commandManager.register(new ReloadJavaScriptProjectsCommand(lazyClientHost));
 	commandManager.register(new SelectTypeScriptVersionCommand(lazyClientHost));
 	commandManager.register(new OpenTsServerLogCommand(lazyClientHost));
 	commandManager.register(new RestartTsServerCommand(lazyClientHost));
 	commandManager.register(new TypeScriptGoToProjectConfigCommand(lazyClientHost));
-	commandManager.register(new JavaScriptGoToProjectConfigCommand(lazyClientHost));
-
 	context.subscriptions.push(new TypeScriptTaskProviderManager(() => lazyClientHost().serviceClient));
+
+	let mingling = new 源码转换命令(() => lazyClientHost().serviceClient)
+	context.subscriptions.push(commands.registerCommand('ctsscript.源码转换命令', mingling.execute, mingling));
 
 	context.subscriptions.push(languages.setLanguageConfiguration(languageModeIds.jsxTags, languageConfigurations.jsxTags));
 
@@ -481,9 +453,9 @@ class TypeScriptServiceClientHost implements ITypeScriptServiceClientHost {
 			}
 			if (languages.size) {
 				const description: LanguageDescription = {
-					id: 'typescript-plugins',
+					id: 'cts-plugins',
 					modeIds: Array.from(languages.values()),
-					diagnosticSource: 'ts-plugins',
+					diagnosticSource: 'Cts-plugins',
 					isExternal: true
 				};
 				const manager = new LanguageProvider(this.client, description, this.commandManager, this.typingsStatus);
@@ -739,7 +711,7 @@ class TypeScriptServiceClientHost implements ITypeScriptServiceClientHost {
 	}
 
 	private reportStyleCheckAsWarnings() {
-		const config = workspace.getConfiguration('typescript');
+		const config = workspace.getConfiguration('ctsscript');
 		return config.get('reportStyleChecksAsWarnings', true);
 	}
 }

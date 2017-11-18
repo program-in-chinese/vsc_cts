@@ -15,10 +15,12 @@ interface IDiagnosticRequestor {
 	requestDiagnostic(filepath: string): void;
 }
 
-function mode2ScriptKind(mode: string): 'TS' | 'TSX' | 'JS' | 'JSX' | undefined {
+function mode2ScriptKind(mode: string): 'TS' |'CTS' | 'TSX' | 'CTSX' | 'JS' | 'JSX' | undefined {
 	switch (mode) {
 		case languageModeIds.typescript: return 'TS';
+		case languageModeIds.ctsscript: return 'CTS';
 		case languageModeIds.typescriptreact: return 'TSX';
+		case languageModeIds.ctsscriptreact: return 'CTSX';
 		case languageModeIds.javascript: return 'JS';
 		case languageModeIds.javascriptreact: return 'JSX';
 	}

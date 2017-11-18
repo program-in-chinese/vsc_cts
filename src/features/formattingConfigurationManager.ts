@@ -7,7 +7,7 @@ import { workspace as Workspace, FormattingOptions, TextDocument, CancellationTo
 
 import * as Proto from '../protocol';
 import { ITypeScriptServiceClient } from '../typescriptService';
-import * as languageIds from '../utils/languageModeIds';
+
 
 namespace FormattingConfiguration {
 	export function equals(a: Proto.FormatCodeSettings, b: Proto.FormatCodeSettings): boolean {
@@ -94,11 +94,7 @@ export default class FormattingConfigurationManager {
 		document: TextDocument,
 		options: FormattingOptions
 	): Proto.FormatCodeSettings {
-		const config = workspace.getConfiguration(
-			document.languageId === languageIds.typescript || document.languageId === languageIds.typescriptreact
-				? 'typescript.format'
-				: 'javascript.format',
-			document.uri);
+		const config = workspace.getConfiguration('ctsscript.format', document.uri);
 		return {
 			tabSize: options.tabSize,
 			indentSize: options.tabSize,

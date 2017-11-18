@@ -27,9 +27,9 @@
       "integrity": "sha1-MAvG4OhjdPe6YQaLWx7NV/xlMto="
     },
     "vscode-extension-telemetry": {
-      "version": "0.0.7",
-      "resolved": "http://registry.npm.taobao.org/vscode-extension-telemetry/download/vscode-extension-telemetry-0.0.7.tgz",
-      "integrity": "sha1-CS6VCuQaWHrUO8BCyHXkcoh9/fw=",
+      "version": "0.0.8",
+      "resolved": "http://registry.npm.taobao.org/vscode-extension-telemetry/download/vscode-extension-telemetry-0.0.8.tgz",
+      "integrity": "sha1-ImG/+Ya2aQpvH3RqRaxb0fhdKeA=",
       "requires": {
         "applicationinsights": "0.18.0",
         "winreg": "1.2.3"

@@ -1,0 +1,3997 @@
+{
+	"information_for_contributors": [
+		"This file has been converted from https://github.com/Microsoft/TypeScript-TmLanguage/blob/master/TypeScript.tmLanguage",
+		"If you want to provide a fix or improvement, please create a pull request against the original repository.",
+		"Once accepted there, we are happy to receive an update request."
+	],
+	"version": "https://github.com/Microsoft/TypeScript-TmLanguage/commit/8361b1a232501c67911c81a4664a9460d7922c6b",
+	"name": "CtsScript",
+	"scopeName": "source.cts",
+	"fileTypes": [
+		"cts"
+	],
+	"uuid": "8627d9b0-aec2-4698-a84c-f9558c349486",
+	"patterns": [
+		{
+			"include": "#directives"
+		},
+		{
+			"include": "#statements"
+		},
+		{
+			"name": "comment.line.shebang.cts",
+			"match": "\\A(#!).*(?=$)",
+			"captures": {
+				"1": {
+					"name": "punctuation.definition.comment.cts"
+				}
+			}
+		}
+	],
+	"repository": {
+		"statements": {
+			"patterns": [
+				{
+					"include": "#string"
+				},
+				{
+					"include": "#template"
+				},
+				{
+					"include": "#comment"
+				},
+				{
+					"include": "#declaration"
+				},
+				{
+					"include": "#control-statement"
+				},
+				{
+					"include": "#after-operator-block-as-object-literal"
+				},
+				{
+					"include": "#decl-block"
+				},
+				{
+					"include": "#expression"
+				},
+				{
+					"include": "#punctuation-semicolon"
+				}
+			]
+		},
+		"declaration": {
+			"patterns": [
+				{
+					"include": "#decorator"
+				},
+				{
+					"include": "#var-expr"
+				},
+				{
+					"include": "#function-declaration"
+				},
+				{
+					"include": "#class-declaration"
+				},
+				{
+					"include": "#interface-declaration"
+				},
+				{
+					"include": "#enum-declaration"
+				},
+				{
+					"include": "#namespace-declaration"
+				},
+				{
+					"include": "#type-alias-declaration"
+				},
+				{
+					"include": "#import-equals-declaration"
+				},
+				{
+					"include": "#import-declaration"
+				},
+				{
+					"include": "#export-declaration"
+				}
+			]
+		},
+		"control-statement": {
+			"patterns": [
+				{
+					"include": "#switch-statement"
+				},
+				{
+					"include": "#for-loop"
+				},
+				{
+					"name": "keyword.control.trycatch.cts",
+					"match": "(?<!\\.|\\$)\\b(捕获|善后|抛出|尝试|catch|finally|throw|try)\\b(?!\\$|\\.)"
+				},
+				{
+					"name": "keyword.control.loop.cts",
+					"match": "(?<!\\.|\\$)\\b(跳出|继续|运行|跳转|判断|break|continue|do|goto|while)\\b(?!\\$|\\.)"
+				},
+				{
+					"name": "keyword.control.flow.cts",
+					"match": "(?<!\\.|\\$)\\b(返回|return)\\b(?!\\$|\\.)"
+				},
+				{
+					"name": "keyword.control.switch.cts",
+					"match": "(?<!\\.|\\$)\\b(case|如为|默认|假如|default|switch)\\b(?!\\$|\\.)"
+				},
+				{
+					"name": "keyword.control.conditional.cts",
+					"match": "(?<!\\.|\\$)\\b(else|if|否则|如果)\\b(?!\\$|\\.)"
+				},
+				{
+					"name": "keyword.control.with.cts",
+					"match": "(?<!\\.|\\$)\\b(with|外扩)\\b(?!\\$|\\.)"
+				},
+				{
+					"name": "keyword.other.debugger.cts",
+					"match": "(?<!\\.|\\$)\\b(debugger|调试)\\b(?!\\$|\\.)"
+				},
+				{
+					"name": "storage.modifier.cts",
+					"match": "(?<!\\.|\\$)\\b(declare|声明)\\b(?!\\$|\\.)"
+				}
+			]
+		},
+		"expression": {
+			"patterns": [
+				{
+					"include": "#string"
+				},
+				{
+					"include": "#regex"
+				},
+				{
+					"include": "#template"
+				},
+				{
+					"include": "#comment"
+				},
+				{
+					"include": "#function-expression"
+				},
+				{
+					"include": "#class-expression"
+				},
+				{
+					"include": "#arrow-function"
+				},
+				{
+					"include": "#cast"
+				},
+				{
+					"include": "#ternary-expression"
+				},
+				{
+					"include": "#new-expr"
+				},
+				{
+					"include": "#object-literal"
+				},
+				{
+					"include": "#expression-operators"
+				},
+				{
+					"include": "#function-call"
+				},
+				{
+					"include": "#literal"
+				},
+				{
+					"include": "#support-objects"
+				},
+				{
+					"include": "#identifiers"
+				},
+				{
+					"include": "#paren-expression"
+				},
+				{
+					"include": "#punctuation-comma"
+				},
+				{
+					"include": "#punctuation-accessor"
+				}
+			]
+		},
+		"decorator": {
+			"name": "meta.decorator.cts",
+			"begin": "(?<!\\.|\\$)\\@",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.decorator.cts"
+				}
+			},
+			"end": "(?=\\s)",
+			"patterns": [
+				{
+					"include": "#expression"
+				}
+			]
+		},
+		"var-expr": {
+			"name": "meta.var.expr.cts",
+			"begin": "(?<!\\.|\\$)(?:(\\bexport|\\b导出)\\s+)?\\b(var|值量|let|变量|const(?!\\s+enum\\b)|常量(?!\\s+枚举\\b))\\b(?!\\$|\\.)",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.control.export.cts"
+				},
+				"2": {
+					"name": "storage.type.cts"
+				}
+			},
+			"end": "(?=$|^|;|}|(\\s+(of|属于|in|位于)\\s+))",
+			"patterns": [
+				{
+					"include": "#destructuring-variable"
+				},
+				{
+					"include": "#var-single-variable"
+				},
+				{
+					"include": "#variable-initializer"
+				},
+				{
+					"include": "#comment"
+				},
+				{
+					"begin": "(,)\\s*(?!\\S)",
+					"beginCaptures": {
+						"1": {
+							"name": "punctuation.separator.comma.cts"
+						}
+					},
+					"end": "(?<!,)((?==|;|}|(\\s+(of|属于|in|位于)\\s+)|^\\s*$))|((?<=\\S)(?=\\s*$))",
+					"patterns": [
+						{
+							"include": "#comment"
+						},
+						{
+							"include": "#destructuring-variable"
+						},
+						{
+							"include": "#var-single-variable"
+						},
+						{
+							"include": "#punctuation-comma"
+						}
+					]
+				},
+				{
+					"include": "#punctuation-comma"
+				}
+			]
+		},
+		"var-single-variable": {
+			"patterns": [
+				{
+					"name": "meta.var-single-variable.expr.cts",
+					"begin": "(?x)([_$[:alpha:]][_$[:alnum:]]*)(?=\\s*\n# function assignment |\n(=\\s*(\n  ((async\\s+|异步\\s+)?(\n    (function\\s*[(<*]|函数\\s*[(<*]) |\n    (function\\s+|函数\\s+) |\n    ([_$[:alpha:]][_$[:alnum:]]*\\s*=>)\n  )) |\n  ((async\\s*|异步\\s*)?(\n    # sure shot arrow functions even if => is on new line\n(\n  [(]\\s*\n  (\n    ([)]\\s*:) |                                                                 # ():\n    ((\\.\\.\\.\\s*)?[_$[:alpha:]][_$[:alnum:]]*\\s*:)                                            # [(]param: | [(]...param:\n  )\n) |\n(\n  [<]\\s*[_$[:alpha:]][_$[:alnum:]]*\\s+extends\\s*[^=>]                                        # < typeparam extends\n) |\n# arrow function possible to detect only with => on same line\n(\n  (<\\s*[_$[:alpha:]\\{\\(\\[]([^<>=]|=[^<]|\\<\\s*[_$[:alpha:]\\{\\(\\[]([^=<>]|=[^<])+\\>)+>\\s*)?                                                           # typeparameters\n  \\(\\s*([_$[:alpha:]\\{\\[]([^()]|\\((\\s*[^()]*)?\\))*)?\\)                          # parameteres\n  (\\s*:\\s*([^<>\\(\\)]|\\<[^<>]+\\>|\\([^\\(\\)]+\\))+)?                                # return type\n  \\s*=>                                                                         # arrow operator\n)\n  ))\n)) |\n# typeannotation is fn type: < | () | (... | (param: | (param, | (param? | (param= | (param) =>\n(:\\s*(\n  (<) |\n  ([(]\\s*(\n    ([)]) |\n    (\\.\\.\\.) |\n    ([_$[:alnum:]]+\\s*(\n      ([:,?=])|\n      ([)]\\s*=>)\n    ))\n  ))\n)))",
+					"beginCaptures": {
+						"1": {
+							"name": "meta.definition.variable.cts entity.name.function.cts"
+						}
+					},
+					"end": "(?=$|^|[;,=}]|(\\s+(of|属于|in|位于)\\s+))",
+					"patterns": [
+						{
+							"include": "#var-single-variable-type-annotation"
+						}
+					]
+				},
+				{
+					"name": "meta.var-single-variable.expr.cts",
+					"begin": "([[:upper:]][_$[:digit:][:upper:]]*)(?![_$[:alnum:]])",
+					"beginCaptures": {
+						"1": {
+							"name": "meta.definition.variable.cts variable.other.constant.cts"
+						}
+					},
+					"end": "(?=$|^|[;,=}]|(\\s+(of|属于|in|位于)\\s+))",
+					"patterns": [
+						{
+							"include": "#var-single-variable-type-annotation"
+						}
+					]
+				},
+				{
+					"name": "meta.var-single-variable.expr.cts",
+					"begin": "([_$[:alpha:]][_$[:alnum:]]*)",
+					"beginCaptures": {
+						"1": {
+							"name": "meta.definition.variable.cts variable.other.readwrite.cts"
+						}
+					},
+					"end": "(?=$|^|[;,=}]|(\\s+(of|属于|in|位于)\\s+))",
+					"patterns": [
+						{
+							"include": "#var-single-variable-type-annotation"
+						}
+					]
+				}
+			]
+		},
+		"var-single-variable-type-annotation": {
+			"patterns": [
+				{
+					"include": "#type-annotation"
+				},
+				{
+					"include": "#string"
+				},
+				{
+					"include": "#comment"
+				}
+			]
+		},
+		"destructuring-variable": {
+			"patterns": [
+				{
+					"name": "meta.object-binding-pattern-variable.cts",
+					"begin": "(?<!=|:|of|属于|位于|in)\\s*(?=\\{)",
+					"end": "(?=$|^|[;,=}]|(\\s+(of|属于|in|位于)\\s+))",
+					"patterns": [
+						{
+							"include": "#object-binding-pattern"
+						},
+						{
+							"include": "#type-annotation"
+						},
+						{
+							"include": "#comment"
+						}
+					]
+				},
+				{
+					"name": "meta.array-binding-pattern-variable.cts",
+					"begin": "(?<!=|:|of|属于|in|位于)\\s*(?=\\[)",
+					"end": "(?=$|^|[;,=}]|(\\s+(of|属于|in|位于)\\s+))",
+					"patterns": [
+						{
+							"include": "#array-binding-pattern"
+						},
+						{
+							"include": "#type-annotation"
+						},
+						{
+							"include": "#comment"
+						}
+					]
+				}
+			]
+		},
+		"object-binding-element": {
+			"patterns": [
+				{
+					"include": "#comment"
+				},
+				{
+					"begin": "(?=(([_$[:alpha:]][_$[:alnum:]]*)|(\\'([^\\'\\\\]|\\\\\\'|\\\\)*\\')|(\\\"([^\\\"\\\\]|\\\\\\\"|\\\\)*\\\")|(\\[([^\\[\\]]|\\[[^\\[\\]]*\\])+\\]))\\s*(:))",
+					"end": "(?=,|\\})",
+					"patterns": [
+						{
+							"include": "#object-binding-element-propertyName"
+						},
+						{
+							"include": "#binding-element"
+						}
+					]
+				},
+				{
+					"include": "#object-binding-pattern"
+				},
+				{
+					"include": "#destructuring-variable-rest"
+				},
+				{
+					"include": "#variable-initializer"
+				},
+				{
+					"include": "#punctuation-comma"
+				}
+			]
+		},
+		"object-binding-element-propertyName": {
+			"begin": "(?=(([_$[:alpha:]][_$[:alnum:]]*)|(\\'([^\\'\\\\]|\\\\\\'|\\\\)*\\')|(\\\"([^\\\"\\\\]|\\\\\\\"|\\\\)*\\\")|(\\[([^\\[\\]]|\\[[^\\[\\]]*\\])+\\]))\\s*(:))",
+			"end": "(:)",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.destructuring.cts"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#string"
+				},
+				{
+					"include": "#array-literal"
+				},
+				{
+					"name": "variable.object.property.cts",
+					"match": "([_$[:alpha:]][_$[:alnum:]]*)"
+				}
+			]
+		},
+		"binding-element": {
+			"patterns": [
+				{
+					"include": "#comment"
+				},
+				{
+					"include": "#object-binding-pattern"
+				},
+				{
+					"include": "#array-binding-pattern"
+				},
+				{
+					"include": "#destructuring-variable-rest"
+				},
+				{
+					"include": "#variable-initializer"
+				}
+			]
+		},
+		"destructuring-variable-rest": {
+			"match": "(?:(\\.\\.\\.)\\s*)?([_$[:alpha:]][_$[:alnum:]]*)",
+			"captures": {
+				"1": {
+					"name": "keyword.operator.rest.cts"
+				},
+				"2": {
+					"name": "meta.definition.variable.cts variable.other.readwrite.cts"
+				}
+			}
+		},
+		"object-binding-pattern": {
+			"begin": "(?:(\\.\\.\\.)\\s*)?(\\{)",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.operator.rest.cts"
+				},
+				"2": {
+					"name": "punctuation.definition.binding-pattern.object.cts"
+				}
+			},
+			"end": "\\}",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.binding-pattern.object.cts"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#object-binding-element"
+				}
+			]
+		},
+		"array-binding-pattern": {
+			"begin": "(?:(\\.\\.\\.)\\s*)?(\\[)",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.operator.rest.cts"
+				},
+				"2": {
+					"name": "punctuation.definition.binding-pattern.array.cts"
+				}
+			},
+			"end": "\\]",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.binding-pattern.array.cts"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#binding-element"
+				},
+				{
+					"include": "#punctuation-comma"
+				}
+			]
+		},
+		"parameter-name": {
+			"patterns": [
+				{
+					"match": "\\s*\\b(public|公开|protected|保护|private|私有|readonly|只读)(?=\\s+(public|公开|protected|保护|private|私有|readonly|只读)\\s+)",
+					"captures": {
+						"1": {
+							"name": "storage.modifier.cts"
+						}
+					}
+				},
+				{
+					"match": "(?x)(?:\\s*\\b(public|公开|private|私有|protected|保护|readonly|只读)\\s+)?(\\.\\.\\.)?\\s*(?<!=|:)(?:(this|本体)|([_$[:alpha:]][_$[:alnum:]]*))\\s*(\\??)(?=\\s*\n# function assignment |\n(=\\s*(\n  ((async\\s+|异步\\s+)?(\n    (function\\s*[(<*]|函数\\s*[(<*]) |\n    (function\\s+|函数\\s+) |\n    (function\\s+|函数\\s+) |\n    ([_$[:alpha:]][_$[:alnum:]]*\\s*=>)\n  )) |\n  ((async\\s*|异步\\s*)?(\n    # sure shot arrow functions even if => is on new line\n(\n  [(]\\s*\n  (\n    ([)]\\s*:) |                                                                 # ():\n    ((\\.\\.\\.\\s*)?[_$[:alpha:]][_$[:alnum:]]*\\s*:)                                            # [(]param: | [(]...param:\n  )\n) |\n(\n  [<]\\s*[_$[:alpha:]][_$[:alnum:]]*\\s+extends\\s*[^=>]                                        # < typeparam extends\n\n  [<]\\s*[_$[:alpha:]][_$[:alnum:]]*\\s+扩展\\s*[^=>]                                        # < typeparam extends\n) |\n# arrow function possible to detect only with => on same line\n(\n  (<\\s*[_$[:alpha:]\\{\\(\\[]([^<>=]|=[^<]|\\<\\s*[_$[:alpha:]\\{\\(\\[]([^=<>]|=[^<])+\\>)+>\\s*)?                                                           # typeparameters\n  \\(\\s*([_$[:alpha:]\\{\\[]([^()]|\\((\\s*[^()]*)?\\))*)?\\)                          # parameteres\n  (\\s*:\\s*([^<>\\(\\)]|\\<[^<>]+\\>|\\([^\\(\\)]+\\))+)?                                # return type\n  \\s*=>                                                                         # arrow operator\n)\n  ))\n)) |\n# typeannotation is fn type: < | () | (... | (param: | (param, | (param? | (param= | (param) =>\n(:\\s*(\n  (<) |\n  ([(]\\s*(\n    ([)]) |\n    (\\.\\.\\.) |\n    ([_$[:alnum:]]+\\s*(\n      ([:,?=])|\n      ([)]\\s*=>)\n    ))\n  ))\n)))",
+					"captures": {
+						"1": {
+							"name": "storage.modifier.cts"
+						},
+						"2": {
+							"name": "keyword.operator.rest.cts"
+						},
+						"3": {
+							"name": "entity.name.function.cts variable.language.this.cts"
+						},
+						"4": {
+							"name": "entity.name.function.cts"
+						},
+						"5": {
+							"name": "keyword.operator.optional.cts"
+						}
+					}
+				},
+				{
+					"match": "(?:\\s*\\b(public|公开|private|私有|protected|保护|readonly|只读)\\s+)?(\\.\\.\\.)?\\s*(?<!=|:)(?:((?<!\\.|\\$)\\bthis\\b(?!\\.|\\$)|(?<!\\.|\\$)\\b本体\\b(?!\\.|\\$))|([_$[:alpha:]][_$[:alnum:]]*))\\s*(\\??)",
+					"captures": {
+						"1": {
+							"name": "storage.modifier.cts"
+						},
+						"2": {
+							"name": "keyword.operator.rest.cts"
+						},
+						"3": {
+							"name": "variable.parameter.cts variable.language.this.cts"
+						},
+						"4": {
+							"name": "variable.parameter.cts"
+						},
+						"5": {
+							"name": "keyword.operator.optional.cts"
+						}
+					}
+				}
+			]
+		},
+		"destructuring-parameter": {
+			"patterns": [
+				{
+					"name": "meta.parameter.object-binding-pattern.cts",
+					"begin": "(?<!=|:)\\s*(\\{)",
+					"beginCaptures": {
+						"1": {
+							"name": "punctuation.definition.binding-pattern.object.cts"
+						}
+					},
+					"end": "\\}",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.definition.binding-pattern.object.cts"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#parameter-object-binding-element"
+						}
+					]
+				},
+				{
+					"name": "meta.paramter.array-binding-pattern.cts",
+					"begin": "(?<!=|:)\\s*(\\[)",
+					"beginCaptures": {
+						"1": {
+							"name": "punctuation.definition.binding-pattern.array.cts"
+						}
+					},
+					"end": "\\]",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.definition.binding-pattern.array.cts"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#parameter-binding-element"
+						},
+						{
+							"include": "#punctuation-comma"
+						}
+					]
+				}
+			]
+		},
+		"parameter-object-binding-element": {
+			"patterns": [
+				{
+					"include": "#comment"
+				},
+				{
+					"begin": "(?=(([_$[:alpha:]][_$[:alnum:]]*)|(\\'([^\\'\\\\]|\\\\\\'|\\\\)*\\')|(\\\"([^\\\"\\\\]|\\\\\\\"|\\\\)*\\\")|(\\[([^\\[\\]]|\\[[^\\[\\]]*\\])+\\]))\\s*(:))",
+					"end": "(?=,|\\})",
+					"patterns": [
+						{
+							"include": "#object-binding-element-propertyName"
+						},
+						{
+							"include": "#parameter-binding-element"
+						}
+					]
+				},
+				{
+					"include": "#parameter-object-binding-pattern"
+				},
+				{
+					"include": "#destructuring-parameter-rest"
+				},
+				{
+					"include": "#variable-initializer"
+				},
+				{
+					"include": "#punctuation-comma"
+				}
+			]
+		},
+		"parameter-binding-element": {
+			"patterns": [
+				{
+					"include": "#comment"
+				},
+				{
+					"include": "#parameter-object-binding-pattern"
+				},
+				{
+					"include": "#parameter-array-binding-pattern"
+				},
+				{
+					"include": "#destructuring-parameter-rest"
+				},
+				{
+					"include": "#variable-initializer"
+				}
+			]
+		},
+		"destructuring-parameter-rest": {
+			"match": "(?:(\\.\\.\\.)\\s*)?([_$[:alpha:]][_$[:alnum:]]*)",
+			"captures": {
+				"1": {
+					"name": "keyword.operator.rest.cts"
+				},
+				"2": {
+					"name": "variable.parameter.cts"
+				}
+			}
+		},
+		"parameter-object-binding-pattern": {
+			"begin": "(?:(\\.\\.\\.)\\s*)?(\\{)",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.operator.rest.cts"
+				},
+				"2": {
+					"name": "punctuation.definition.binding-pattern.object.cts"
+				}
+			},
+			"end": "\\}",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.binding-pattern.object.cts"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#parameter-object-binding-element"
+				}
+			]
+		},
+		"parameter-array-binding-pattern": {
+			"begin": "(?:(\\.\\.\\.)\\s*)?(\\[)",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.operator.rest.cts"
+				},
+				"2": {
+					"name": "punctuation.definition.binding-pattern.array.cts"
+				}
+			},
+			"end": "\\]",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.binding-pattern.array.cts"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#parameter-binding-element"
+				},
+				{
+					"include": "#punctuation-comma"
+				}
+			]
+		},
+		"field-declaration": {
+			"name": "meta.field.declaration.cts",
+			"begin": "(?<!\\()(?:(?<!\\.|\\$)\\b(readonly|只读)\\s+)?(?=(([_$[:alpha:]][_$[:alnum:]]*)|(\\'([^\\'\\\\]|\\\\\\'|\\\\)*\\')|(\\\"([^\\\"\\\\]|\\\\\\\"|\\\\)*\\\")|(\\[([^\\[\\]]|\\[[^\\[\\]]*\\])+\\]))\\s*(\\?\\s*)?(=|:))",
+			"beginCaptures": {
+				"1": {
+					"name": "storage.modifier.cts"
+				}
+			},
+			"end": "(?=\\}|;|,|$|(^(?!(([_$[:alpha:]][_$[:alnum:]]*)|(\\'([^\\'\\\\]|\\\\\\'|\\\\)*\\')|(\\\"([^\\\"\\\\]|\\\\\\\"|\\\\)*\\\")|(\\[([^\\[\\]]|\\[[^\\[\\]]*\\])+\\]))\\s*(\\?\\s*)?(=|:))))|(?<=\\})",
+			"patterns": [
+				{
+					"include": "#variable-initializer"
+				},
+				{
+					"begin": "(?=(([_$[:alpha:]][_$[:alnum:]]*)|(\\'([^\\'\\\\]|\\\\\\'|\\\\)*\\')|(\\\"([^\\\"\\\\]|\\\\\\\"|\\\\)*\\\")|(\\[([^\\[\\]]|\\[[^\\[\\]]*\\])+\\]))\\s*(\\?\\s*)?(=|:))",
+					"end": "(?=[};,=]|$|(^(?!(([_$[:alpha:]][_$[:alnum:]]*)|(\\'([^\\'\\\\]|\\\\\\'|\\\\)*\\')|(\\\"([^\\\"\\\\]|\\\\\\\"|\\\\)*\\\")|(\\[([^\\[\\]]|\\[[^\\[\\]]*\\])+\\]))\\s*(\\?\\s*)?(=|:))))|(?<=\\})",
+					"patterns": [
+						{
+							"include": "#type-annotation"
+						},
+						{
+							"include": "#string"
+						},
+						{
+							"include": "#array-literal"
+						},
+						{
+							"include": "#comment"
+						},
+						{
+							"name": "meta.definition.property.cts entity.name.function.cts",
+							"match": "(?x)([_$[:alpha:]][_$[:alnum:]]*)(?=(\\?\\s*)?\\s*\n# function assignment |\n(=\\s*(\n  ((async\\s+|异步\\s+)?(\n    (function\\s*[(<*]|函数\\s*[(<*]) |\n    (function\\s+|函数\\s+) |\n    ([_$[:alpha:]][_$[:alnum:]]*\\s*=>)\n  )) |\n  ((async\\s*|异步\\s*)?(\n    # sure shot arrow functions even if => is on new line\n(\n  [(]\\s*\n  (\n    ([)]\\s*:) |                                                                 # ():\n    ((\\.\\.\\.\\s*)?[_$[:alpha:]][_$[:alnum:]]*\\s*:)                                            # [(]param: | [(]...param:\n  )\n) |\n(\n  [<]\\s*[_$[:alpha:]][_$[:alnum:]]*\\s+extends\\s*[^=>]                                        # < typeparam extends\n|\n  [<]\\s*[_$[:alpha:]][_$[:alnum:]]*\\s+扩展\\s*[^=>]                                        # < typeparam extends\n) |\n# arrow function possible to detect only with => on same line\n(\n  (<\\s*[_$[:alpha:]\\{\\(\\[]([^<>=]|=[^<]|\\<\\s*[_$[:alpha:]\\{\\(\\[]([^=<>]|=[^<])+\\>)+>\\s*)?                                                           # typeparameters\n  \\(\\s*([_$[:alpha:]\\{\\[]([^()]|\\((\\s*[^()]*)?\\))*)?\\)                          # parameteres\n  (\\s*:\\s*([^<>\\(\\)]|\\<[^<>]+\\>|\\([^\\(\\)]+\\))+)?                                # return type\n  \\s*=>                                                                         # arrow operator\n)\n  ))\n)) |\n# typeannotation is fn type: < | () | (... | (param: | (param, | (param? | (param= | (param) =>\n(:\\s*(\n  (<) |\n  ([(]\\s*(\n    ([)]) |\n    (\\.\\.\\.) |\n    ([_$[:alnum:]]+\\s*(\n      ([:,?=])|\n      ([)]\\s*=>)\n    ))\n  ))\n)))"
+						},
+						{
+							"name": "meta.definition.property.cts variable.object.property.cts",
+							"match": "[_$[:alpha:]][_$[:alnum:]]*"
+						},
+						{
+							"name": "keyword.operator.optional.cts",
+							"match": "\\?"
+						}
+					]
+				}
+			]
+		},
+		"variable-initializer": {
+			"patterns": [
+				{
+					"begin": "(?<!=|!)(=)(?!=)(?=\\s*\\S)",
+					"beginCaptures": {
+						"1": {
+							"name": "keyword.operator.assignment.cts"
+						}
+					},
+					"end": "(?=$|^|[,);}\\]])",
+					"patterns": [
+						{
+							"include": "#expression"
+						}
+					]
+				},
+				{
+					"begin": "(?<!=|!)(=)(?!=)",
+					"beginCaptures": {
+						"1": {
+							"name": "keyword.operator.assignment.cts"
+						}
+					},
+					"end": "(?=[,);}\\]])|(?=^\\s*$)|(?<=\\S)(?<!=)(?=\\s*$)",
+					"patterns": [
+						{
+							"include": "#expression"
+						}
+					]
+				}
+			]
+		},
+		"function-declaration": {
+			"name": "meta.function.cts",
+			"begin": "(?<!\\.|\\$)\\b(?:(export|导出)\\s+)?(?:(async|异步)\\s+)?(function\\b|函数\\b)(?:\\s*(\\*))?(?:(?:\\s+|(?<=\\*))([_$[:alpha:]][_$[:alnum:]]*))?\\s*",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.control.export.cts"
+				},
+				"2": {
+					"name": "storage.modifier.async.cts"
+				},
+				"3": {
+					"name": "storage.type.function.cts"
+				},
+				"4": {
+					"name": "keyword.generator.asterisk.cts"
+				},
+				"5": {
+					"name": "meta.definition.function.cts entity.name.function.cts"
+				}
+			},
+			"end": "(?=$|^|;)|(?<=\\})",
+			"patterns": [
+				{
+					"include": "#function-body"
+				}
+			]
+		},
+		"function-expression": {
+			"name": "meta.function.expression.cts",
+			"begin": "(?<!\\.|\\$)\\b(?:(async|异步)\\s+)?(function\\b|函数\\b)(?:\\s*(\\*))?(?:(?:\\s+|(?<=\\*))([_$[:alpha:]][_$[:alnum:]]*))?\\s*",
+			"beginCaptures": {
+				"1": {
+					"name": "storage.modifier.async.cts"
+				},
+				"2": {
+					"name": "storage.type.function.cts"
+				},
+				"3": {
+					"name": "keyword.generator.asterisk.cts"
+				},
+				"4": {
+					"name": "meta.definition.function.cts entity.name.function.cts"
+				}
+			},
+			"end": "(?<=\\})",
+			"patterns": [
+				{
+					"include": "#function-body"
+				}
+			]
+		},
+		"function-body": {
+			"patterns": [
+				{
+					"include": "#comment"
+				},
+				{
+					"include": "#type-parameters"
+				},
+				{
+					"include": "#function-parameters"
+				},
+				{
+					"include": "#return-type"
+				},
+				{
+					"include": "#decl-block"
+				}
+			]
+		},
+		"method-declaration": {
+			"patterns": [
+				{
+					"name": "meta.method.declaration.cts",
+					"begin": "(?<!\\.|\\$)(?:\\b(public|公开|private|私有|protected|保护)\\s+)?(?:\\b(abstract)\\s+)?(?:\\b(async)\\s+)?(?:\\b(get|获取|set|设置)\\s+)(?:(\\*)\\s*)?(?=((([_$[:alpha:]][_$[:alnum:]]*)|(\\'([^\\'\\\\]|\\\\\\'|\\\\)*\\')|(\\\"([^\\\"\\\\]|\\\\\\\"|\\\\)*\\\")|(\\[([^\\[\\]]|\\[[^\\[\\]]*\\])+\\]))\\s*(\\??))\\s*[\\(\\<])",
+					"beginCaptures": {
+						"1": {
+							"name": "storage.modifier.cts"
+						},
+						"2": {
+							"name": "storage.modifier.cts"
+						},
+						"3": {
+							"name": "storage.modifier.async.cts"
+						},
+						"4": {
+							"name": "storage.type.property.cts"
+						},
+						"5": {
+							"name": "keyword.generator.asterisk.cts"
+						}
+					},
+					"end": "(?=\\}|;|,|$)|(?<=\\})",
+					"patterns": [
+						{
+							"include": "#method-declaration-name"
+						},
+						{
+							"include": "#function-body"
+						}
+					]
+				},
+				{
+					"name": "meta.method.declaration.cts",
+					"begin": "(?<!\\.|\\$)(?:\\b(public|公开|private|私有|protected|保护)\\s+)?(?:\\b(abstract|抽象)\\s+)?(?:\\b(async|异步)\\s+)?(?:(?:\\b(?:(new|新建)|(constructor|构造))\\b(?!\\$|\\.|:))|(?:(\\*)\\s*)?(?=((([_$[:alpha:]][_$[:alnum:]]*)|(\\'([^\\'\\\\]|\\\\\\'|\\\\)*\\')|(\\\"([^\\\"\\\\]|\\\\\\\"|\\\\)*\\\")|(\\[([^\\[\\]]|\\[[^\\[\\]]*\\])+\\]))\\s*(\\??))?\\s*[\\(\\<]))",
+					"beginCaptures": {
+						"1": {
+							"name": "storage.modifier.cts"
+						},
+						"2": {
+							"name": "storage.modifier.cts"
+						},
+						"3": {
+							"name": "storage.modifier.async.cts"
+						},
+						"4": {
+							"name": "keyword.operator.new.cts"
+						},
+						"5": {
+							"name": "storage.type.cts"
+						},
+						"6": {
+							"name": "keyword.generator.asterisk.cts"
+						}
+					},
+					"end": "(?=\\}|;|,|$)|(?<=\\})",
+					"patterns": [
+						{
+							"include": "#method-declaration-name"
+						},
+						{
+							"include": "#function-body"
+						}
+					]
+				}
+			]
+		},
+		"object-literal-method-declaration": {
+			"name": "meta.method.declaration.cts",
+			"begin": "(?<!\\.|\\$)(?:\\b(async|异步)\\s+)?(?:\\b(get|获取|set|设置)\\s+)?(?:(\\*)\\s*)?(?=((([_$[:alpha:]][_$[:alnum:]]*)|(\\'([^\\'\\\\]|\\\\\\'|\\\\)*\\')|(\\\"([^\\\"\\\\]|\\\\\\\"|\\\\)*\\\")|(\\[([^\\[\\]]|\\[[^\\[\\]]*\\])+\\]))\\s*(\\??))\\s*[\\(\\<])",
+			"beginCaptures": {
+				"1": {
+					"name": "storage.modifier.async.cts"
+				},
+				"2": {
+					"name": "storage.type.property.cts"
+				},
+				"3": {
+					"name": "keyword.generator.asterisk.cts"
+				}
+			},
+			"end": "(?=\\}|;|,)|(?<=\\})",
+			"patterns": [
+				{
+					"include": "#method-declaration-name"
+				},
+				{
+					"include": "#function-body"
+				},
+				{
+					"begin": "(?<!\\.|\\$)(?:\\b(async|异步)\\s+)?(?:\\b(get|获取|set|设置)\\s+)?(?:(\\*)\\s*)?(?=((([_$[:alpha:]][_$[:alnum:]]*)|(\\'([^\\'\\\\]|\\\\\\'|\\\\)*\\')|(\\\"([^\\\"\\\\]|\\\\\\\"|\\\\)*\\\")|(\\[([^\\[\\]]|\\[[^\\[\\]]*\\])+\\]))\\s*(\\??))\\s*[\\(\\<])",
+					"beginCaptures": {
+						"1": {
+							"name": "storage.modifier.async.cts"
+						},
+						"2": {
+							"name": "storage.type.property.cts"
+						},
+						"3": {
+							"name": "keyword.generator.asterisk.cts"
+						}
+					},
+					"end": "(?=\\(|\\<)",
+					"patterns": [
+						{
+							"include": "#method-declaration-name"
+						}
+					]
+				}
+			]
+		},
+		"method-declaration-name": {
+			"begin": "(?=(([_$[:alpha:]][_$[:alnum:]]*)|(\\'([^\\'\\\\]|\\\\\\'|\\\\)*\\')|(\\\"([^\\\"\\\\]|\\\\\\\"|\\\\)*\\\")|(\\[([^\\[\\]]|\\[[^\\[\\]]*\\])+\\]))\\s*(\\??)\\s*[\\(\\<])",
+			"end": "(?=\\(|\\<)",
+			"patterns": [
+				{
+					"include": "#string"
+				},
+				{
+					"include": "#array-literal"
+				},
+				{
+					"name": "meta.definition.method.cts entity.name.function.cts",
+					"match": "[_$[:alpha:]][_$[:alnum:]]*"
+				},
+				{
+					"name": "keyword.operator.optional.cts",
+					"match": "\\?"
+				}
+			]
+		},
+		"arrow-function": {
+			"patterns": [
+				{
+					"name": "meta.arrow.cts",
+					"match": "(?:(?<!\\.|\\$)(\\basync\\b异步)\\s+)?([_$[:alpha:]][_$[:alnum:]]*)\\s*(?==>)",
+					"captures": {
+						"1": {
+							"name": "storage.modifier.async.cts"
+						},
+						"2": {
+							"name": "variable.parameter.cts"
+						}
+					}
+				},
+				{
+					"name": "meta.arrow.cts",
+					"begin": "(?x) (?:\n  (?<!\\.|\\$)(\\basync|\\b异步)\n)? ((?<![})!\\]])\\s*\n  (?=\n    # sure shot arrow functions even if => is on new line\n(\n  [(]\\s*\n  (\n    ([)]\\s*:) |                                                                 # ():\n    ((\\.\\.\\.\\s*)?[_$[:alpha:]][_$[:alnum:]]*\\s*:)                                            # [(]param: | [(]...param:\n  )\n) |\n(\n  [<]\\s*[_$[:alpha:]][_$[:alnum:]]*\\s+extends\\s*[^=>]                                        # < typeparam extends\n|\n  [<]\\s*[_$[:alpha:]][_$[:alnum:]]*\\s+扩展\\s*[^=>]                                        # < typeparam extends\n) |\n# arrow function possible to detect only with => on same line\n(\n  (<\\s*[_$[:alpha:]\\{\\(\\[]([^<>=]|=[^<]|\\<\\s*[_$[:alpha:]\\{\\(\\[]([^=<>]|=[^<])+\\>)+>\\s*)?                                                           # typeparameters\n  \\(\\s*([_$[:alpha:]\\{\\[]([^()]|\\((\\s*[^()]*)?\\))*)?\\)                          # parameteres\n  (\\s*:\\s*([^<>\\(\\)]|\\<[^<>]+\\>|\\([^\\(\\)]+\\))+)?                                # return type\n  \\s*=>                                                                         # arrow operator\n)\n  )\n)",
+					"beginCaptures": {
+						"1": {
+							"name": "storage.modifier.async.cts"
+						}
+					},
+					"end": "(?==>|\\{|(^\\s*(export|function|class|interface|let|var|const|import|enum|namespace|module|type|abstract|declare|导出|函数|类|类别|接口|变量|值量|常量|导入|枚举|名域|抽象|声明)\\s+))",
+					"patterns": [
+						{
+							"include": "#comment"
+						},
+						{
+							"include": "#type-parameters"
+						},
+						{
+							"include": "#function-parameters"
+						},
+						{
+							"include": "#arrow-return-type"
+						}
+					]
+				},
+				{
+					"name": "meta.arrow.cts",
+					"begin": "=>",
+					"beginCaptures": {
+						"0": {
+							"name": "storage.type.function.arrow.cts"
+						}
+					},
+					"end": "(?<=\\}|\\S)(?<!=>)|((?!\\{)(?=\\S))",
+					"patterns": [
+						{
+							"include": "#decl-block"
+						},
+						{
+							"include": "#expression"
+						}
+					]
+				}
+			]
+		},
+		"indexer-declaration": {
+			"name": "meta.indexer.declaration.cts",
+			"begin": "(?:(?<!\\.|\\$)\\b(readonly|只读)\\s*)?(\\[)\\s*([_$[:alpha:]][_$[:alnum:]]*)\\s*(?=:)",
+			"beginCaptures": {
+				"1": {
+					"name": "storage.modifier.cts"
+				},
+				"2": {
+					"name": "meta.brace.square.cts"
+				},
+				"3": {
+					"name": "variable.parameter.cts"
+				}
+			},
+			"end": "(\\])\\s*(\\?\\s*)?|$",
+			"endCaptures": {
+				"1": {
+					"name": "meta.brace.square.cts"
+				},
+				"2": {
+					"name": "keyword.operator.optional.cts"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#type-annotation"
+				}
+			]
+		},
+		"indexer-mapped-type-declaration": {
+			"name": "meta.indexer.mappedtype.declaration.cts",
+			"begin": "(?:(?<!\\.|\\$)\\b(readonly|只读)\\s*)?(\\[)\\s*([_$[:alpha:]][_$[:alnum:]]*)\\s+(in|位于)\\s+",
+			"beginCaptures": {
+				"1": {
+					"name": "storage.modifier.cts"
+				},
+				"2": {
+					"name": "meta.brace.square.cts"
+				},
+				"3": {
+					"name": "entity.name.type.cts"
+				},
+				"4": {
+					"name": "keyword.operator.expression.in.cts"
+				}
+			},
+			"end": "(\\])\\s*(\\?\\s*)?|$",
+			"endCaptures": {
+				"1": {
+					"name": "meta.brace.square.cts"
+				},
+				"2": {
+					"name": "keyword.operator.optional.cts"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#type"
+				}
+			]
+		},
+		"function-parameters": {
+			"name": "meta.parameters.cts",
+			"begin": "\\(",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.parameters.begin.cts"
+				}
+			},
+			"end": "\\)",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.parameters.end.cts"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#comment"
+				},
+				{
+					"include": "#decorator"
+				},
+				{
+					"include": "#destructuring-parameter"
+				},
+				{
+					"include": "#parameter-name"
+				},
+				{
+					"include": "#type-annotation"
+				},
+				{
+					"include": "#variable-initializer"
+				},
+				{
+					"name": "punctuation.separator.parameter.cts",
+					"match": ","
+				}
+			]
+		},
+		"class-declaration": {
+			"name": "meta.class.cts",
+			"begin": "(?<!\\.|\\$)\\b(?:(export|导出)\\s+)?\\b(?:(abstract|抽象)\\s+)?\\b(class|类|类别)\\b(?=\\s+|/[/*])",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.control.export.cts"
+				},
+				"2": {
+					"name": "storage.modifier.cts"
+				},
+				"3": {
+					"name": "storage.type.class.cts"
+				}
+			},
+			"end": "(?<=\\})",
+			"patterns": [
+				{
+					"include": "#class-declaration-or-expression-patterns"
+				}
+			]
+		},
+		"class-expression": {
+			"name": "meta.class.cts",
+			"begin": "(?<!\\.|\\$)\\b(class|类|类别)\\b(?=\\s+|[<{]|/[/*])",
+			"beginCaptures": {
+				"1": {
+					"name": "storage.type.class.cts"
+				}
+			},
+			"end": "(?<=\\})",
+			"patterns": [
+				{
+					"include": "#class-declaration-or-expression-patterns"
+				}
+			]
+		},
+		"class-declaration-or-expression-patterns": {
+			"patterns": [
+				{
+					"include": "#comment"
+				},
+				{
+					"include": "#class-or-interface-heritage"
+				},
+				{
+					"match": "[_$[:alpha:]][_$[:alnum:]]*",
+					"captures": {
+						"0": {
+							"name": "entity.name.type.class.cts"
+						}
+					}
+				},
+				{
+					"include": "#type-parameters"
+				},
+				{
+					"include": "#class-or-interface-body"
+				}
+			]
+		},
+		"interface-declaration": {
+			"name": "meta.interface.cts",
+			"begin": "(?<!\\.|\\$)\\b(?:(export|导出)\\s+)?\\b(?:(abstract|抽象)\\s+)?\\b(interface|接口)\\b(?=\\s+|/[/*])",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.control.export.cts"
+				},
+				"2": {
+					"name": "storage.modifier.cts"
+				},
+				"3": {
+					"name": "storage.type.interface.cts"
+				}
+			},
+			"end": "(?<=\\})",
+			"patterns": [
+				{
+					"include": "#comment"
+				},
+				{
+					"include": "#class-or-interface-heritage"
+				},
+				{
+					"match": "[_$[:alpha:]][_$[:alnum:]]*",
+					"captures": {
+						"0": {
+							"name": "entity.name.type.interface.cts"
+						}
+					}
+				},
+				{
+					"include": "#type-parameters"
+				},
+				{
+					"include": "#class-or-interface-body"
+				}
+			]
+		},
+		"class-or-interface-heritage": {
+			"begin": "(?<!\\.|\\$)(?:\\b(extends|扩展|implements|实现)\\b)(?!\\$|\\.)",
+			"beginCaptures": {
+				"1": {
+					"name": "storage.modifier.cts"
+				}
+			},
+			"end": "(?=\\{)",
+			"endCaptures": {
+				"1": {
+					"name": "punctuation.definition.block.cts"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#comment"
+				},
+				{
+					"include": "#class-or-interface-heritage"
+				},
+				{
+					"include": "#type-parameters"
+				},
+				{
+					"match": "([_$[:alpha:]][_$[:alnum:]]*)\\s*(\\.)(?=\\s*[_$[:alpha:]][_$[:alnum:]]*(\\s*\\.\\s*[_$[:alpha:]][_$[:alnum:]]*)*\\s*([,<{]|extends|扩展|implements|实现|//|/\\*))",
+					"captures": {
+						"1": {
+							"name": "entity.name.type.module.cts"
+						},
+						"2": {
+							"name": "punctuation.accessor.cts"
+						}
+					}
+				},
+				{
+					"match": "([_$[:alpha:]][_$[:alnum:]]*)(?=\\s*([,<{]|extends|扩展|implements|实现|//|/\\*))",
+					"captures": {
+						"1": {
+							"name": "entity.other.inherited-class.cts"
+						}
+					}
+				},
+				{
+					"include": "#expression"
+				}
+			]
+		},
+		"class-or-interface-body": {
+			"begin": "\\{",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.block.cts"
+				}
+			},
+			"end": "\\}",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.block.cts"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#string"
+				},
+				{
+					"include": "#comment"
+				},
+				{
+					"include": "#decorator"
+				},
+				{
+					"include": "#method-declaration"
+				},
+				{
+					"include": "#indexer-declaration"
+				},
+				{
+					"include": "#field-declaration"
+				},
+				{
+					"include": "#type-annotation"
+				},
+				{
+					"include": "#variable-initializer"
+				},
+				{
+					"include": "#access-modifier"
+				},
+				{
+					"include": "#property-accessor"
+				},
+				{
+					"include": "#after-operator-block-as-object-literal"
+				},
+				{
+					"include": "#decl-block"
+				},
+				{
+					"include": "#expression"
+				},
+				{
+					"include": "#punctuation-comma"
+				},
+				{
+					"include": "#punctuation-semicolon"
+				}
+			]
+		},
+		"access-modifier": {
+			"name": "storage.modifier.cts",
+			"match": "(?<!\\.|\\$)\\b(抽象|公开|保护|私有|只读|静态|abstract|public|protected|private|readonly|static)\\b(?!\\$|\\.)"
+		},
+		"property-accessor": {
+			"name": "storage.type.property.cts",
+			"match": "(?<!\\.|\\$)\\b(get|获取|set|设置)\\b(?!\\$|\\.)"
+		},
+		"enum-declaration": {
+			"name": "meta.enum.declaration.cts",
+			"begin": "(?<!\\.|\\$)(?:(\\bexport|\\b导出)\\s+)?(?:\\b(const|常量)\\s+)?\\b(enum|枚举)\\s+([_$[:alpha:]][_$[:alnum:]]*)",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.control.export.cts"
+				},
+				"2": {
+					"name": "storage.modifier.cts"
+				},
+				"3": {
+					"name": "storage.type.enum.cts"
+				},
+				"4": {
+					"name": "entity.name.type.enum.cts"
+				}
+			},
+			"end": "(?<=\\})",
+			"patterns": [
+				{
+					"include": "#comment"
+				},
+				{
+					"begin": "\\{",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.definition.block.cts"
+						}
+					},
+					"end": "\\}",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.definition.block.cts"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#comment"
+						},
+						{
+							"begin": "([_$[:alpha:]][_$[:alnum:]]*)",
+							"beginCaptures": {
+								"0": {
+									"name": "variable.other.enummember.cts"
+								}
+							},
+							"end": "(?=,|\\}|$)",
+							"patterns": [
+								{
+									"include": "#comment"
+								},
+								{
+									"include": "#variable-initializer"
+								}
+							]
+						},
+						{
+							"begin": "(?=((\\'([^\\'\\\\]|\\\\\\'|\\\\)*\\')|(\\\"([^\\\"\\\\]|\\\\\\\"|\\\\)*\\\")|(\\[([^\\[\\]]|\\[[^\\[\\]]*\\])+\\])))",
+							"end": "(?=,|\\}|$)",
+							"patterns": [
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#array-literal"
+								},
+								{
+									"include": "#comment"
+								},
+								{
+									"include": "#variable-initializer"
+								}
+							]
+						},
+						{
+							"include": "#punctuation-comma"
+						}
+					]
+				}
+			]
+		},
+		"namespace-declaration": {
+			"name": "meta.namespace.declaration.cts",
+			"begin": "(?<!\\.|\\$)(?:(\\bexport|\\b导出)\\s+)?\\b(namespace|名域|module|模块)\\s+(?=[_$[:alpha:]\"'`])",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.control.export.cts"
+				},
+				"2": {
+					"name": "storage.type.namespace.cts"
+				}
+			},
+			"end": "(?<=\\})|(?=;|\\b抽象\\b|\\b异步\\b|\\b类\\b|\\b类别\\b|\\b常量\\b|\\b声明\\b|\\b枚举\\b|\\b导出\\b|\\b函数\\b|\\b导入\\b|\\b接口\\b|\\b变量\\b|\\b模块\\b|\\b名域\\b|\\b类型\\b|\\b值量\\b|\\b抽象\\b|\\b异步\\b|\\b类\\b|\\b类别\\b|\\b常量\\b|\\b声明\\b|\\b枚举\\b|\\b导出\\b|\\b函数\\b|\\b导入\\b|\\b接口\\b|\\b变量\\b|\\b模块\\b|\\b名域\\b|\\b类型\\b|\\b值量\\b|\\babstract\\b|\\basync\\b|\\bclass\\b|\\bconst\\b|\\bdeclare\\b|\\benum\\b|\\bexport\\b|\\bfunction\\b|\\bimport\\b|\\binterface\\b|\\blet\\b|\\bmodule\\b|\\bnamespace\\b|\\btype\\b|\\bvar\\b)",
+			"patterns": [
+				{
+					"include": "#comment"
+				},
+				{
+					"include": "#string"
+				},
+				{
+					"name": "entity.name.type.module.cts",
+					"match": "([_$[:alpha:]][_$[:alnum:]]*)"
+				},
+				{
+					"include": "#punctuation-accessor"
+				},
+				{
+					"include": "#decl-block"
+				}
+			]
+		},
+		"type-alias-declaration": {
+			"name": "meta.type.declaration.cts",
+			"begin": "(?<!\\.|\\$)(?:(\\bexport|\\b导出)\\s+)?\\b(type|类型)\\b\\s+([_$[:alpha:]][_$[:alnum:]]*)\\s*",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.control.export.cts"
+				},
+				"2": {
+					"name": "storage.type.type.cts"
+				},
+				"3": {
+					"name": "entity.name.type.alias.cts"
+				}
+			},
+			"end": "(?=[};]|\\b抽象\\b|\\b异步\\b|\\b类\\b|\\b类别\\b|\\b常量\\b|\\b声明\\b|\\b枚举\\b|\\b导出\\b|\\b函数\\b|\\b导入\\b|\\b接口\\b|\\b变量\\b|\\b模块\\b|\\b名域\\b|\\b类型\\b|\\b值量\\b|\\babstract\\b|\\basync\\b|\\bclass\\b|\\bconst\\b|\\bdeclare\\b|\\benum\\b|\\bexport\\b|\\bfunction\\b|\\bimport\\b|\\binterface\\b|\\blet\\b|\\bmodule\\b|\\bnamespace\\b|\\btype\\b|\\bvar\\b)",
+			"patterns": [
+				{
+					"include": "#comment"
+				},
+				{
+					"include": "#type-parameters"
+				},
+				{
+					"include": "#type"
+				},
+				{
+					"match": "(=)\\s*",
+					"captures": {
+						"1": {
+							"name": "keyword.operator.assignment.cts"
+						}
+					}
+				}
+			]
+		},
+		"import-equals-declaration": {
+			"patterns": [
+				{
+					"name": "meta.import-equals.external.cts",
+					"begin": "(?<!\\.|\\$)(?:(\\bexport|\\b导出)\\s+)?\\b(import|导入)\\s+([_$[:alpha:]][_$[:alnum:]]*)\\s*(=)\\s*(require|需要)\\s*(\\()",
+					"beginCaptures": {
+						"1": {
+							"name": "keyword.control.export.cts"
+						},
+						"2": {
+							"name": "keyword.control.import.cts"
+						},
+						"3": {
+							"name": "variable.other.readwrite.alias.cts"
+						},
+						"4": {
+							"name": "keyword.operator.assignment.cts"
+						},
+						"5": {
+							"name": "keyword.control.require.cts"
+						},
+						"6": {
+							"name": "meta.brace.round.cts"
+						}
+					},
+					"end": "\\)",
+					"endCaptures": {
+						"0": {
+							"name": "meta.brace.round.cts"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#comment"
+						},
+						{
+							"include": "#string"
+						}
+					]
+				},
+				{
+					"name": "meta.import-equals.internal.cts",
+					"begin": "(?<!\\.|\\$)(?:(\\bexport|\\b导出)\\s+)?\\b(import|导入)\\s+([_$[:alpha:]][_$[:alnum:]]*)\\s*(=)\\s*(?!require\\b|需要\\b)",
+					"beginCaptures": {
+						"1": {
+							"name": "keyword.control.export.cts"
+						},
+						"2": {
+							"name": "keyword.control.import.cts"
+						},
+						"3": {
+							"name": "variable.other.readwrite.alias.cts"
+						},
+						"4": {
+							"name": "keyword.operator.assignment.cts"
+						}
+					},
+					"end": "(?=;|$|^)",
+					"patterns": [
+						{
+							"include": "#comment"
+						},
+						{
+							"match": "([_$[:alpha:]][_$[:alnum:]]*)\\s*(\\.)",
+							"captures": {
+								"1": {
+									"name": "entity.name.type.module.cts"
+								},
+								"2": {
+									"name": "punctuation.accessor.cts"
+								}
+							}
+						},
+						{
+							"name": "variable.other.readwrite.cts",
+							"match": "([_$[:alpha:]][_$[:alnum:]]*)"
+						}
+					]
+				}
+			]
+		},
+		"import-declaration": {
+			"name": "meta.import.cts",
+			"begin": "(?<!\\.|\\$)(?:(\\bexport|\\b导出)\\s+)?\\b(import|导入)(?!(\\s*[:\\(])|(\\$|\\.))\\b",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.control.export.cts"
+				},
+				"2": {
+					"name": "keyword.control.import.cts"
+				}
+			},
+			"end": "(?=;|$|^)",
+			"patterns": [
+				{
+					"include": "#import-export-declaration"
+				}
+			]
+		},
+		"export-declaration": {
+			"patterns": [
+				{
+					"match": "(?<!\\.|\\$)\\b(export|导出)\\s+(as)\\s+(namespace|名域)\\s+([_$[:alpha:]][_$[:alnum:]]*)",
+					"captures": {
+						"1": {
+							"name": "keyword.control.export.cts"
+						},
+						"2": {
+							"name": "keyword.control.as.cts"
+						},
+						"3": {
+							"name": "storage.type.namespace.cts"
+						},
+						"4": {
+							"name": "entity.name.type.module.cts"
+						}
+					}
+				},
+				{
+					"name": "meta.export.default.cts",
+					"begin": "(?<!\\.|\\$)\\b(export|导出)(?:(?:\\s*(=))|(?:\\s+(default|默认)(?=\\s+)))",
+					"beginCaptures": {
+						"1": {
+							"name": "keyword.control.export.cts"
+						},
+						"2": {
+							"name": "keyword.operator.assignment.cts"
+						},
+						"3": {
+							"name": "keyword.control.default.cts"
+						}
+					},
+					"end": "(?=;|$|\\b抽象\\b|\\b异步\\b|\\b类\\b|\\b类别\\b|\\b常量\\b|\\b声明\\b|\\b枚举\\b|\\b导出\\b|\\b函数\\b|\\b导入\\b|\\b接口\\b|\\b变量\\b|\\b模块\\b|\\b名域\\b|\\b类型\\b|\\b值量\\b|\\babstract\\b|\\basync\\b|\\bclass\\b|\\bconst\\b|\\bdeclare\\b|\\benum\\b|\\bexport\\b|\\bfunction\\b|\\bimport\\b|\\binterface\\b|\\blet\\b|\\bmodule\\b|\\bnamespace\\b|\\btype\\b|\\bvar\\b)",
+					"patterns": [
+						{
+							"include": "#expression"
+						}
+					]
+				},
+				{
+					"name": "meta.export.cts",
+					"begin": "(?<!\\.|\\$)\\b(export|导出)(?!(\\s*:)|(\\$))\\b",
+					"beginCaptures": {
+						"0": {
+							"name": "keyword.control.export.cts"
+						}
+					},
+					"end": "(?=;|$|\\b抽象\\b|\\b异步\\b|\\b类\\b|\\b类别\\b|\\b常量\\b|\\b声明\\b|\\b枚举\\b|\\b导出\\b|\\b函数\\b|\\b导入\\b|\\b接口\\b|\\b变量\\b|\\b模块\\b|\\b名域\\b|\\b类型\\b|\\b值量\\b|\\babstract\\b|\\basync\\b|\\bclass\\b|\\bconst\\b|\\bdeclare\\b|\\benum\\b|\\bexport\\b|\\bfunction\\b|\\bimport\\b|\\binterface\\b|\\blet\\b|\\bmodule\\b|\\bnamespace\\b|\\btype\\b|\\bvar\\b)",
+					"patterns": [
+						{
+							"include": "#import-export-declaration"
+						}
+					]
+				}
+			]
+		},
+		"import-export-declaration": {
+			"patterns": [
+				{
+					"include": "#comment"
+				},
+				{
+					"include": "#string"
+				},
+				{
+					"include": "#import-export-block"
+				},
+				{
+					"name": "keyword.control.from.cts",
+					"match": "\\bfrom\\b|\\b来自\\b"
+				},
+				{
+					"include": "#import-export-clause"
+				}
+			]
+		},
+		"import-export-block": {
+			"name": "meta.block.cts",
+			"begin": "\\{",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.block.cts"
+				}
+			},
+			"end": "\\}",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.block.cts"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#import-export-clause"
+				}
+			]
+		},
+		"import-export-clause": {
+			"patterns": [
+				{
+					"include": "#comment"
+				},
+				{
+					"match": "(?<!\\.|\\$)(?:(\\bdefault|\\b默认)|(\\*)|(\\b[_$[:alpha:]][_$[:alnum:]]*))\\s+(as|转为)\\s+(\\b[_$[:alpha:]][_$[:alnum:]]*)",
+					"captures": {
+						"1": {
+							"name": "keyword.control.default.cts"
+						},
+						"2": {
+							"name": "constant.language.import-export-all.cts"
+						},
+						"3": {
+							"name": "variable.other.readwrite.cts"
+						},
+						"4": {
+							"name": "keyword.control.as.cts"
+						},
+						"5": {
+							"name": "variable.other.readwrite.alias.cts"
+						}
+					}
+				},
+				{
+					"include": "#punctuation-comma"
+				},
+				{
+					"name": "constant.language.import-export-all.cts",
+					"match": "\\*"
+				},
+				{
+					"name": "keyword.control.default.cts",
+					"match": "\\b(default|默认)\\b"
+				},
+				{
+					"name": "variable.other.readwrite.alias.cts",
+					"match": "([_$[:alpha:]][_$[:alnum:]]*)"
+				}
+			]
+		},
+		"switch-statement": {
+			"name": "switch-statement.expr.cts",
+			"begin": "(?<!\\.|\\$)(?=\\bswitch\\s*\\()|(?=\\b假如\\s*\\()",
+			"end": "\\}",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.block.cts"
+				}
+			},
+			"patterns": [
+				{
+					"name": "switch-expression.expr.cts",
+					"begin": "(?<!\\.|\\$)\\b(switch|假如)\\s*(\\()",
+					"beginCaptures": {
+						"1": {
+							"name": "keyword.control.switch.cts"
+						},
+						"2": {
+							"name": "meta.brace.round.cts"
+						}
+					},
+					"end": "\\)",
+					"endCaptures": {
+						"0": {
+							"name": "meta.brace.round.cts"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#expression"
+						}
+					]
+				},
+				{
+					"name": "switch-block.expr.cts",
+					"begin": "\\{",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.definition.block.cts"
+						}
+					},
+					"end": "(?=\\})",
+					"patterns": [
+						{
+							"name": "case-clause.expr.cts",
+							"begin": "(?<!\\.|\\$)\\b(case|如为|默认|default(?=:))\\b(?!\\$|\\.)",
+							"beginCaptures": {
+								"1": {
+									"name": "keyword.control.switch.cts"
+								}
+							},
+							"end": ":",
+							"endCaptures": {
+								"0": {
+									"name": "punctuation.definition.section.case-statement.cts"
+								}
+							},
+							"patterns": [
+								{
+									"include": "#expression"
+								}
+							]
+						},
+						{
+							"include": "#statements"
+						}
+					]
+				}
+			]
+		},
+		"for-loop": {
+			"begin": "(?<!\\.|\\$)\\b(for|循环)(?:\\s+(await|等待))?\\s*(\\()",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.control.loop.cts"
+				},
+				"2": {
+					"name": "keyword.control.loop.cts"
+				},
+				"3": {
+					"name": "meta.brace.round.cts"
+				}
+			},
+			"end": "\\)",
+			"endCaptures": {
+				"0": {
+					"name": "meta.brace.round.cts"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#var-expr"
+				},
+				{
+					"include": "#expression"
+				},
+				{
+					"include": "#punctuation-semicolon"
+				}
+			]
+		},
+		"decl-block": {
+			"name": "meta.block.cts",
+			"begin": "\\{",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.block.cts"
+				}
+			},
+			"end": "\\}",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.block.cts"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#statements"
+				}
+			]
+		},
+		"after-operator-block-as-object-literal": {
+			"name": "meta.objectliteral.cts",
+			"begin": "(?<=[=(,\\[?+!]|await|等待|返回|获得|抛出|位于|属于|类为|return|yield|throw|in|of|typeof|&&|\\|\\||\\*)\\s*(\\{)",
+			"beginCaptures": {
+				"1": {
+					"name": "punctuation.definition.block.cts"
+				}
+			},
+			"end": "\\}",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.block.cts"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#object-member"
+				}
+			]
+		},
+		"object-literal": {
+			"name": "meta.objectliteral.cts",
+			"begin": "\\{",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.block.cts"
+				}
+			},
+			"end": "\\}",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.block.cts"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#object-member"
+				}
+			]
+		},
+		"object-member": {
+			"patterns": [
+				{
+					"include": "#comment"
+				},
+				{
+					"include": "#object-literal-method-declaration"
+				},
+				{
+					"name": "meta.object.member.cts meta.object-literal.key.cts",
+					"begin": "(?=\\[)",
+					"end": "(?=:)",
+					"patterns": [
+						{
+							"include": "#array-literal"
+						}
+					]
+				},
+				{
+					"name": "meta.object.member.cts meta.object-literal.key.cts",
+					"begin": "(?=[\\'\\\"])",
+					"end": "(?=:)",
+					"patterns": [
+						{
+							"include": "#string"
+						}
+					]
+				},
+				{
+					"name": "meta.object.member.cts",
+					"match": "(?![_$[:alpha:]])([[:digit:]]+)\\s*(?=:)",
+					"captures": {
+						"0": {
+							"name": "meta.object-literal.key.cts"
+						},
+						"1": {
+							"name": "constant.numeric.decimal.cts"
+						}
+					}
+				},
+				{
+					"name": "meta.object.member.cts",
+					"match": "(?x)(?:([_$[:alpha:]][_$[:alnum:]]*)\\s*(?=:\\s*(\n  ((async\\s+|异步\\s+)?(\n    (function\\s*[(<*]|函数\\s*[(<*]) |\n    (function\\s+|函数\\s+) |\n    ([_$[:alpha:]][_$[:alnum:]]*\\s*=>)\n  )) |\n  ((async\\s*|异步\\s*)?(\n    # sure shot arrow functions even if => is on new line\n(\n  [(]\\s*\n  (\n    ([)]\\s*:) |                                                                 # ():\n    ((\\.\\.\\.\\s*)?[_$[:alpha:]][_$[:alnum:]]*\\s*:)                                            # [(]param: | [(]...param:\n  )\n) |\n(\n  [<]\\s*[_$[:alpha:]][_$[:alnum:]]*\\s+extends\\s*[^=>]                                        # < typeparam extends\n) |\n# arrow function possible to detect only with => on same line\n(\n  (<\\s*[_$[:alpha:]\\{\\(\\[]([^<>=]|=[^<]|\\<\\s*[_$[:alpha:]\\{\\(\\[]([^=<>]|=[^<])+\\>)+>\\s*)?                                                           # typeparameters\n  \\(\\s*([_$[:alpha:]\\{\\[]([^()]|\\((\\s*[^()]*)?\\))*)?\\)                          # parameteres\n  (\\s*:\\s*([^<>\\(\\)]|\\<[^<>]+\\>|\\([^\\(\\)]+\\))+)?                                # return type\n  \\s*=>                                                                         # arrow operator\n)\n  ))\n)))",
+					"captures": {
+						"0": {
+							"name": "meta.object-literal.key.cts"
+						},
+						"1": {
+							"name": "entity.name.function.cts"
+						}
+					}
+				},
+				{
+					"name": "meta.object.member.cts",
+					"match": "(?:[_$[:alpha:]][_$[:alnum:]]*)\\s*(?=:)",
+					"captures": {
+						"0": {
+							"name": "meta.object-literal.key.cts"
+						}
+					}
+				},
+				{
+					"name": "meta.object.member.cts",
+					"begin": "\\.\\.\\.",
+					"beginCaptures": {
+						"0": {
+							"name": "keyword.operator.spread.cts"
+						}
+					},
+					"end": "(?=,|\\})",
+					"patterns": [
+						{
+							"include": "#expression"
+						}
+					]
+				},
+				{
+					"name": "meta.object.member.cts",
+					"match": "([_$[:alpha:]][_$[:alnum:]]*)\\s*(?=,|\\}|$)",
+					"captures": {
+						"1": {
+							"name": "variable.other.readwrite.cts"
+						}
+					}
+				},
+				{
+					"name": "meta.object.member.cts",
+					"begin": "(?=[_$[:alpha:]][_$[:alnum:]]*\\s*=)",
+					"end": "(?=,|\\}|$)",
+					"patterns": [
+						{
+							"include": "#expression"
+						}
+					]
+				},
+				{
+					"name": "meta.object.member.cts",
+					"begin": ":",
+					"beginCaptures": {
+						"0": {
+							"name": "meta.object-literal.key.cts punctuation.separator.key-value.cts"
+						}
+					},
+					"end": "(?=,|\\})",
+					"patterns": [
+						{
+							"include": "#expression"
+						}
+					]
+				},
+				{
+					"include": "#punctuation-comma"
+				}
+			]
+		},
+		"ternary-expression": {
+			"begin": "(\\?)",
+			"beginCaptures": {
+				"0": {
+					"name": "keyword.operator.ternary.cts"
+				}
+			},
+			"end": "(:)",
+			"endCaptures": {
+				"0": {
+					"name": "keyword.operator.ternary.cts"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#expression"
+				}
+			]
+		},
+		"function-call": {
+			"begin": "(?=(([_$[:alpha:]][_$[:alnum:]]*\\s*\\.\\s*)*|(\\.\\s*)?)([_$[:alpha:]][_$[:alnum:]]*)\\s*(<\\s*[_$[:alpha:]\\{\\(\\[\\\"\\'\\`]([^<>]|\\<\\s*[_$[:alpha:]\\{\\(\\[\\\"\\'\\`][^<>]+\\>)+>\\s*)?\\()",
+			"end": "(?<=\\))(?!(([_$[:alpha:]][_$[:alnum:]]*\\s*\\.\\s*)*|(\\.\\s*)?)([_$[:alpha:]][_$[:alnum:]]*)\\s*(<\\s*[_$[:alpha:]\\{\\(\\[\\\"\\'\\`]([^<>]|\\<\\s*[_$[:alpha:]\\{\\(\\[\\\"\\'\\`][^<>]+\\>)+>\\s*)?\\()",
+			"patterns": [
+				{
+					"name": "meta.function-call.cts",
+					"begin": "(?=(([_$[:alpha:]][_$[:alnum:]]*\\s*\\.\\s*)*|(\\.\\s*)?)([_$[:alpha:]][_$[:alnum:]]*))",
+					"end": "(?=\\s*(<\\s*[_$[:alpha:]\\{\\(\\[\\\"\\'\\`]([^<>]|\\<\\s*[_$[:alpha:]\\{\\(\\[\\\"\\'\\`][^<>]+\\>)+>\\s*)?\\()",
+					"patterns": [
+						{
+							"include": "#literal"
+						},
+						{
+							"include": "#support-objects"
+						},
+						{
+							"include": "#object-identifiers"
+						},
+						{
+							"include": "#punctuation-accessor"
+						},
+						{
+							"name": "keyword.operator.expression.import.cts",
+							"match": "(?![\\.\\$])\\bimport(?=\\s*[\\(]\\s*[\\\"\\'\\`])|(?![\\.\\$])\\b导入(?=\\s*[\\(]\\s*[\\\"\\'\\`])"
+						},
+						{
+							"name": "entity.name.function.cts",
+							"match": "([_$[:alpha:]][_$[:alnum:]]*)"
+						}
+					]
+				},
+				{
+					"include": "#comment"
+				},
+				{
+					"name": "meta.type.parameters.cts",
+					"begin": "\\<",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.definition.typeparameters.begin.cts"
+						}
+					},
+					"end": "\\>",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.definition.typeparameters.end.cts"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#type"
+						},
+						{
+							"include": "#punctuation-comma"
+						}
+					]
+				},
+				{
+					"include": "#paren-expression"
+				}
+			]
+		},
+		"new-expr": {
+			"name": "new.expr.cts",
+			"begin": "(?<!\\.|\\$)\\b(new|新建)\\b(?!\\$|\\.)",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.operator.new.cts"
+				}
+			},
+			"end": "(?<=\\))|(?=[;),}\\]]|$|((?<!\\.|\\$)\\bnew\\b(?!\\$|\\.))|((?<!\\.|\\$)\\b新建\\b(?!\\$|\\.))|((?<!\\.|\\$)\\bfunction((\\s+[_$[:alpha:]][_$[:alnum:]]*)|(\\s*[\\(])))|((?<!\\.|\\$)\\b函数((\\s+[_$[:alpha:]][_$[:alnum:]]*)|(\\s*[\\(]))))",
+			"patterns": [
+				{
+					"include": "#paren-expression"
+				},
+				{
+					"include": "#class-declaration"
+				},
+				{
+					"include": "#type"
+				}
+			]
+		},
+		"paren-expression": {
+			"begin": "\\(",
+			"beginCaptures": {
+				"0": {
+					"name": "meta.brace.round.cts"
+				}
+			},
+			"end": "\\)",
+			"endCaptures": {
+				"0": {
+					"name": "meta.brace.round.cts"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#expression"
+				},
+				{
+					"include": "#punctuation-comma"
+				}
+			]
+		},
+		"cast": {
+			"patterns": [
+				{
+					"name": "cast.expr.cts",
+					"begin": "(?:(?<=return|返回|抛出|获得|等待|默认|throw|yield|await|default|[=(,:>*?]|[^+]\\+))\\s*(<)(?!<?\\=)",
+					"beginCaptures": {
+						"1": {
+							"name": "meta.brace.angle.cts"
+						}
+					},
+					"end": "(\\>)\\s*",
+					"endCaptures": {
+						"1": {
+							"name": "meta.brace.angle.cts"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#type"
+						}
+					]
+				},
+				{
+					"name": "cast.expr.cts",
+					"begin": "(?:(?<=^))\\s*(<)(?=[_$[:alpha:]][_$[:alnum:]]*\\s*>)",
+					"beginCaptures": {
+						"1": {
+							"name": "meta.brace.angle.cts"
+						}
+					},
+					"end": "(\\>)\\s*",
+					"endCaptures": {
+						"1": {
+							"name": "meta.brace.angle.cts"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#type"
+						}
+					]
+				}
+			]
+		},
+		"expression-operators": {
+			"patterns": [
+				{
+					"name": "keyword.control.flow.cts",
+					"match": "(?<!\\.|\\$)\\b(await|等待)\\b(?!\\$|\\.)"
+				},
+				{
+					"match": "(?<!\\.|\\$)\\b(yield|获得)\\b(?!\\$|\\.)(?:\\s*(\\*))?",
+					"captures": {
+						"1": {
+							"name": "keyword.control.flow.cts"
+						},
+						"2": {
+							"name": "keyword.generator.asterisk.cts"
+						}
+					}
+				},
+				{
+					"name": "keyword.operator.expression.delete.cts",
+					"match": "(?<!\\.|\\$)\\bdelete\\b(?!\\$|\\.)|(?<!\\.|\\$)\\b删除\\b(?!\\$|\\.)"
+				},
+				{
+					"name": "keyword.operator.expression.in.cts",
+					"match": "(?<!\\.|\\$)\\bin\\b(?!\\$|\\.)|(?<!\\.|\\$)\\b位于\\b(?!\\$|\\.)"
+				},
+				{
+					"name": "keyword.operator.expression.of.cts",
+					"match": "(?<!\\.|\\$)\\bof\\b(?!\\$|\\.)|(?<!\\.|\\$)\\b属于\\b(?!\\$|\\.)"
+				},
+				{
+					"name": "keyword.operator.expression.instanceof.cts",
+					"match": "(?<!\\.|\\$)\\binstanceof\\b(?!\\$|\\.)|(?<!\\.|\\$)\\b身为\\b(?!\\$|\\.)"
+				},
+				{
+					"name": "keyword.operator.new.cts",
+					"match": "(?<!\\.|\\$)\\bnew\\b(?!\\$|\\.)|(?<!\\.|\\$)\\b新建\\b(?!\\$|\\.)"
+				},
+				{
+					"include": "#typeof-operator"
+				},
+				{
+					"name": "keyword.operator.expression.void.cts",
+					"match": "(?<!\\.|\\$)\\bvoid\\b(?!\\$|\\.)|(?<!\\.|\\$)\\b无值\\b(?!\\$|\\.)"
+				},
+				{
+					"begin": "(?<!\\.|\\$)\\b(as|转为)\\s+",
+					"beginCaptures": {
+						"1": {
+							"name": "keyword.control.as.cts"
+						}
+					},
+					"end": "(?=$|^|[;,:})\\]]|((?<!\\.|\\$)\\b(as|转为)\\s+))",
+					"patterns": [
+						{
+							"include": "#type"
+						}
+					]
+				},
+				{
+					"name": "keyword.operator.spread.cts",
+					"match": "\\.\\.\\."
+				},
+				{
+					"name": "keyword.operator.assignment.compound.cts",
+					"match": "\\*=|(?<!\\()/=|%=|\\+=|\\-="
+				},
+				{
+					"name": "keyword.operator.assignment.compound.bitwise.cts",
+					"match": "\\&=|\\^=|<<=|>>=|>>>=|\\|="
+				},
+				{
+					"name": "keyword.operator.bitwise.shift.cts",
+					"match": "<<|>>>|>>"
+				},
+				{
+					"name": "keyword.operator.comparison.cts",
+					"match": "===|!==|==|!="
+				},
+				{
+					"name": "keyword.operator.relational.cts",
+					"match": "<=|>=|<>|<|>"
+				},
+				{
+					"name": "keyword.operator.logical.cts",
+					"match": "\\!|&&|\\|\\|"
+				},
+				{
+					"name": "keyword.operator.bitwise.cts",
+					"match": "\\&|~|\\^|\\|"
+				},
+				{
+					"name": "keyword.operator.assignment.cts",
+					"match": "\\="
+				},
+				{
+					"name": "keyword.operator.decrement.cts",
+					"match": "--"
+				},
+				{
+					"name": "keyword.operator.increment.cts",
+					"match": "\\+\\+"
+				},
+				{
+					"name": "keyword.operator.arithmetic.cts",
+					"match": "%|\\*|/|-|\\+"
+				},
+				{
+					"match": "(?<=[_$[:alnum:])])\\s*(/)(?![/*])",
+					"captures": {
+						"1": {
+							"name": "keyword.operator.arithmetic.cts"
+						}
+					}
+				}
+			]
+		},
+		"typeof-operator": {
+			"name": "keyword.operator.expression.typeof.cts",
+			"match": "(?<!\\.|\\$)\\btypeof\\b(?!\\$|\\.)|(?<!\\.|\\$)\\b类为\\b(?!\\$|\\.)"
+		},
+		"literal": {
+			"patterns": [
+				{
+					"include": "#numeric-literal"
+				},
+				{
+					"include": "#boolean-literal"
+				},
+				{
+					"include": "#null-literal"
+				},
+				{
+					"include": "#undefined-literal"
+				},
+				{
+					"include": "#numericConstant-literal"
+				},
+				{
+					"include": "#array-literal"
+				},
+				{
+					"include": "#this-literal"
+				},
+				{
+					"include": "#super-literal"
+				}
+			]
+		},
+		"array-literal": {
+			"name": "meta.array.literal.cts",
+			"begin": "\\[",
+			"beginCaptures": {
+				"0": {
+					"name": "meta.brace.square.cts"
+				}
+			},
+			"end": "\\]",
+			"endCaptures": {
+				"0": {
+					"name": "meta.brace.square.cts"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#expression"
+				},
+				{
+					"include": "#punctuation-comma"
+				}
+			]
+		},
+		"numeric-literal": {
+			"patterns": [
+				{
+					"name": "constant.numeric.hex.cts",
+					"match": "\\b(?<!\\$)0(x|X)[0-9a-fA-F]+\\b(?!\\$)"
+				},
+				{
+					"name": "constant.numeric.binary.cts",
+					"match": "\\b(?<!\\$)0(b|B)[01]+\\b(?!\\$)"
+				},
+				{
+					"name": "constant.numeric.octal.cts",
+					"match": "\\b(?<!\\$)0(o|O)?[0-7]+\\b(?!\\$)"
+				},
+				{
+					"match": "(?x)\n(?<!\\$)(?:\n  (?:\\b[0-9]+(\\.)[0-9]+[eE][+-]?[0-9]+\\b)| # 1.1E+3\n  (?:\\b[0-9]+(\\.)[eE][+-]?[0-9]+\\b)|       # 1.E+3\n  (?:\\B(\\.)[0-9]+[eE][+-]?[0-9]+\\b)|       # .1E+3\n  (?:\\b[0-9]+[eE][+-]?[0-9]+\\b)|           # 1E+3\n  (?:\\b[0-9]+(\\.)[0-9]+\\b)|                # 1.1\n  (?:\\b[0-9]+(\\.)\\B)|                      # 1.\n  (?:\\B(\\.)[0-9]+\\b)|                      # .1\n  (?:\\b[0-9]+\\b(?!\\.))                     # 1\n)(?!\\$)",
+					"captures": {
+						"0": {
+							"name": "constant.numeric.decimal.cts"
+						},
+						"1": {
+							"name": "meta.delimiter.decimal.period.cts"
+						},
+						"2": {
+							"name": "meta.delimiter.decimal.period.cts"
+						},
+						"3": {
+							"name": "meta.delimiter.decimal.period.cts"
+						},
+						"4": {
+							"name": "meta.delimiter.decimal.period.cts"
+						},
+						"5": {
+							"name": "meta.delimiter.decimal.period.cts"
+						},
+						"6": {
+							"name": "meta.delimiter.decimal.period.cts"
+						}
+					}
+				}
+			]
+		},
+		"boolean-literal": {
+			"patterns": [
+				{
+					"name": "constant.language.boolean.true.cts",
+					"match": "(?<!\\.|\\$)\\btrue\\b(?!\\$)|(?<!\\.|\\$)\\b为真\\b(?!\\$)|(?<!\\.|\\$)\\b真的\\b(?!\\$)|(?<!\\.|\\$)\\b真\\b(?!\\$)"
+				},
+				{
+					"name": "constant.language.boolean.false.cts",
+					"match": "(?<!\\.|\\$)\\bfalse\\b(?!\\$)|(?<!\\.|\\$)\\b为假\\b(?!\\$)|(?<!\\.|\\$)\\b假的\\b(?!\\$)|(?<!\\.|\\$)\\b假\\b(?!\\$)"
+				}
+			]
+		},
+		"null-literal": {
+			"name": "constant.language.null.cts",
+			"match": "(?<!\\.|\\$)\\bnull\\b(?!\\$)|(?<!\\.|\\$)\\b空值\\b(?!\\$)"
+		},
+		"this-literal": {
+			"name": "variable.language.this.cts",
+			"match": "(?<!\\$)((?<=\\.\\.\\.)|(?<!\\.))\\bthis\\b(?!\\$)|(?<!\\$)((?<=\\.\\.\\.)|(?<!\\.))\\b本体\\b(?!\\$)"
+		},
+		"super-literal": {
+			"name": "variable.language.super.cts",
+			"match": "(?<!\\.|\\$)\\bsuper\\b(?!\\$)|(?<!\\.|\\$)\\b父级\\b(?!\\$)"
+		},
+		"undefined-literal": {
+			"name": "constant.language.undefined.cts",
+			"match": "(?<!\\.|\\$)\\bundefined\\b(?!\\$)|(?<!\\.|\\$)\\b未定\\b(?!\\$)"
+		},
+		"numericConstant-literal": {
+			"patterns": [
+				{
+					"name": "constant.language.nan.cts",
+					"match": "(?<!\\.|\\$)\\bNaN\\b(?!\\$)|(?<!\\.|\\$)\\b非数字\\b(?!\\$)"
+				},
+				{
+					"name": "constant.language.infinity.cts",
+					"match": "(?<!\\.|\\$)\\bInfinity\\b(?!\\$)|(?<!\\.|\\$)\\b无穷大\\b(?!\\$)"
+				}
+			]
+		},
+		"support-objects": {
+			"patterns": [
+				{
+					"name": "variable.language.arguments.cts",
+					"match": "(?<!\\.|\\$)\\b(arguments|增强参数)\\b(?!\\$)"
+				},
+				{
+					"name": "support.class.builtin.cts",
+					"match": "(?x)(?<!\\.|\\$)\\b(Array|数组类|ArrayBuffer|Atomics|Boolean|DataView|Date|Float32Array|Float64Array|Function|Generator\n  |GeneratorFunction|Int8Array|Int16Array|Int32Array|Intl|Map|Number|Object|Promise|Proxy\n  |Reflect|RegExp|Set|SharedArrayBuffer|SIMD|String|Symbol|TypedArray\n  |Uint8Array|Uint16Array|Uint32Array|Uint8ClampedArray|WeakMap|WeakSet)\\b(?!\\$)"
+				},
+				{
+					"name": "support.class.error.cts",
+					"match": "(?<!\\.|\\$)\\b((Eval|Internal|Range|Reference|Syntax|Type|URI)?Error)\\b(?!\\$)"
+				},
+				{
+					"name": "support.function.cts",
+					"match": "(?x)(?<!\\.|\\$)\\b(clear(Interval|Timeout)|decodeURI|decodeURIComponent|encodeURI|encodeURIComponent|escape|eval|\n  isFinite|isNaN|parseFloat|parseInt|require|set(Interval|Timeout)|super|unescape|uneval)(?=\\s*\\()"
+				},
+				{
+					"match": "(?x)(?<!\\.|\\$)\\b(Math|数学类)(?:\\s*(\\.)\\s*(?:\n  (abs|acos|acosh|asin|asinh|atan|atan2|atanh|cbrt|ceil|clz32|cos|cosh|exp|\n  expm1|floor|fround|hypot|imul|log|log10|log1p|log2|max|min|pow|random|\n  round|sign|sin|sinh|sqrt|tan|tanh|trunc)\n  |\n  (E|LN10|LN2|LOG10E|LOG2E|PI|SQRT1_2|SQRT2)))?\\b(?!\\$)",
+					"captures": {
+						"1": {
+							"name": "support.constant.math.cts"
+						},
+						"2": {
+							"name": "punctuation.accessor.cts"
+						},
+						"3": {
+							"name": "support.function.math.cts"
+						},
+						"4": {
+							"name": "support.constant.property.math.cts"
+						}
+					}
+				},
+				{
+					"match": "(?x)(?<!\\.|\\$)\\b(console|控制台)(?:\\s*(\\.)\\s*(\n  assert|clear|count|debug|dir|error|group|groupCollapsed|groupEnd|info|log\n  |日志\n  |profile|profileEnd|table|time|timeEnd|timeStamp|trace|warn))?\\b(?!\\$)",
+					"captures": {
+						"1": {
+							"name": "support.class.console.cts"
+						},
+						"2": {
+							"name": "punctuation.accessor.cts"
+						},
+						"3": {
+							"name": "support.function.console.cts"
+						}
+					}
+				},
+				{
+					"match": "(?<!\\.|\\$)\\b(JSON)(?:\\s*(\\.)\\s*(parse|编译|解析|stringify))?\\b(?!\\$)",
+					"captures": {
+						"1": {
+							"name": "support.constant.json.cts"
+						},
+						"2": {
+							"name": "punctuation.accessor.cts"
+						},
+						"3": {
+							"name": "support.function.json.cts"
+						}
+					}
+				},
+				{
+					"match": "(?x) (\\.) \\s* (?:\n  (constructor|构造|长度|原型|__原型__|length|prototype|__proto__)\n  |\n  (EPSILON|MAX_SAFE_INTEGER|MAX_VALUE|MIN_SAFE_INTEGER|MIN_VALUE|NEGATIVE_INFINITY|POSITIVE_INFINITY))\\b(?!\\$)",
+					"captures": {
+						"1": {
+							"name": "punctuation.accessor.cts"
+						},
+						"2": {
+							"name": "support.variable.property.cts"
+						},
+						"3": {
+							"name": "support.constant.cts"
+						}
+					}
+				},
+				{
+					"match": "(?x) (?<!\\.|\\$) \\b (?:\n  (document|文档|事件|导航|窗口|event|navigator|performance|screen|window)\n  |\n  (AnalyserNode|ArrayBufferView|Attr|AudioBuffer|AudioBufferSourceNode|AudioContext|AudioDestinationNode|AudioListener\n  |AudioNode|AudioParam|BatteryManager|BeforeUnloadEvent|BiquadFilterNode|Blob|BufferSource|ByteString|CSS|CSSConditionRule\n  |CSSCounterStyleRule|CSSGroupingRule|CSSMatrix|CSSMediaRule|CSSPageRule|CSSPrimitiveValue|CSSRule|CSSRuleList|CSSStyleDeclaration\n  |CSSStyleRule|CSSStyleSheet|CSSSupportsRule|CSSValue|CSSValueList|CanvasGradient|CanvasImageSource|CanvasPattern\n  |CanvasRenderingContext2D|ChannelMergerNode|ChannelSplitterNode|CharacterData|ChromeWorker|CloseEvent|Comment|CompositionEvent\n  |Console|ConvolverNode|Coordinates|Credential|CredentialsContainer|Crypto|CryptoKey|CustomEvent|DOMError|DOMException\n  |DOMHighResTimeStamp|DOMImplementation|DOMString|DOMStringList|DOMStringMap|DOMTimeStamp|DOMTokenList|DataTransfer\n  |DataTransferItem|DataTransferItemList|DedicatedWorkerGlobalScope|DelayNode|DeviceProximityEvent|DirectoryEntry\n  |DirectoryEntrySync|DirectoryReader|DirectoryReaderSync|Document|DocumentFragment|DocumentTouch|DocumentType|DragEvent\n  |DynamicsCompressorNode|Element|Entry|EntrySync|ErrorEvent|Event|EventListener|EventSource|EventTarget|FederatedCredential\n  |FetchEvent|File|FileEntry|FileEntrySync|FileException|FileList|FileReader|FileReaderSync|FileSystem|FileSystemSync\n  |FontFace|FormData|GainNode|Gamepad|GamepadButton|GamepadEvent|Geolocation|GlobalEventHandlers|HTMLAnchorElement\n  |HTMLAreaElement|HTMLAudioElement|HTMLBRElement|HTMLBaseElement|HTMLBodyElement|HTMLButtonElement|HTMLCanvasElement\n  |HTMLCollection|HTMLContentElement|HTMLDListElement|HTMLDataElement|HTMLDataListElement|HTMLDialogElement|HTMLDivElement\n  |HTMLDocument|HTMLElement|HTMLEmbedElement|HTMLFieldSetElement|HTMLFontElement|HTMLFormControlsCollection|HTMLFormElement\n  |HTMLHRElement|HTMLHeadElement|HTMLHeadingElement|HTMLHtmlElement|HTMLIFrameElement|HTMLImageElement|HTMLInputElement\n  |HTMLKeygenElement|HTMLLIElement|HTMLLabelElement|HTMLLegendElement|HTMLLinkElement|HTMLMapElement|HTMLMediaElement\n  |HTMLMetaElement|HTMLMeterElement|HTMLModElement|HTMLOListElement|HTMLObjectElement|HTMLOptGroupElement|HTMLOptionElement\n  |HTMLOptionsCollection|HTMLOutputElement|HTMLParagraphElement|HTMLParamElement|HTMLPreElement|HTMLProgressElement\n  |HTMLQuoteElement|HTMLScriptElement|HTMLSelectElement|HTMLShadowElement|HTMLSourceElement|HTMLSpanElement|HTMLStyleElement\n  |HTMLTableCaptionElement|HTMLTableCellElement|HTMLTableColElement|HTMLTableDataCellElement|HTMLTableElement|HTMLTableHeaderCellElement\n  |HTMLTableRowElement|HTMLTableSectionElement|HTMLTextAreaElement|HTMLTimeElement|HTMLTitleElement|HTMLTrackElement\n  |HTMLUListElement|HTMLUnknownElement|HTMLVideoElement|HashChangeEvent|History|IDBCursor|IDBCursorWithValue|IDBDatabase\n  |IDBEnvironment|IDBFactory|IDBIndex|IDBKeyRange|IDBMutableFile|IDBObjectStore|IDBOpenDBRequest|IDBRequest|IDBTransaction\n  |IDBVersionChangeEvent|IIRFilterNode|IdentityManager|ImageBitmap|ImageBitmapFactories|ImageData|Index|InputDeviceCapabilities\n  |InputEvent|InstallEvent|InstallTrigger|KeyboardEvent|LinkStyle|LocalFileSystem|LocalFileSystemSync|Location|MIDIAccess\n  |MIDIConnectionEvent|MIDIInput|MIDIInputMap|MIDIOutputMap|MediaElementAudioSourceNode|MediaError|MediaKeyMessageEvent\n  |MediaKeySession|MediaKeyStatusMap|MediaKeySystemAccess|MediaKeySystemConfiguration|MediaKeys|MediaRecorder|MediaStream\n  |MediaStreamAudioDestinationNode|MediaStreamAudioSourceNode|MessageChannel|MessageEvent|MessagePort|MouseEvent\n  |MutationObserver|MutationRecord|NamedNodeMap|Navigator|NavigatorConcurrentHardware|NavigatorGeolocation|NavigatorID\n  |NavigatorLanguage|NavigatorOnLine|Node|NodeFilter|NodeIterator|NodeList|NonDocumentTypeChildNode|Notification\n  |OfflineAudioCompletionEvent|OfflineAudioContext|OscillatorNode|PageTransitionEvent|PannerNode|ParentNode|PasswordCredential\n  |Path2D|PaymentAddress|PaymentRequest|PaymentResponse|Performance|PerformanceEntry|PerformanceFrameTiming|PerformanceMark\n  |PerformanceMeasure|PerformanceNavigation|PerformanceNavigationTiming|PerformanceObserver|PerformanceObserverEntryList\n  |PerformanceResourceTiming|PerformanceTiming|PeriodicSyncEvent|PeriodicWave|Plugin|Point|PointerEvent|PopStateEvent\n  |PortCollection|Position|PositionError|PositionOptions|PresentationConnectionClosedEvent|PresentationConnectionList\n  |PresentationReceiver|ProcessingInstruction|ProgressEvent|PromiseRejectionEvent|PushEvent|PushRegistrationManager\n  |RTCCertificate|RTCConfiguration|RTCPeerConnection|RTCSessionDescriptionCallback|RTCStatsReport|RadioNodeList|RandomSource\n  |Range|ReadableByteStream|RenderingContext|SVGAElement|SVGAngle|SVGAnimateColorElement|SVGAnimateElement|SVGAnimateMotionElement\n  |SVGAnimateTransformElement|SVGAnimatedAngle|SVGAnimatedBoolean|SVGAnimatedEnumeration|SVGAnimatedInteger|SVGAnimatedLength\n  |SVGAnimatedLengthList|SVGAnimatedNumber|SVGAnimatedNumberList|SVGAnimatedPoints|SVGAnimatedPreserveAspectRatio\n  |SVGAnimatedRect|SVGAnimatedString|SVGAnimatedTransformList|SVGAnimationElement|SVGCircleElement|SVGClipPathElement\n  |SVGCursorElement|SVGDefsElement|SVGDescElement|SVGElement|SVGEllipseElement|SVGEvent|SVGFilterElement|SVGFontElement\n  |SVGFontFaceElement|SVGFontFaceFormatElement|SVGFontFaceNameElement|SVGFontFaceSrcElement|SVGFontFaceUriElement\n  |SVGForeignObjectElement|SVGGElement|SVGGlyphElement|SVGGradientElement|SVGHKernElement|SVGImageElement|SVGLength\n  |SVGLengthList|SVGLineElement|SVGLinearGradientElement|SVGMPathElement|SVGMaskElement|SVGMatrix|SVGMissingGlyphElement\n  |SVGNumber|SVGNumberList|SVGPathElement|SVGPatternElement|SVGPoint|SVGPolygonElement|SVGPolylineElement|SVGPreserveAspectRatio\n  |SVGRadialGradientElement|SVGRect|SVGRectElement|SVGSVGElement|SVGScriptElement|SVGSetElement|SVGStopElement|SVGStringList\n  |SVGStylable|SVGStyleElement|SVGSwitchElement|SVGSymbolElement|SVGTRefElement|SVGTSpanElement|SVGTests|SVGTextElement\n  |SVGTextPositioningElement|SVGTitleElement|SVGTransform|SVGTransformList|SVGTransformable|SVGUseElement|SVGVKernElement\n  |SVGViewElement|ServiceWorker|ServiceWorkerContainer|ServiceWorkerGlobalScope|ServiceWorkerRegistration|ServiceWorkerState\n  |ShadowRoot|SharedWorker|SharedWorkerGlobalScope|SourceBufferList|StereoPannerNode|Storage|StorageEvent|StyleSheet\n  |StyleSheetList|SubtleCrypto|SyncEvent|Text|TextMetrics|TimeEvent|TimeRanges|Touch|TouchEvent|TouchList|Transferable\n  |TreeWalker|UIEvent|USVString|VRDisplayCapabilities|ValidityState|WaveShaperNode|WebGL|WebGLActiveInfo|WebGLBuffer\n  |WebGLContextEvent|WebGLFramebuffer|WebGLProgram|WebGLRenderbuffer|WebGLRenderingContext|WebGLShader|WebGLShaderPrecisionFormat\n  |WebGLTexture|WebGLTimerQueryEXT|WebGLTransformFeedback|WebGLUniformLocation|WebGLVertexArrayObject|WebGLVertexArrayObjectOES\n  |WebSocket|WebSockets|WebVTT|WheelEvent|Window|WindowBase64|WindowEventHandlers|WindowTimers|Worker|WorkerGlobalScope\n  |WorkerLocation|WorkerNavigator|XMLHttpRequest|XMLHttpRequestEventTarget|XMLSerializer|XPathExpression|XPathResult\n  |XSLTProcessor))\\b(?!\\$)",
+					"captures": {
+						"1": {
+							"name": "support.variable.dom.cts"
+						},
+						"2": {
+							"name": "support.class.dom.cts"
+						}
+					}
+				},
+				{
+					"match": "(?x) (\\.) \\s* (?:\n  (ATTRIBUTE_NODE|CDATA_SECTION_NODE|COMMENT_NODE|DOCUMENT_FRAGMENT_NODE|DOCUMENT_NODE|DOCUMENT_TYPE_NODE\n  |DOMSTRING_SIZE_ERR|ELEMENT_NODE|ENTITY_NODE|ENTITY_REFERENCE_NODE|HIERARCHY_REQUEST_ERR|INDEX_SIZE_ERR\n  |INUSE_ATTRIBUTE_ERR|INVALID_CHARACTER_ERR|NO_DATA_ALLOWED_ERR|NO_MODIFICATION_ALLOWED_ERR|NOT_FOUND_ERR\n  |NOT_SUPPORTED_ERR|NOTATION_NODE|PROCESSING_INSTRUCTION_NODE|TEXT_NODE|WRONG_DOCUMENT_ERR)\n  |\n  (_content|[xyz]|abbr|above|accept|acceptCharset|accessKey|action|align|[av]Link(?:color)?|all|alt|anchors|appCodeName\n  |appCore|applets|appMinorVersion|appName|appVersion|archive|areas|arguments|attributes|availHeight|availLeft|availTop\n  |availWidth|axis|background|backgroundColor|backgroundImage|below|bgColor|body|border|borderBottomWidth|borderColor\n  |borderLeftWidth|borderRightWidth|borderStyle|borderTopWidth|borderWidth|bottom|bufferDepth|callee|caller|caption\n  |cellPadding|cells|cellSpacing|ch|characterSet|charset|checked|childNodes|chOff|cite|classes|className|clear\n  |clientInformation|clip|clipBoardData|closed|code|codeBase|codeType|color|colorDepth|cols|colSpan|compact|complete\n  |components|content|controllers|cookie|cookieEnabled|cords|cpuClass|crypto|current|data|dateTime|declare|defaultCharset\n  |defaultChecked|defaultSelected|defaultStatus|defaultValue|defaultView|defer|description|dialogArguments|dialogHeight\n  |dialogLeft|dialogTop|dialogWidth|dir|directories|disabled|display|docmain|doctype|documentElement|elements|embeds\n  |enabledPlugin|encoding|enctype|entities|event|expando|external|face|fgColor|filename|firstChild|fontFamily|fontSize\n  |fontWeight|form|formName|forms|frame|frameBorder|frameElement|frames|hasFocus|hash|headers|height|history|host\n  |hostname|href|hreflang|hspace|htmlFor|httpEquiv|id|ids|ignoreCase|images|implementation|index|innerHeight|innerWidth\n  |input|isMap|label|lang|language|lastChild|lastIndex|lastMatch|lastModified|lastParen|layer[sXY]|left|leftContext\n  |lineHeight|link|linkColor|links|listStyleType|localName|location|locationbar|longDesc|lowsrc|lowSrc|marginBottom\n  |marginHeight|marginLeft|marginRight|marginTop|marginWidth|maxLength|media|menubar|method|mimeTypes|multiline|multiple\n  |name|nameProp|namespaces|namespaceURI|next|nextSibling|nodeName|nodeType|nodeValue|noHref|noResize|noShade|notationName\n  |notations|noWrap|object|offscreenBuffering|onLine|onreadystatechange|opener|opsProfile|options|oscpu|outerHeight\n  |outerWidth|ownerDocument|paddingBottom|paddingLeft|paddingRight|paddingTop|page[XY]|page[XY]Offset|parent|parentLayer\n  |parentNode|parentWindow|pathname|personalbar|pixelDepth|pkcs11|platform|plugins|port|prefix|previous|previousDibling\n  |product|productSub|profile|profileend|prompt|prompter|protocol|publicId|readOnly|readyState|referrer|rel|responseText\n  |responseXML|rev|right|rightContext|rowIndex|rows|rowSpan|rules|scheme|scope|screen[XY]|screenLeft|screenTop|scripts\n  |scrollbars|scrolling|sectionRowIndex|security|securityPolicy|selected|selectedIndex|selection|self|shape|siblingAbove\n  |siblingBelow|size|source|specified|standby|start|status|statusbar|statusText|style|styleSheets|suffixes|summary\n  |systemId|systemLanguage|tagName|tags|target|tBodies|text|textAlign|textDecoration|textIndent|textTransform|tFoot|tHead\n  |title|toolbar|top|type|undefined|uniqueID|updateInterval|URL|URLUnencoded|useMap|userAgent|userLanguage|userProfile\n  |vAlign|value|valueType|vendor|vendorSub|version|visibility|vspace|whiteSpace|width|X[MS]LDocument|zIndex))\\b(?!\\$|\\s*(<\\s*[_$[:alpha:]\\{\\(\\[]([^<>=]|=[^<]|\\<\\s*[_$[:alpha:]\\{\\(\\[]([^=<>]|=[^<])+\\>)+>\\s*)?\\()",
+					"captures": {
+						"1": {
+							"name": "punctuation.accessor.cts"
+						},
+						"2": {
+							"name": "support.constant.dom.cts"
+						},
+						"3": {
+							"name": "support.variable.property.dom.cts"
+						}
+					}
+				},
+				{
+					"name": "support.class.node.cts",
+					"match": "(?x)(?<!\\.|\\$)\\b(Buffer|EventEmitter|Server|服务器类|Pipe|Socket|REPLServer|ReadStream|WriteStream|Stream\n  |Inflate|Deflate|InflateRaw|DeflateRaw|GZip|GUnzip|Unzip|Zip)\\b(?!\\$)"
+				},
+				{
+					"match": "(?x)(?<!\\.|\\$)\\b(process|进程)(?:(\\.)(?:\n  (arch|argv|config|connected|env|execArgv|execPath|exitCode|mainModule|pid|platform|release|stderr|stdin|stdout|title|version|versions)\n  |\n  (abort|chdir|cwd|disconnect|exit|[sg]ete?[gu]id|send|[sg]etgroups|initgroups|kill|memoryUsage|nextTick|umask|uptime|hrtime)\n))?\\b(?!\\$)",
+					"captures": {
+						"1": {
+							"name": "support.variable.object.process.cts"
+						},
+						"2": {
+							"name": "punctuation.accessor.cts"
+						},
+						"3": {
+							"name": "support.variable.property.process.cts"
+						},
+						"4": {
+							"name": "support.function.process.cts"
+						}
+					}
+				},
+				{
+					"match": "(?<!\\.|\\$)\\b(?:(exports|出口)|(module|模块)(?:(\\.)(exports|出口|ID|文件名|加载|父|子|id|filename|loaded|parent|children))?)\\b(?!\\$)",
+					"captures": {
+						"1": {
+							"name": "support.type.object.module.cts"
+						},
+						"2": {
+							"name": "support.type.object.module.cts"
+						},
+						"3": {
+							"name": "punctuation.accessor.cts"
+						},
+						"4": {
+							"name": "support.type.object.module.cts"
+						}
+					}
+				},
+				{
+					"name": "support.variable.object.node.cts",
+					"match": "(?<!\\.|\\$)\\b(global|全局|_全局_|根|__当前目录|_当前文件目录|GLOBAL|root|__dirname|__filename)\\b(?!\\$)"
+				},
+				{
+					"match": "(?x) (\\.) \\s*\n(?:\n (on(?:Rowsinserted|Rowsdelete|Rowenter|Rowexit|Resize|Resizestart|Resizeend|Reset|\n   Readystatechange|Mouseout|Mouseover|Mousedown|Mouseup|Mousemove|\n   Before(?:cut|deactivate|unload|update|paste|print|editfocus|activate)|\n   Blur|Scrolltop|Submit|Select|Selectstart|Selectionchange|Hover|Help|\n   Change|Contextmenu|Controlselect|Cut|Cellchange|Clock|Close|Deactivate|\n   Datasetchanged|Datasetcomplete|Dataavailable|Drop|Drag|Dragstart|Dragover|\n   Dragdrop|Dragenter|Dragend|Dragleave|Dblclick|Unload|Paste|Propertychange|Error|\n   Errorupdate|Keydown|Keyup|Keypress|Focus|Load|Activate|Afterupdate|Afterprint|Abort)\n ) |\n (shift|showModelessDialog|showModalDialog|showHelp|scroll|scrollX|scrollByPages|\n   scrollByLines|scrollY|scrollTo|stop|strike|sizeToContent|sidebar|signText|sort|\n   sup|sub|substr|substring|splice|split|send|set(?:Milliseconds|Seconds|Minutes|Hours|\n   Month|Year|FullYear|Date|UTC(?:Milliseconds|Seconds|Minutes|Hours|Month|FullYear|Date)|\n   Time|Hotkeys|Cursor|ZOptions|Active|Resizable|RequestHeader)|search|slice|\n   savePreferences|small|home|handleEvent|navigate|char|charCodeAt|charAt|concat|\n   contextual|confirm|compile|clear|captureEvents|call|createStyleSheet|createPopup|\n   createEventObject|to(?:GMTString|UTCString|String|Source|UpperCase|LowerCase|LocaleString)|\n   test|taint|taintEnabled|indexOf|italics|disableExternalCapture|dump|detachEvent|unshift|\n   untaint|unwatch|updateCommands|join|javaEnabled|pop|push|plugins.refresh|paddings|parse|\n   print|prompt|preference|enableExternalCapture|exec|execScript|valueOf|UTC|find|file|\n   fileModifiedDate|fileSize|fileCreatedDate|fileUpdatedDate|fixed|fontsize|fontcolor|\n   forward|fromCharCode|watch|link|load|lastIndexOf|anchor|attachEvent|atob|apply|alert|\n   abort|routeEvents|resize|resizeBy|resizeTo|recalc|returnValue|replace|reverse|reload|\n   releaseCapture|releaseEvents|go|get(?:Milliseconds|Seconds|Minutes|Hours|Month|Day|Year|FullYear|\n   Time|Date|TimezoneOffset|UTC(?:Milliseconds|Seconds|Minutes|Hours|Day|Month|FullYear|Date)|\n   Attention|Selection|ResponseHeader|AllResponseHeaders)|moveBy|moveBelow|moveTo|\n   moveToAbsolute|moveAbove|mergeAttributes|match|margins|btoa|big|bold|borderWidths|blink|back\n ) |\n (acceptNode|add|addEventListener|addTextTrack|adoptNode|after|animate|append|\n   appendChild|appendData|before|blur|canPlayType|captureStream|\n   caretPositionFromPoint|caretRangeFromPoint|checkValidity|clear|click|\n   cloneContents|cloneNode|cloneRange|close|closest|collapse|\n   compareBoundaryPoints|compareDocumentPosition|comparePoint|contains|\n   convertPointFromNode|convertQuadFromNode|convertRectFromNode|createAttribute|\n   createAttributeNS|createCaption|createCDATASection|createComment|\n   createContextualFragment|createDocument|createDocumentFragment|\n   createDocumentType|createElement|createElementNS|createEntityReference|\n   createEvent|createExpression|createHTMLDocument|createNodeIterator|\n   createNSResolver|createProcessingInstruction|createRange|createShadowRoot|\n   createTBody|createTextNode|createTFoot|createTHead|createTreeWalker|delete|\n   deleteCaption|deleteCell|deleteContents|deleteData|deleteRow|deleteTFoot|\n   deleteTHead|detach|disconnect|dispatchEvent|elementFromPoint|elementsFromPoint|\n   enableStyleSheetsForSet|entries|evaluate|execCommand|exitFullscreen|\n   exitPointerLock|expand|extractContents|fastSeek|firstChild|focus|forEach|get|\n   getAll|getAnimations|getAttribute|getAttributeNames|getAttributeNode|\n   getAttributeNodeNS|getAttributeNS|getBoundingClientRect|getBoxQuads|\n   getClientRects|getContext|getDestinationInsertionPoints|getElementById|\n   getElementsByClassName|getElementsByName|getElementsByTagName|\n   getElementsByTagNameNS|getItem|getNamedItem|getSelection|getStartDate|\n   getVideoPlaybackQuality|has|hasAttribute|hasAttributeNS|hasAttributes|\n   hasChildNodes|hasFeature|hasFocus|importNode|initEvent|insertAdjacentElement|\n   insertAdjacentHTML|insertAdjacentText|insertBefore|insertCell|insertData|\n   insertNode|insertRow|intersectsNode|isDefaultNamespace|isEqualNode|\n   isPointInRange|isSameNode|item|key|keys|lastChild|load|lookupNamespaceURI|\n   lookupPrefix|matches|move|moveAttribute|moveAttributeNode|moveChild|\n   moveNamedItem|namedItem|nextNode|nextSibling|normalize|observe|open|\n   parentNode|pause|play|postMessage|prepend|preventDefault|previousNode|\n   previousSibling|probablySupportsContext|queryCommandEnabled|\n   queryCommandIndeterm|queryCommandState|queryCommandSupported|queryCommandValue|\n   querySelector|querySelectorAll|registerContentHandler|registerElement|\n   registerProtocolHandler|releaseCapture|releaseEvents|remove|removeAttribute|\n   removeAttributeNode|removeAttributeNS|removeChild|removeEventListener|\n   removeItem|replace|replaceChild|replaceData|replaceWith|reportValidity|\n   requestFullscreen|requestPointerLock|reset|scroll|scrollBy|scrollIntoView|\n   scrollTo|seekToNextFrame|select|selectNode|selectNodeContents|set|setAttribute|\n   setAttributeNode|setAttributeNodeNS|setAttributeNS|setCapture|\n   setCustomValidity|setEnd|setEndAfter|setEndBefore|setItem|setNamedItem|\n   setRangeText|setSelectionRange|setSinkId|setStart|setStartAfter|setStartBefore|\n   slice|splitText|stepDown|stepUp|stopImmediatePropagation|stopPropagation|\n   submit|substringData|supports|surroundContents|takeRecords|terminate|toBlob|\n   toDataURL|toggle|toString|values|write|writeln\n )\n)(?=\\s*\\()",
+					"captures": {
+						"1": {
+							"name": "punctuation.accessor.cts"
+						},
+						"2": {
+							"name": "support.function.event-handler.cts"
+						},
+						"3": {
+							"name": "support.function.cts"
+						},
+						"4": {
+							"name": "support.function.dom.cts"
+						}
+					}
+				}
+			]
+		},
+		"identifiers": {
+			"patterns": [
+				{
+					"include": "#object-identifiers"
+				},
+				{
+					"match": "(?x)(?:(\\.)\\s*)?([_$[:alpha:]][_$[:alnum:]]*)(?=\\s*=\\s*(\n  ((async\\s+|异步\\s+)?(\n    (function\\s*[(<*]|函数\\s*[(<*]) |\n    (function\\s+|函数\\s+) |\n    ([_$[:alpha:]][_$[:alnum:]]*\\s*=>)\n  )) |\n  ((async\\s*|异步\\s*)?(\n    # sure shot arrow functions even if => is on new line\n(\n  [(]\\s*\n  (\n    ([)]\\s*:) |                                                                 # ():\n    ((\\.\\.\\.\\s*)?[_$[:alpha:]][_$[:alnum:]]*\\s*:)                                            # [(]param: | [(]...param:\n  )\n) |\n(\n  [<]\\s*[_$[:alpha:]][_$[:alnum:]]*\\s+extends\\s*[^=>]                                        # < typeparam extends\n|\n  [<]\\s*[_$[:alpha:]][_$[:alnum:]]*\\s+扩展\\s*[^=>]                                        # < typeparam extends\n) |\n# arrow function possible to detect only with => on same line\n(\n  (<\\s*[_$[:alpha:]\\{\\(\\[]([^<>=]|=[^<]|\\<\\s*[_$[:alpha:]\\{\\(\\[]([^=<>]|=[^<])+\\>)+>\\s*)?                                                           # typeparameters\n  \\(\\s*([_$[:alpha:]\\{\\[]([^()]|\\((\\s*[^()]*)?\\))*)?\\)                          # parameteres\n  (\\s*:\\s*([^<>\\(\\)]|\\<[^<>]+\\>|\\([^\\(\\)]+\\))+)?                                # return type\n  \\s*=>                                                                         # arrow operator\n)\n  ))\n))",
+					"captures": {
+						"1": {
+							"name": "punctuation.accessor.cts"
+						},
+						"2": {
+							"name": "entity.name.function.cts"
+						}
+					}
+				},
+				{
+					"match": "(\\.)\\s*([[:upper:]][_$[:digit:][:upper:]]*)(?![_$[:alnum:]])",
+					"captures": {
+						"1": {
+							"name": "punctuation.accessor.cts"
+						},
+						"2": {
+							"name": "variable.other.constant.property.cts"
+						}
+					}
+				},
+				{
+					"match": "(\\.)\\s*([_$[:alpha:]][_$[:alnum:]]*)",
+					"captures": {
+						"1": {
+							"name": "punctuation.accessor.cts"
+						},
+						"2": {
+							"name": "variable.other.property.cts"
+						}
+					}
+				},
+				{
+					"name": "variable.other.constant.cts",
+					"match": "([[:upper:]][_$[:digit:][:upper:]]*)(?![_$[:alnum:]])"
+				},
+				{
+					"name": "variable.other.readwrite.cts",
+					"match": "[_$[:alpha:]][_$[:alnum:]]*"
+				}
+			]
+		},
+		"object-identifiers": {
+			"patterns": [
+				{
+					"name": "support.class.cts",
+					"match": "([_$[:alpha:]][_$[:alnum:]]*)(?=\\s*\\.\\s*(prototype|原型)\\b(?!\\$))"
+				},
+				{
+					"match": "(?x)(\\.)\\s*(?:\n  ([[:upper:]][_$[:digit:][:upper:]]*) |\n  ([_$[:alpha:]][_$[:alnum:]]*)\n)(?=\\s*\\.\\s*[_$[:alpha:]][_$[:alnum:]]*)",
+					"captures": {
+						"1": {
+							"name": "punctuation.accessor.cts"
+						},
+						"2": {
+							"name": "variable.other.constant.object.property.cts"
+						},
+						"3": {
+							"name": "variable.other.object.property.cts"
+						}
+					}
+				},
+				{
+					"match": "(?x)(?:\n  ([[:upper:]][_$[:digit:][:upper:]]*) |\n  ([_$[:alpha:]][_$[:alnum:]]*)\n)(?=\\s*\\.\\s*[_$[:alpha:]][_$[:alnum:]]*)",
+					"captures": {
+						"1": {
+							"name": "variable.other.constant.object.cts"
+						},
+						"2": {
+							"name": "variable.other.object.cts"
+						}
+					}
+				}
+			]
+		},
+		"type-annotation": {
+			"patterns": [
+				{
+					"name": "meta.type.annotation.cts",
+					"begin": "(:)(?=\\s*\\S)",
+					"beginCaptures": {
+						"1": {
+							"name": "keyword.operator.type.annotation.cts"
+						}
+					},
+					"end": "(?<![:|&])((?=$|^|[,);\\}\\]]|//)|(?==[^>])|((?<=[\\}>\\]\\)]|[_$[:alpha:]])\\s*(?=\\{)))",
+					"patterns": [
+						{
+							"include": "#type"
+						}
+					]
+				},
+				{
+					"name": "meta.type.annotation.cts",
+					"begin": "(:)",
+					"beginCaptures": {
+						"1": {
+							"name": "keyword.operator.type.annotation.cts"
+						}
+					},
+					"end": "(?<![:|&])((?=[,);\\}\\]]|//)|(?==[^>])|(?=^\\s*$)|((?<=\\S)(?=\\s*$))|((?<=[\\}>\\]\\)]|[_$[:alpha:]])\\s*(?=\\{)))",
+					"patterns": [
+						{
+							"include": "#type"
+						}
+					]
+				}
+			]
+		},
+		"return-type": {
+			"patterns": [
+				{
+					"name": "meta.return.type.cts",
+					"begin": "(?<=\\))\\s*(:)(?=\\s*\\S)",
+					"beginCaptures": {
+						"1": {
+							"name": "keyword.operator.type.annotation.cts"
+						}
+					},
+					"end": "(?<![:|&])(?=$|^|[{};,]|//)",
+					"patterns": [
+						{
+							"include": "#return-type-core"
+						}
+					]
+				},
+				{
+					"name": "meta.return.type.cts",
+					"begin": "(?<=\\))\\s*(:)",
+					"beginCaptures": {
+						"1": {
+							"name": "keyword.operator.type.annotation.cts"
+						}
+					},
+					"end": "(?<![:|&])((?=[{};,]|//|^\\s*$)|((?<=\\S)(?=\\s*$)))",
+					"patterns": [
+						{
+							"include": "#return-type-core"
+						}
+					]
+				}
+			]
+		},
+		"return-type-core": {
+			"patterns": [
+				{
+					"include": "#comment"
+				},
+				{
+					"begin": "(?<=[:|&])(?=\\s*\\{)",
+					"end": "(?<=\\})",
+					"patterns": [
+						{
+							"include": "#type-object"
+						}
+					]
+				},
+				{
+					"include": "#type-predicate-operator"
+				},
+				{
+					"include": "#type"
+				}
+			]
+		},
+		"arrow-return-type": {
+			"name": "meta.return.type.arrow.cts",
+			"begin": "(?<=\\))\\s*(:)",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.operator.type.annotation.cts"
+				}
+			},
+			"end": "(?==>|\\{|(^\\s*(导出|函数|类|类别|接口|变量|值量|常量|导入|枚举|名域|模块|类型|抽象|声明|export|function|class|interface|let|var|const|import|enum|namespace|module|type|abstract|declare)\\s+))",
+			"patterns": [
+				{
+					"begin": "(?<=[:])(?=\\s*\\{)",
+					"end": "(?<=\\})",
+					"patterns": [
+						{
+							"include": "#type-object"
+						}
+					]
+				},
+				{
+					"include": "#type-predicate-operator"
+				},
+				{
+					"include": "#type"
+				}
+			]
+		},
+		"type-parameters": {
+			"name": "meta.type.parameters.cts",
+			"begin": "(<)",
+			"beginCaptures": {
+				"1": {
+					"name": "punctuation.definition.typeparameters.begin.cts"
+				}
+			},
+			"end": "(>)",
+			"endCaptures": {
+				"1": {
+					"name": "punctuation.definition.typeparameters.end.cts"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#comment"
+				},
+				{
+					"name": "storage.modifier.cts",
+					"match": "(?<!\\.|\\$)\\b(extends|扩展)\\b(?!\\$)"
+				},
+				{
+					"name": "keyword.operator.assignment.cts",
+					"match": "\\=(?!>)"
+				},
+				{
+					"include": "#type"
+				},
+				{
+					"include": "#punctuation-comma"
+				}
+			]
+		},
+		"type": {
+			"patterns": [
+				{
+					"include": "#comment"
+				},
+				{
+					"include": "#string"
+				},
+				{
+					"include": "#numeric-literal"
+				},
+				{
+					"include": "#type-primitive"
+				},
+				{
+					"include": "#type-builtin-literals"
+				},
+				{
+					"include": "#type-parameters"
+				},
+				{
+					"include": "#type-tuple"
+				},
+				{
+					"include": "#type-object"
+				},
+				{
+					"include": "#type-operators"
+				},
+				{
+					"include": "#type-fn-type-parameters"
+				},
+				{
+					"include": "#type-paren-or-function-parameters"
+				},
+				{
+					"include": "#type-function-return-type"
+				},
+				{
+					"include": "#type-name"
+				}
+			]
+		},
+		"type-primitive": {
+			"name": "support.type.primitive.cts",
+			"match": "(?<!\\.|\\$)\\b(文字|数字|真假|符号|任意|无值|不及|string|number|boolean|symbol|any|void|never)\\b(?!\\$|\\.)"
+		},
+		"type-builtin-literals": {
+			"name": "support.type.builtin.cts",
+			"match": "(?<!\\.|\\$)\\b(本体|为真|真的|真|为假|假的|假|未定|空值|实例|this|true|false|undefined|null|object)\\b(?!\\$|\\.)"
+		},
+		"type-tuple": {
+			"name": "meta.type.tuple.cts",
+			"begin": "\\[",
+			"beginCaptures": {
+				"0": {
+					"name": "meta.brace.square.cts"
+				}
+			},
+			"end": "\\]",
+			"endCaptures": {
+				"0": {
+					"name": "meta.brace.square.cts"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#type"
+				},
+				{
+					"include": "#punctuation-comma"
+				}
+			]
+		},
+		"type-object": {
+			"name": "meta.object.type.cts",
+			"begin": "\\{",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.block.cts"
+				}
+			},
+			"end": "\\}",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.block.cts"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#comment"
+				},
+				{
+					"include": "#method-declaration"
+				},
+				{
+					"include": "#indexer-declaration"
+				},
+				{
+					"include": "#indexer-mapped-type-declaration"
+				},
+				{
+					"include": "#field-declaration"
+				},
+				{
+					"include": "#type-annotation"
+				},
+				{
+					"begin": "\\.\\.\\.",
+					"beginCaptures": {
+						"0": {
+							"name": "keyword.operator.spread.cts"
+						}
+					},
+					"end": "(?=\\}|;|,|$)|(?<=\\})",
+					"patterns": [
+						{
+							"include": "#type"
+						}
+					]
+				},
+				{
+					"include": "#punctuation-comma"
+				},
+				{
+					"include": "#punctuation-semicolon"
+				},
+				{
+					"include": "#type"
+				}
+			]
+		},
+		"type-paren-or-function-parameters": {
+			"name": "meta.type.paren.cover.cts",
+			"begin": "\\(",
+			"beginCaptures": {
+				"0": {
+					"name": "meta.brace.round.cts"
+				}
+			},
+			"end": "\\)",
+			"endCaptures": {
+				"0": {
+					"name": "meta.brace.round.cts"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#type"
+				},
+				{
+					"include": "#function-parameters"
+				}
+			]
+		},
+		"type-fn-type-parameters": {
+			"patterns": [
+				{
+					"name": "meta.type.constructor.cts",
+					"match": "(?<!\\.|\\$)\\b(new|新建)\\b(?=\\s*\\<)",
+					"captures": {
+						"1": {
+							"name": "keyword.control.new.cts"
+						}
+					}
+				},
+				{
+					"name": "meta.type.constructor.cts",
+					"begin": "(?<!\\.|\\$)\\b(new|新建)\\b\\s*(?=\\()",
+					"beginCaptures": {
+						"1": {
+							"name": "keyword.control.new.cts"
+						}
+					},
+					"end": "(?<=\\))",
+					"patterns": [
+						{
+							"include": "#function-parameters"
+						}
+					]
+				},
+				{
+					"name": "meta.type.function.cts",
+					"begin": "(?x)(\n  (?=\n    [(]\\s*(\n      ([)]) |\n      (\\.\\.\\.) |\n      ([_$[:alnum:]]+\\s*(\n        ([:,?=])|\n        ([)]\\s*=>)\n      ))\n    )\n  )\n)",
+					"end": "(?<=\\))",
+					"patterns": [
+						{
+							"include": "#function-parameters"
+						}
+					]
+				}
+			]
+		},
+		"type-function-return-type": {
+			"patterns": [
+				{
+					"name": "meta.type.function.return.cts",
+					"begin": "(=>)(?=\\s*\\S)",
+					"beginCaptures": {
+						"1": {
+							"name": "storage.type.function.arrow.cts"
+						}
+					},
+					"end": "(?<!=>)(?<![|&])(?=[,\\]\\)\\{\\}=;>]|//|$)",
+					"patterns": [
+						{
+							"include": "#type-function-return-type-core"
+						}
+					]
+				},
+				{
+					"name": "meta.type.function.return.cts",
+					"begin": "=>",
+					"beginCaptures": {
+						"0": {
+							"name": "storage.type.function.arrow.cts"
+						}
+					},
+					"end": "(?<!=>)(?<![|&])((?=[,\\]\\)\\{\\}=;>]|//|^\\s*$)|((?<=\\S)(?=\\s*$)))",
+					"patterns": [
+						{
+							"include": "#type-function-return-type-core"
+						}
+					]
+				}
+			]
+		},
+		"type-function-return-type-core": {
+			"patterns": [
+				{
+					"include": "#comment"
+				},
+				{
+					"begin": "(?<==>)(?=\\s*\\{)",
+					"end": "(?<=\\})",
+					"patterns": [
+						{
+							"include": "#type-object"
+						}
+					]
+				},
+				{
+					"include": "#type-predicate-operator"
+				},
+				{
+					"include": "#type"
+				}
+			]
+		},
+		"type-operators": {
+			"patterns": [
+				{
+					"include": "#typeof-operator"
+				},
+				{
+					"begin": "([&|])(?=\\s*\\{)",
+					"beginCaptures": {
+						"0": {
+							"name": "keyword.operator.type.cts"
+						}
+					},
+					"end": "(?<=\\})",
+					"patterns": [
+						{
+							"include": "#type-object"
+						}
+					]
+				},
+				{
+					"begin": "[&|]",
+					"beginCaptures": {
+						"0": {
+							"name": "keyword.operator.type.cts"
+						}
+					},
+					"end": "(?=\\S)"
+				},
+				{
+					"name": "keyword.operator.expression.keyof.cts",
+					"match": "(?<!\\.|\\$)\\bkeyof\\b(?!\\$|\\.)|(?<!\\.|\\$)\\b键集\\b(?!\\$|\\.)"
+				}
+			]
+		},
+		"type-predicate-operator": {
+			"name": "keyword.operator.expression.is.cts",
+			"match": "(?<!\\.|\\$)\\bis\\b(?!\\$|\\.)|(?<!\\.|\\$)\\b作为\\b(?!\\$|\\.)"
+		},
+		"type-name": {
+			"patterns": [
+				{
+					"match": "([_$[:alpha:]][_$[:alnum:]]*)\\s*(\\.)",
+					"captures": {
+						"1": {
+							"name": "entity.name.type.module.cts"
+						},
+						"2": {
+							"name": "punctuation.accessor.cts"
+						}
+					}
+				},
+				{
+					"name": "entity.name.type.cts",
+					"match": "[_$[:alpha:]][_$[:alnum:]]*"
+				}
+			]
+		},
+		"punctuation-comma": {
+			"name": "punctuation.separator.comma.cts",
+			"match": ","
+		},
+		"punctuation-semicolon": {
+			"name": "punctuation.terminator.statement.cts",
+			"match": ";"
+		},
+		"punctuation-accessor": {
+			"name": "punctuation.accessor.cts",
+			"match": "\\."
+		},
+		"string": {
+			"patterns": [
+				{
+					"include": "#qstring-single"
+				},
+				{
+					"include": "#qstring-double"
+				}
+			]
+		},
+		"qstring-double": {
+			"name": "string.quoted.double.cts",
+			"begin": "\"",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.begin.cts"
+				}
+			},
+			"end": "(\")|((?:[^\\\\\\n])$)",
+			"endCaptures": {
+				"1": {
+					"name": "punctuation.definition.string.end.cts"
+				},
+				"2": {
+					"name": "invalid.illegal.newline.cts"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#string-character-escape"
+				}
+			]
+		},
+		"qstring-single": {
+			"name": "string.quoted.single.cts",
+			"begin": "'",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.begin.cts"
+				}
+			},
+			"end": "(\\')|((?:[^\\\\\\n])$)",
+			"endCaptures": {
+				"1": {
+					"name": "punctuation.definition.string.end.cts"
+				},
+				"2": {
+					"name": "invalid.illegal.newline.cts"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#string-character-escape"
+				}
+			]
+		},
+		"string-character-escape": {
+			"name": "constant.character.escape.cts",
+			"match": "\\\\(x[0-9A-Fa-f]{2}|[0-2][0-7]{0,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.|$)"
+		},
+		"template": {
+			"name": "string.template.cts",
+			"begin": "([_$[:alpha:]][_$[:alnum:]]*)?(`)",
+			"beginCaptures": {
+				"1": {
+					"name": "entity.name.function.tagged-template.cts"
+				},
+				"2": {
+					"name": "punctuation.definition.string.template.begin.cts"
+				}
+			},
+			"end": "`",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.template.end.cts"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#template-substitution-element"
+				},
+				{
+					"include": "#string-character-escape"
+				}
+			]
+		},
+		"template-substitution-element": {
+			"name": "meta.template.expression.cts",
+			"begin": "\\$\\{",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.template-expression.begin.cts"
+				}
+			},
+			"end": "\\}",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.template-expression.end.cts"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#expression"
+				}
+			],
+			"contentName": "meta.embedded.line.cts"
+		},
+		"regex": {
+			"patterns": [
+				{
+					"name": "string.regexp.cts",
+					"begin": "(?<=[=(:,\\[?+!]|返回|如为|return|case|=>|&&|\\|\\||\\*\\/)\\s*(\\/)(?![\\/*])(?=(?:[^\\/\\\\\\[]|\\\\.|\\[([^\\]\\\\]|\\\\.)+\\])+\\/(?![\\/*])[gimuy]*(?!\\s*[a-zA-Z0-9_$]))",
+					"beginCaptures": {
+						"1": {
+							"name": "punctuation.definition.string.begin.cts"
+						}
+					},
+					"end": "(/)([gimuy]*)",
+					"endCaptures": {
+						"1": {
+							"name": "punctuation.definition.string.end.cts"
+						},
+						"2": {
+							"name": "keyword.other.cts"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#regexp"
+						}
+					]
+				},
+				{
+					"name": "string.regexp.cts",
+					"begin": "(?<![_$[:alnum:])])\\/(?![\\/*])(?=(?:[^\\/\\\\\\[]|\\\\.|\\[([^\\]\\\\]|\\\\.)+\\])+\\/(?![\\/*])[gimuy]*(?!\\s*[a-zA-Z0-9_$]))",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.definition.string.begin.cts"
+						}
+					},
+					"end": "(/)([gimuy]*)",
+					"endCaptures": {
+						"1": {
+							"name": "punctuation.definition.string.end.cts"
+						},
+						"2": {
+							"name": "keyword.other.cts"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#regexp"
+						}
+					]
+				}
+			]
+		},
+		"regexp": {
+			"patterns": [
+				{
+					"name": "keyword.control.anchor.regexp",
+					"match": "\\\\[bB]|\\^|\\$"
+				},
+				{
+					"name": "keyword.other.back-reference.regexp",
+					"match": "\\\\[1-9]\\d*"
+				},
+				{
+					"name": "keyword.operator.quantifier.regexp",
+					"match": "[?+*]|\\{(\\d+,\\d+|\\d+,|,\\d+|\\d+)\\}\\??"
+				},
+				{
+					"name": "keyword.operator.or.regexp",
+					"match": "\\|"
+				},
+				{
+					"name": "meta.group.assertion.regexp",
+					"begin": "(\\()((\\?=)|(\\?!))",
+					"beginCaptures": {
+						"1": {
+							"name": "punctuation.definition.group.regexp"
+						},
+						"2": {
+							"name": "punctuation.definition.group.assertion.regexp"
+						},
+						"3": {
+							"name": "meta.assertion.look-ahead.regexp"
+						},
+						"4": {
+							"name": "meta.assertion.negative-look-ahead.regexp"
+						}
+					},
+					"end": "(\\))",
+					"endCaptures": {
+						"1": {
+							"name": "punctuation.definition.group.regexp"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#regexp"
+						}
+					]
+				},
+				{
+					"name": "meta.group.regexp",
+					"begin": "\\((\\?:)?",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.definition.group.regexp"
+						},
+						"1": {
+							"name": "punctuation.definition.group.no-capture.regexp"
+						}
+					},
+					"end": "\\)",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.definition.group.regexp"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#regexp"
+						}
+					]
+				},
+				{
+					"name": "constant.other.character-class.set.regexp",
+					"begin": "(\\[)(\\^)?",
+					"beginCaptures": {
+						"1": {
+							"name": "punctuation.definition.character-class.regexp"
+						},
+						"2": {
+							"name": "keyword.operator.negation.regexp"
+						}
+					},
+					"end": "(\\])",
+					"endCaptures": {
+						"1": {
+							"name": "punctuation.definition.character-class.regexp"
+						}
+					},
+					"patterns": [
+						{
+							"name": "constant.other.character-class.range.regexp",
+							"match": "(?:.|(\\\\(?:[0-7]{3}|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}))|(\\\\c[A-Z])|(\\\\.))\\-(?:[^\\]\\\\]|(\\\\(?:[0-7]{3}|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}))|(\\\\c[A-Z])|(\\\\.))",
+							"captures": {
+								"1": {
+									"name": "constant.character.numeric.regexp"
+								},
+								"2": {
+									"name": "constant.character.control.regexp"
+								},
+								"3": {
+									"name": "constant.character.escape.backslash.regexp"
+								},
+								"4": {
+									"name": "constant.character.numeric.regexp"
+								},
+								"5": {
+									"name": "constant.character.control.regexp"
+								},
+								"6": {
+									"name": "constant.character.escape.backslash.regexp"
+								}
+							}
+						},
+						{
+							"include": "#regex-character-class"
+						}
+					]
+				},
+				{
+					"include": "#regex-character-class"
+				}
+			]
+		},
+		"regex-character-class": {
+			"patterns": [
+				{
+					"name": "constant.other.character-class.regexp",
+					"match": "\\\\[wWsSdDtrnvf]|\\."
+				},
+				{
+					"name": "constant.character.numeric.regexp",
+					"match": "\\\\([0-7]{3}|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4})"
+				},
+				{
+					"name": "constant.character.control.regexp",
+					"match": "\\\\c[A-Z]"
+				},
+				{
+					"name": "constant.character.escape.backslash.regexp",
+					"match": "\\\\."
+				}
+			]
+		},
+		"comment": {
+			"patterns": [
+				{
+					"name": "comment.block.documentation.cts",
+					"begin": "/\\*\\*(?!/)",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.definition.comment.cts"
+						}
+					},
+					"end": "\\*/",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.definition.comment.cts"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#docblock"
+						}
+					]
+				},
+				{
+					"name": "comment.block.cts",
+					"begin": "(/\\*)(?:\\s*((@)internal)(?=\\s|(\\*/)))?|(/\\*)(?:\\s*((@)内部)(?=\\s|(\\*/)))?",
+					"beginCaptures": {
+						"1": {
+							"name": "punctuation.definition.comment.cts"
+						},
+						"2": {
+							"name": "storage.type.internaldeclaration.cts"
+						},
+						"3": {
+							"name": "punctuation.decorator.internaldeclaration.cts"
+						}
+					},
+					"end": "\\*/",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.definition.comment.cts"
+						}
+					}
+				},
+				{
+					"begin": "(^[ \\t]+)?((//)(?:\\s*((@)internal)(?=\\s|$))?)|(^[ \\t]+)?((//)(?:\\s*((@)内部)(?=\\s|$))?)",
+					"beginCaptures": {
+						"1": {
+							"name": "punctuation.whitespace.comment.leading.cts"
+						},
+						"2": {
+							"name": "comment.line.double-slash.cts"
+						},
+						"3": {
+							"name": "punctuation.definition.comment.cts"
+						},
+						"4": {
+							"name": "storage.type.internaldeclaration.cts"
+						},
+						"5": {
+							"name": "punctuation.decorator.internaldeclaration.cts"
+						}
+					},
+					"end": "(?=^)",
+					"contentName": "comment.line.double-slash.cts"
+				}
+			]
+		},
+		"directives": {
+			"name": "comment.line.triple-slash.directive.cts",
+			"begin": "^(///)\\s*(?=<(reference|引用|AMD附件|AMD模块|amd-dependency|amd-module)(\\s+(path|路径|类型集|不使用默认支持库|名称|types|no-default-lib|name)\\s*=\\s*((\\'([^\\'\\\\]|\\\\\\'|\\\\)*\\')|(\\\"([^\\\"\\\\]|\\\\\\\"|\\\\)*\\\")))+\\s*/>\\s*$)",
+			"beginCaptures": {
+				"1": {
+					"name": "punctuation.definition.comment.cts"
+				}
+			},
+			"end": "(?=^)",
+			"patterns": [
+				{
+					"name": "meta.tag.cts",
+					"begin": "(<)(reference|引用|AMD附件|AMD模块|amd-dependency|amd-module)",
+					"beginCaptures": {
+						"1": {
+							"name": "punctuation.definition.tag.directive.cts"
+						},
+						"2": {
+							"name": "entity.name.tag.directive.cts"
+						}
+					},
+					"end": "/>",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.definition.tag.directive.cts"
+						}
+					},
+					"patterns": [
+						{
+							"name": "entity.other.attribute-name.directive.cts",
+							"match": "path|路径|类型集|不使用默认支持库|名称|types|no-default-lib|name"
+						},
+						{
+							"name": "keyword.operator.assignment.cts",
+							"match": "="
+						},
+						{
+							"include": "#string"
+						}
+					]
+				}
+			]
+		},
+		"docblock": {
+			"patterns": [
+				{
+					"match": "(?x)\n((@)(?:access|人口|api|API))\n\\s+\n(私有|保护|公开|private|protected|public)\n\\b",
+					"captures": {
+						"1": {
+							"name": "storage.type.class.jsdoc"
+						},
+						"2": {
+							"name": "punctuation.definition.block.tag.jsdoc"
+						},
+						"3": {
+							"name": "constant.language.access-type.jsdoc"
+						}
+					}
+				},
+				{
+					"match": "(?x)\n((@)author|(@)作者)\n\\s+\n(\n  [^@\\s<>*/]\n  (?:[^@<>*/]|\\*[^/])*\n)\n(?:\n  \\s*\n  (<)\n  ([^>\\s]+)\n  (>)\n)?",
+					"captures": {
+						"1": {
+							"name": "storage.type.class.jsdoc"
+						},
+						"2": {
+							"name": "punctuation.definition.block.tag.jsdoc"
+						},
+						"3": {
+							"name": "entity.name.type.instance.jsdoc"
+						},
+						"4": {
+							"name": "punctuation.definition.bracket.angle.begin.jsdoc"
+						},
+						"5": {
+							"name": "constant.other.email.link.underline.jsdoc"
+						},
+						"6": {
+							"name": "punctuation.definition.bracket.angle.end.jsdoc"
+						}
+					}
+				},
+				{
+					"match": "(?x)\n((@)borrows|(@)引用) \\s+\n((?:[^@\\s*/]|\\*[^/])+)    # <that namepath>\n\\s+ (as|转为) \\s+              # as\n((?:[^@\\s*/]|\\*[^/])+)    # <this namepath>",
+					"captures": {
+						"1": {
+							"name": "storage.type.class.jsdoc"
+						},
+						"2": {
+							"name": "punctuation.definition.block.tag.jsdoc"
+						},
+						"3": {
+							"name": "entity.name.type.instance.jsdoc"
+						},
+						"4": {
+							"name": "keyword.operator.control.jsdoc"
+						},
+						"5": {
+							"name": "entity.name.type.instance.jsdoc"
+						}
+					}
+				},
+				{
+					"name": "meta.example.jsdoc",
+					"begin": "((@)example|(@)例如)\\s+",
+					"end": "(?=@|\\*/)",
+					"beginCaptures": {
+						"1": {
+							"name": "storage.type.class.jsdoc"
+						},
+						"2": {
+							"name": "punctuation.definition.block.tag.jsdoc"
+						}
+					},
+					"patterns": [
+						{
+							"match": "^\\s\\*\\s+"
+						},
+						{
+							"contentName": "constant.other.description.jsdoc",
+							"begin": "\\G(<)caption(>)|\\G(<)标题(>)",
+							"beginCaptures": {
+								"0": {
+									"name": "entity.name.tag.inline.jsdoc"
+								},
+								"1": {
+									"name": "punctuation.definition.bracket.angle.begin.jsdoc"
+								},
+								"2": {
+									"name": "punctuation.definition.bracket.angle.end.jsdoc"
+								}
+							},
+							"end": "(</)caption(>)(</)标题(>)|(?=\\*/)",
+							"endCaptures": {
+								"0": {
+									"name": "entity.name.tag.inline.jsdoc"
+								},
+								"1": {
+									"name": "punctuation.definition.bracket.angle.begin.jsdoc"
+								},
+								"2": {
+									"name": "punctuation.definition.bracket.angle.end.jsdoc"
+								}
+							}
+						},
+						{
+							"match": "[^\\s@*](?:[^*]|\\*[^/])*",
+							"captures": {
+								"0": {
+									"name": "source.embedded.cts"
+								}
+							}
+						}
+					]
+				},
+				{
+					"match": "(?x) ((@)kind|(@)标识) \\s+ (类|常数|事件|外部|文件|函数|成员|最大|模块|名域|类型定义|class|constant|event|external|file|function|member|mixin|module|namespace|typedef) \\b",
+					"captures": {
+						"1": {
+							"name": "storage.type.class.jsdoc"
+						},
+						"2": {
+							"name": "punctuation.definition.block.tag.jsdoc"
+						},
+						"3": {
+							"name": "constant.language.symbol-type.jsdoc"
+						}
+					}
+				},
+				{
+					"match": "(?x)\n((@)see|(@)详见)\n\\s+\n(?:\n  # URL\n  (\n    (?=https?://)\n    (?:[^\\s*]|\\*[^/])+\n  )\n  |\n  # JSDoc namepath\n  (\n    (?!\n      # Avoid matching bare URIs (also acceptable as links)\n      https?://\n      |\n      # Avoid matching {@inline tags}; we match those below\n      (?:\\[[^\\[\\]]*\\])? # Possible description [preceding]{@tag}\n      {@(?:link|链接|代码链接|片段链接|教程|linkcode|linkplain|tutorial)\\b\n    )\n    # Matched namepath\n    (?:[^@\\s*/]|\\*[^/])+\n  )\n)",
+					"captures": {
+						"1": {
+							"name": "storage.type.class.jsdoc"
+						},
+						"2": {
+							"name": "punctuation.definition.block.tag.jsdoc"
+						},
+						"3": {
+							"name": "variable.other.link.underline.jsdoc"
+						},
+						"4": {
+							"name": "entity.name.type.instance.jsdoc"
+						}
+					}
+				},
+				{
+					"match": "(?x)\n((@)template|(@)模板)\n\\s+\n# One or more valid identifiers\n(\n  [A-Za-z_$]         # First character: non-numeric word character\n  [\\w$.\\[\\]]*        # Rest of identifier\n  (?:                # Possible list of additional identifiers\n    \\s* , \\s*\n    [A-Za-z_$]\n    [\\w$.\\[\\]]*\n  )*\n)",
+					"captures": {
+						"1": {
+							"name": "storage.type.class.jsdoc"
+						},
+						"2": {
+							"name": "punctuation.definition.block.tag.jsdoc"
+						},
+						"3": {
+							"name": "variable.other.jsdoc"
+						}
+					}
+				},
+				{
+					"match": "(?x)\n(\n  (@)\n  (?:arg|参数|增强参数|常量|常数|成员|名域|变量|argument|const|constant|member|namespace|param|var)\n)\n\\s+\n(\n  [A-Za-z_$]\n  [\\w$.\\[\\]]*\n)",
+					"captures": {
+						"1": {
+							"name": "storage.type.class.jsdoc"
+						},
+						"2": {
+							"name": "punctuation.definition.block.tag.jsdoc"
+						},
+						"3": {
+							"name": "variable.other.jsdoc"
+						}
+					}
+				},
+				{
+					"begin": "((@)typedef(@)类型定义)\\s+(?={)",
+					"beginCaptures": {
+						"1": {
+							"name": "storage.type.class.jsdoc"
+						},
+						"2": {
+							"name": "punctuation.definition.block.tag.jsdoc"
+						}
+					},
+					"end": "(?=\\s|\\*/|[^{}\\[\\]A-Za-z_$])",
+					"patterns": [
+						{
+							"include": "#jsdoctype"
+						},
+						{
+							"name": "entity.name.type.instance.jsdoc",
+							"match": "(?:[^@\\s*/]|\\*[^/])+"
+						}
+					]
+				},
+				{
+					"begin": "((@)(?:arg|参数|增强参数|常量|常数|成员|名域|属性|原型|变量|argument|const|constant|member|namespace|param|prop|property|var))\\s+(?={)",
+					"beginCaptures": {
+						"1": {
+							"name": "storage.type.class.jsdoc"
+						},
+						"2": {
+							"name": "punctuation.definition.block.tag.jsdoc"
+						}
+					},
+					"end": "(?=\\s|\\*/|[^{}\\[\\]A-Za-z_$])",
+					"patterns": [
+						{
+							"include": "#jsdoctype"
+						},
+						{
+							"name": "variable.other.jsdoc",
+							"match": "([A-Za-z_$][\\w$.\\[\\]]*)"
+						},
+						{
+							"name": "variable.other.jsdoc",
+							"match": "(?x)\n(\\[)\\s*\n[\\w$]+\n(?:\n  (?:\\[\\])?                                        # Foo[ ].bar properties within an array\n  \\.                                                # Foo.Bar namespaced parameter\n  [\\w$]+\n)*\n(?:\n  \\s*\n  (=)                                                # [foo=bar] Default parameter value\n  \\s*\n  (\n    # The inner regexes are to stop the match early at */ and to not stop at escaped quotes\n    (?>\n      \"(?:(?:\\*(?!/))|(?:\\\\(?!\"))|[^*\\\\])*?\" |                      # [foo=\"bar\"] Double-quoted\n      '(?:(?:\\*(?!/))|(?:\\\\(?!'))|[^*\\\\])*?' |                      # [foo='bar'] Single-quoted\n      \\[ (?:(?:\\*(?!/))|[^*])*? \\] |                                # [foo=[1,2]] Array literal\n      (?:(?:\\*(?!/))|\\s(?!\\s*\\])|\\[.*?(?:\\]|(?=\\*/))|[^*\\s\\[\\]])*   # Everything else\n    )*\n  )\n)?\n\\s*(?:(\\])((?:[^*\\s]|\\*[^\\s/])+)?|(?=\\*/))",
+							"captures": {
+								"1": {
+									"name": "punctuation.definition.optional-value.begin.bracket.square.jsdoc"
+								},
+								"2": {
+									"name": "keyword.operator.assignment.jsdoc"
+								},
+								"3": {
+									"name": "source.embedded.cts"
+								},
+								"4": {
+									"name": "punctuation.definition.optional-value.end.bracket.square.jsdoc"
+								},
+								"5": {
+									"name": "invalid.illegal.syntax.jsdoc"
+								}
+							}
+						}
+					]
+				},
+				{
+					"begin": "(?x)\n(\n  (@)\n  (?:定义|枚举|外部|导出|扩展|实现|修饰|标记|define|enum|exception|export|extends|lends|implements|modifies\n  |namespace|private|protected|returns?|suppress|this|throws|type\n  |yields?)\n)\n\\s+(?={)",
+					"beginCaptures": {
+						"1": {
+							"name": "storage.type.class.jsdoc"
+						},
+						"2": {
+							"name": "punctuation.definition.block.tag.jsdoc"
+						}
+					},
+					"end": "(?=\\s|\\*/|[^{}\\[\\]A-Za-z_$])",
+					"patterns": [
+						{
+							"include": "#jsdoctype"
+						}
+					]
+				},
+				{
+					"match": "(?x)\n(\n  (@)\n  (?:别名|增强参数|回调|构造|输出|事件|文件集|出口集?|alias|augments|callback|constructs|emits|event|fires|exports?\n  |扩展|外部|函数|主机|标记|列表|接口|修饰|extends|external|function|func|host|lends|listens|interface|memberof!?\n  |成员|模块|最小|最大|名称|需要|详见|类型定义|使用|method|module|mixes|mixin|name|requires|see|this|typedef|uses)\n)\n\\s+\n(\n  (?:\n    [^{}@\\s*] | \\*[^/]\n  )+\n)",
+					"captures": {
+						"1": {
+							"name": "storage.type.class.jsdoc"
+						},
+						"2": {
+							"name": "punctuation.definition.block.tag.jsdoc"
+						},
+						"3": {
+							"name": "entity.name.type.instance.jsdoc"
+						}
+					}
+				},
+				{
+                    "contentName": "variable.other.jsdoc",
+                    "begin": "((@)(?:default|默认(?:value|值)?|license|许可证|版本|version))\\s+(([''\"]))",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "storage.type.class.jsdoc"
+						},
+						"2": {
+							"name": "punctuation.definition.block.tag.jsdoc"
+						},
+						"3": {
+							"name": "variable.other.jsdoc"
+						},
+						"4": {
+							"name": "punctuation.definition.string.begin.jsdoc"
+						}
+					},
+					"end": "(\\3)|(?=$|\\*/)",
+					"endCaptures": {
+						"0": {
+							"name": "variable.other.jsdoc"
+						},
+						"1": {
+							"name": "punctuation.definition.string.end.jsdoc"
+						}
+					}
+				},
+				{
+					"match": "((@)(?:default|默认(?:value|值)?|license|许可证|教程|版本|变量|tutorial|variation|version))\\s+([^\\s*]+)",
+					"captures": {
+						"1": {
+							"name": "storage.type.class.jsdoc"
+						},
+						"2": {
+							"name": "punctuation.definition.block.tag.jsdoc"
+						},
+						"3": {
+							"name": "variable.other.jsdoc"
+						}
+					}
+				},
+				{
+					"name": "storage.type.class.jsdoc",
+					"match": "(?x) (@) (?:abstract|抽象|别名|API|参数|增强参数|异步|人口|特性|access|alias|api|arg|argument|async|attribute|augments|作者|引用|author|beta|borrows|bubbles |回调|类|类别|代码|配置|常数|常量|构造|版权|默认|默认值|callback|chainable|class|classdesc|code|config|const|constant|constructor|constructs|copyright |default|defaultvalue|定义|词典|输出|枚举|外部|出口|define|deprecated|desc|description|dict|emits|enum|event|example|exception |exports?|扩展|extends|extension(?:_?for)?|external|外部|externs|file|fileoverview|final|fires|for|func |函数|引擎|全局|隐藏构造|主机|忽略|实现|隐式转换|function|generator|global|hideconstructor|host|ignore|implements|implicitCast|inherit[Dd]oc |inner|接口|instance|interface|internal|内部|kind|标记|许可证|主函数|成员|成员在|lends|license|listens|main|member|memberof!?|method |mixes|mixins?|modifies|模块|名称|名域|无构造|module|name|namespace|noalias|nocollapse|nocompile|nosideeffects |重载|参数|override|overview|package|param|polymer(?:Behavior)?|私有|保护|属性|特性|原型|公开|只读|preserve|private|prop|property|protected |public|read[Oo]nly|record|require[ds]|returns?|详见|静态|结构|see|since|static|struct|submodule|summary |suppress|template|this|本体|throws|抛出|todo|任务|教程|tutorial|type|类型|typedef|类型定义|未定义|unrestricted|使用|uses|var|变量|variation |版本|version|virtual|writeOnce|获得|yields?) \\b",
+					"captures": {
+						"1": {
+							"name": "punctuation.definition.block.tag.jsdoc"
+						}
+					}
+				},
+				{
+					"include": "#inline-tags"
+				}
+			]
+		},
+		"brackets": {
+			"patterns": [
+				{
+					"begin": "{",
+					"end": "}|(?=\\*/)",
+					"patterns": [
+						{
+							"include": "#brackets"
+						}
+					]
+				},
+				{
+					"begin": "\\[",
+					"end": "\\]|(?=\\*/)",
+					"patterns": [
+						{
+							"include": "#brackets"
+						}
+					]
+				}
+			]
+		},
+		"inline-tags": {
+			"patterns": [
+				{
+					"name": "constant.other.description.jsdoc",
+					"match": "(\\[)[^\\]]+(\\])(?={@(?:link|链接|链接代码|链接片段|教程|linkcode|linkplain|tutorial))",
+					"captures": {
+						"1": {
+							"name": "punctuation.definition.bracket.square.begin.jsdoc"
+						},
+						"2": {
+							"name": "punctuation.definition.bracket.square.end.jsdoc"
+						}
+					}
+				},
+				{
+					"name": "entity.name.type.instance.jsdoc",
+					"begin": "({)((@)(?:link(?:code|代码|片段|plain)?|教程|tutorial))\\s*",
+					"beginCaptures": {
+						"1": {
+							"name": "punctuation.definition.bracket.curly.begin.jsdoc"
+						},
+						"2": {
+							"name": "storage.type.class.jsdoc"
+						},
+						"3": {
+							"name": "punctuation.definition.inline.tag.jsdoc"
+						}
+					},
+					"end": "}|(?=\\*/)",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.definition.bracket.curly.end.jsdoc"
+						}
+					},
+					"patterns": [
+						{
+							"match": "\\G((?=https?://)(?:[^|}\\s*]|\\*[/])+)(\\|)?",
+							"captures": {
+								"1": {
+									"name": "variable.other.link.underline.jsdoc"
+								},
+								"2": {
+									"name": "punctuation.separator.pipe.jsdoc"
+								}
+							}
+						},
+						{
+							"match": "\\G((?:[^{}@\\s|*]|\\*[^/])+)(\\|)?",
+							"captures": {
+								"1": {
+									"name": "variable.other.description.jsdoc"
+								},
+								"2": {
+									"name": "punctuation.separator.pipe.jsdoc"
+								}
+							}
+						}
+					]
+				}
+			]
+		},
+		"jsdoctype": {
+			"patterns": [
+				{
+					"name": "invalid.illegal.type.jsdoc",
+					"match": "\\G{(?:[^}*]|\\*[^/}])+$"
+				},
+				{
+					"contentName": "entity.name.type.instance.jsdoc",
+					"begin": "\\G({)",
+					"beginCaptures": {
+						"0": {
+							"name": "entity.name.type.instance.jsdoc"
+						},
+						"1": {
+							"name": "punctuation.definition.bracket.curly.begin.jsdoc"
+						}
+					},
+					"end": "((}))\\s*|(?=\\*/)",
+					"endCaptures": {
+						"1": {
+							"name": "entity.name.type.instance.jsdoc"
+						},
+						"2": {
+							"name": "punctuation.definition.bracket.curly.end.jsdoc"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#brackets"
+						}
+					]
+				}
+			]
+		}
+	}
+}

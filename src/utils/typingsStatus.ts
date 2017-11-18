@@ -102,7 +102,7 @@ export class AtaProgressReporter {
 			id: number;
 		}
 
-		if (workspace.getConfiguration('typescript').get<boolean>('check.npmIsInstalled', true)) {
+		if (workspace.getConfiguration('ctsscript').get<boolean>('check.npmIsInstalled', true)) {
 			window.showWarningMessage<MyMessageItem>(
 				localize(
 					'typesInstallerInitializationFailed.title',
@@ -127,7 +127,7 @@ export class AtaProgressReporter {
 						commands.executeCommand('vscode.open', Uri.parse('https://go.microsoft.com/fwlink/?linkid=847635'));
 						break;
 					case 2:
-						const tsConfig = workspace.getConfiguration('typescript');
+						const tsConfig = workspace.getConfiguration('ctsescript');
 						tsConfig.update('check.npmIsInstalled', false, true);
 						break;
 				}

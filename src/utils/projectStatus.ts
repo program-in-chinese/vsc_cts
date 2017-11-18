@@ -222,7 +222,7 @@ function computeLargeRoots(configFileName: string, fileNames: string[]): string[
 
 	data
 		.sort((a, b) => b.count - a.count)
-		.filter(s => s.root === 'src' || s.root === 'test' || s.root === 'tests');
+		.filter(s => s.root === 'src' ||s.root === '源码' || s.root === 'test' ||s.root === '测试' || s.root === 'tests'|| s.root === '测试集');
 
 	let result: string[] = [];
 	let sum = 0;

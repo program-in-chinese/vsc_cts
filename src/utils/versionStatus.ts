@@ -25,7 +25,7 @@ export default class VersionStatus {
 		this.showHideStatus();
 		this.versionBarEntry.text = version.versionString;
 		this.versionBarEntry.tooltip = version.path;
-		this.versionBarEntry.command = 'typescript.selectTypeScriptVersion';
+		this.versionBarEntry.command = 'ctsscript.selectTypeScriptVersion';
 	}
 
 	private showHideStatus() {

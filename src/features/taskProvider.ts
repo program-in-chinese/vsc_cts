@@ -215,7 +215,7 @@ class TscTaskProvider implements vscode.TaskProvider {
 	}
 
 	private onConfigurationChanged(): void {
-		const type = vscode.workspace.getConfiguration('typescript.tsc').get<AutoDetect>('autoDetect');
+		const type = vscode.workspace.getConfiguration('ctsscript.tsc').get<AutoDetect>('autoDetect');
 		this.autoDetect = typeof type === 'undefined' ? 'on' : type;
 	}
 }
@@ -243,12 +243,12 @@ export default class TypeScriptTaskProviderManager {
 	}
 
 	private onConfigurationChanged() {
-		const autoDetect = vscode.workspace.getConfiguration('typescript.tsc').get<AutoDetect>('autoDetect');
+		const autoDetect = vscode.workspace.getConfiguration('ctsscript.tsc').get<AutoDetect>('autoDetect');
 		if (this.taskProviderSub && autoDetect === 'off') {
 			this.taskProviderSub.dispose();
 			this.taskProviderSub = undefined;
 		} else if (!this.taskProviderSub && autoDetect !== 'off') {
-			this.taskProviderSub = vscode.workspace.registerTaskProvider('typescript', new TscTaskProvider(this.lazyClient));
+			this.taskProviderSub = vscode.workspace.registerTaskProvider('ctsscript', new TscTaskProvider(this.lazyClient));
 		}
 	}
 }

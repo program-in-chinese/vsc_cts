@@ -14,7 +14,7 @@ import FormattingOptionsManager from './formattingConfigurationManager';
 import { CommandManager, Command } from '../utils/commandManager';
 
 class ApplyRefactoringCommand implements Command {
-	public static readonly ID = '_typescript.applyRefactoring';
+	public static readonly ID = '_ctsscript.applyRefactoring';
 	public readonly id = ApplyRefactoringCommand.ID;
 
 	constructor(
@@ -72,7 +72,7 @@ class ApplyRefactoringCommand implements Command {
 }
 
 class SelectRefactorCommand implements Command {
-	public static readonly ID = '_typescript.selectRefactoring';
+	public static readonly ID = '_ctsscript.selectRefactoring';
 	public readonly id = SelectRefactorCommand.ID;
 
 	constructor(

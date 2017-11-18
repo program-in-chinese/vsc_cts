@@ -82,7 +82,7 @@ export default class JsDocCompletionProvider implements CompletionItemProvider {
 }
 
 class TryCompleteJsDocCommand implements Command {
-	public static readonly COMMAND_NAME = '_typeScript.tryCompleteJsDoc';
+	public static readonly COMMAND_NAME = '_ctsScript.tryCompleteJsDoc';
 	public readonly id = TryCompleteJsDocCommand.COMMAND_NAME;
 
 	constructor(

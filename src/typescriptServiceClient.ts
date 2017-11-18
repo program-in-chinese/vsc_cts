@@ -298,7 +298,7 @@ export default class TypeScriptServiceClient implements ITypeScriptServiceClient
 		if (this.servicePromise) {
 			return this.servicePromise;
 		}
-		return Promise.reject<cp.ChildProcess>(new Error('Could not create TS service'));
+		return Promise.reject<cp.ChildProcess>(new Error('Could not create CTS service'));
 	}
 
 	private startService(resendModels: boolean = false): Thenable<cp.ChildProcess> {
@@ -427,7 +427,7 @@ export default class TypeScriptServiceClient implements ITypeScriptServiceClient
 				})
 				.then(selection => {
 					if (selection) {
-						return workspace.getConfiguration().update('typescript.tsserver.log', 'verbose', true).then(() => {
+						return workspace.getConfiguration().update('ctsscript.tsserver.log', 'verbose', true).then(() => {
 							this.restartTsServer();
 						});
 					}

@@ -16,15 +16,13 @@ export function getContributedTypeScriptServerPlugins(): TypeScriptServerPlugin[
 	const plugins: TypeScriptServerPlugin[] = [];
 	for (const extension of extensions.all) {
 		const pack = extension.packageJSON;
-		if (pack.contributes && pack.contributes.typescriptServerPlugins && Array.isArray(pack.contributes.typescriptServerPlugins)) {
-			for (const plugin of pack.contributes.typescriptServerPlugins) {
-				plugins.push({
-					name: plugin.name,
+		if (pack.contributes && pack.id === "Htwx.ctsscript") {
+			plugins.push({
+					name: pack.name,
 					path: extension.extensionPath,
-					languages: Array.isArray(plugin.languages) ? plugin.languages : [],
-				});
-			}
-		}
+					languages: Array.isArray(pack.contributes.languages) ? pack.contributes.languages : [],
+			});
+	}
 	}
 	return plugins;
 }

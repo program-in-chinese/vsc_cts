@@ -11,12 +11,12 @@ import { tsTextSpanToVsRange } from '../utils/convert';
 
 function getSymbolKind(item: Proto.NavtoItem): SymbolKind {
 	switch (item.kind) {
-		case 'method': return SymbolKind.Method;
-		case 'enum': return SymbolKind.Enum;
-		case 'function': return SymbolKind.Function;
-		case 'class': return SymbolKind.Class;
-		case 'interface': return SymbolKind.Interface;
-		case 'var': return SymbolKind.Variable;
+		case '方法': return SymbolKind.Method;
+		case '枚举': return SymbolKind.Enum;
+		case '函数': return SymbolKind.Function;
+		case '类别': return SymbolKind.Class;
+		case '接口': return SymbolKind.Interface;
+		case '值量': return SymbolKind.Variable;
 		default: return SymbolKind.Variable;
 	}
 }
@@ -66,12 +66,12 @@ export default class TypeScriptWorkspaceSymbolProvider implements WorkspaceSymbo
 		const data = response.body;
 		if (data) {
 			for (const item of data) {
-				if (!item.containerName && item.kind === 'alias') {
+				if (!item.containerName && item.kind === '别名') {
 					continue;
 				}
 				const range = tsTextSpanToVsRange(item);
 				let label = item.name;
-				if (item.kind === 'method' || item.kind === 'function') {
+				if (item.kind === '方法' || item.kind === '函数') {
 					label += '()';
 				}
 				result.push(new SymbolInformation(label, getSymbolKind(item), item.containerName || '',

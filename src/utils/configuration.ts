@@ -63,8 +63,6 @@ export class TypeScriptServiceConfiguration {
 		this.localTsdk = TypeScriptServiceConfiguration.extractLocalTsdk(configuration);
 		this.npmLocation = TypeScriptServiceConfiguration.readNpmLocation(configuration);
 		this.tsServerLogLevel = TypeScriptServiceConfiguration.readTsServerLogLevel(configuration);
-		this.checkJs = TypeScriptServiceConfiguration.readCheckJs(configuration);
-		this.experimentalDecorators = TypeScriptServiceConfiguration.readExperimentalDecorators(configuration);
 		this.disableAutomaticTypeAcquisition = TypeScriptServiceConfiguration.readDisableAutomaticTypeAcquisition(configuration);
 	}
 
@@ -80,7 +78,7 @@ export class TypeScriptServiceConfiguration {
 	}
 
 	private static extractGlobalTsdk(configuration: WorkspaceConfiguration): string | null {
-		const inspect = configuration.inspect('typescript.tsdk');
+		const inspect = configuration.inspect('ctsscript.tsdk');
 		if (inspect && inspect.globalValue && 'string' === typeof inspect.globalValue) {
 			return inspect.globalValue;
 		}
@@ -88,7 +86,7 @@ export class TypeScriptServiceConfiguration {
 	}
 
 	private static extractLocalTsdk(configuration: WorkspaceConfiguration): string | null {
-		const inspect = configuration.inspect('typescript.tsdk');
+		const inspect = configuration.inspect('ctsscript.tsdk');
 		if (inspect && inspect.workspaceValue && 'string' === typeof inspect.workspaceValue) {
 			return inspect.workspaceValue;
 		}
@@ -96,27 +94,19 @@ export class TypeScriptServiceConfiguration {
 	}
 
 	private static readTsServerLogLevel(configuration: WorkspaceConfiguration): TsServerLogLevel {
-		const setting = configuration.get<string>('typescript.tsserver.log', 'off');
+		const setting = configuration.get<string>('ctsscript.tsserver.log', 'off');
 		return TsServerLogLevel.fromString(setting);
 	}
 
-	private static readCheckJs(configuration: WorkspaceConfiguration): boolean {
-		return configuration.get<boolean>('javascript.implicitProjectConfig.checkJs', false);
-	}
-
-	private static readExperimentalDecorators(configuration: WorkspaceConfiguration): boolean {
-		return configuration.get<boolean>('javascript.implicitProjectConfig.experimentalDecorators', false);
-	}
-
 	private static readNpmLocation(configuration: WorkspaceConfiguration): string | null {
-		return configuration.get<string | null>('typescript.npm', null);
+		return configuration.get<string | null>('ctsscript.npm', null);
 	}
 
 	private static readDisableAutomaticTypeAcquisition(configuration: WorkspaceConfiguration): boolean {
-		return configuration.get<boolean>('typescript.disableAutomaticTypeAcquisition', false);
+		return configuration.get<boolean>('ctsscript.disableAutomaticTypeAcquisition', false);
 	}
 
 	private static extractLocale(configuration: WorkspaceConfiguration): string | null {
-		return configuration.get<string | null>('typescript.locale', null);
+		return configuration.get<string | null>('ctsscript.locale', null);
 	}
 }

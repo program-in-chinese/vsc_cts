@@ -9,7 +9,7 @@ import { Memento, commands, Uri, window, QuickPickItem, workspace } from 'vscode
 
 const localize = nls.loadMessageBundle();
 
-const useWorkspaceTsdkStorageKey = 'typescript.useWorkspaceTsdk';
+const useWorkspaceTsdkStorageKey = 'ctsscript.useWorkspaceTsdk';
 
 interface MyQuickPickItem extends QuickPickItem {
 	id: MessageAction;
@@ -97,7 +97,7 @@ export class TypeScriptVersionPicker {
 			case MessageAction.useLocal:
 				await this.workspaceState.update(useWorkspaceTsdkStorageKey, true);
 				if (selected.version) {
-					const tsConfig = workspace.getConfiguration('typescript');
+					const tsConfig = workspace.getConfiguration('ctsscript');
 					await tsConfig.update('tsdk', selected.version.pathLabel, false);
 
 					const previousVersion = this.currentVersion;

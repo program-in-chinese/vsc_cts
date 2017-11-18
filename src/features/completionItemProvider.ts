@@ -127,7 +127,7 @@ class MyCompletionItem extends CompletionItem {
 }
 
 class ApplyCompletionCodeActionCommand implements Command {
-	public static readonly ID = '_typescript.applyCompletionCodeAction';
+	public static readonly ID = '_ctsscript.applyCompletionCodeAction';
 	public readonly id = ApplyCompletionCodeActionCommand.ID;
 
 	public constructor(
@@ -396,7 +396,7 @@ export default class TypeScriptCompletionItemProvider implements CompletionItemP
 
 	private getConfiguration(resource: Uri): Configuration {
 		// Use shared setting for js and ts
-		const typeScriptConfig = workspace.getConfiguration('typescript', resource);
+		const typeScriptConfig = workspace.getConfiguration('ctsscript', resource);
 		return {
 			useCodeSnippetsOnMethodSuggest: typeScriptConfig.get<boolean>(Configuration.useCodeSnippetsOnMethodSuggest, false),
 			quickSuggestionsForPaths: typeScriptConfig.get<boolean>(Configuration.quickSuggestionsForPaths, true),

@@ -1,15 +1,15 @@
 {
-  "name": "typescript",
-  "description": "Extension to add Typescript capabilities to VSCode.",
-  "displayName": "TypeScript support for VSCode",
+  "name": "ctsscript",
+  "description": "Extension to add CtsScript capabilities to VSCode.",
+  "displayName": "CtsScript support for VSCode",
   "version": "0.10.1",
   "author": "Microsoft Corporation",
   "license": "MIT",
-  "publisher": "vscode",
-  "aiKey": "AIF-d9b70cd4-b9f9-4d70-929b-a071c400b217",
-  "enableProposedApi": true,
+  "publisher": "Htwx",
+  "aiKey": "AIF-9b2d1ea5-14d3-4c29-aedb-e5512fad5050",
+  "enableProposedApi": false,
   "engines": {
-    "vscode": "*"
+    "vscode": "^1.18.0"
   },
   "dependencies": {
     "semver": "4.3.6",
@@ -25,119 +25,140 @@
     "update-grammar": "node ./build/update-grammars.js"
   },
   "activationEvents": [
-    "onLanguage:javascript",
-    "onLanguage:javascriptreact",
-    "onLanguage:typescript",
-    "onLanguage:typescriptreact",
-    "onLanguage:jsx-tags",
-    "onCommand:typescript.reloadProjects",
-    "onCommand:javascript.reloadProjects",
-    "onCommand:typescript.selectTypeScriptVersion",
-    "onCommand:javascript.goToProjectConfig",
-    "onCommand:typescript.goToProjectConfig",
-    "onCommand:typescript.openTsServerLog",
+    "onLanguage:ctsscript",
+    "onLanguage:ctsscriptreact",
+    "onCommand:ctsscript.reloadProjects",
+    "onCommand:ctsscript.selectTypeScriptVersion",
+    "onCommand:ctsscript.goToProjectConfig",
+    "onCommand:ctsscript.openTsServerLog",
     "onCommand:workbench.action.tasks.runTask"
   ],
   "main": "./out/typescriptMain",
   "contributes": {
     "languages": [
       {
-        "id": "typescript",
+        "id": "ctsscript",
         "aliases": [
-          "TypeScript",
-          "ts",
-          "typescript"
+          "CtsScript",
+          "cts",
+          "ctsscript"
         ],
         "extensions": [
-          ".ts"
+          ".cts"
         ],
         "configuration": "./language-configuration.json"
       },
       {
-        "id": "typescriptreact",
+        "id": "ctsscriptreact",
         "aliases": [
-          "TypeScript React",
-          "tsx"
+          "CtsScriptReact",
+          "ctsx"
         ],
         "extensions": [
-          ".tsx"
+          ".ctsx"
         ],
         "configuration": "./language-configuration.json"
       }
     ],
     "grammars": [
       {
-        "language": "typescript",
-        "scopeName": "source.ts",
-        "path": "./syntaxes/TypeScript.tmLanguage.json"
+        "language": "ctsscript",
+        "scopeName": "source.cts",
+        "path": "./syntaxes/CtsScript.tmLanguage.json"
       },
       {
-        "language": "typescriptreact",
-        "scopeName": "source.tsx",
-        "path": "./syntaxes/TypeScriptReact.tmLanguage.json",
+        "language": "ctsscriptreact",
+        "scopeName": "source.ctsx",
+        "path": "./syntaxes/CtsScriptReact.tmLanguage.json",
         "embeddedLanguages": {
           "meta.tag.tsx": "jsx-tags",
           "meta.tag.without-attributes.tsx": "jsx-tags",
-          "meta.tag.attributes.tsx": "typescriptreact",
-          "meta.embedded.expression.tsx": "typescriptreact"
+          "meta.tag.attributes.tsx": "ctsscriptreact",
+          "meta.embedded.expression.tsx": "ctsscriptreact"
         }
       }
     ],
     "configuration": {
       "type": "object",
-      "title": "%configuration.typescript%",
+      "title": "配置.CTS",
       "order": 20,
       "properties": {
-        "typescript.tsdk": {
+        "ctsscript.tsdk": {
           "type": [
             "string",
             "null"
           ],
           "default": null,
-          "description": "%typescript.tsdk.desc%",
+          "description": "指定包含要使用的CTS服务和 支持库*.d.cts 文件的文件夹路径",
           "scope": "window"
         },
-        "typescript.disableAutomaticTypeAcquisition": {
+        "ctsscript.disableAutomaticTypeAcquisition": {
           "type": "boolean",
           "default": false,
-          "description": "%typescript.disableAutomaticTypeAcquisition%",
+          "description": "禁用自动类型",
           "scope": "window"
         },
-        "typescript.npm": {
+        "ctsscript.npm": {
           "type": [
             "string",
             "null"
           ],
           "default": null,
-          "description": "%typescript.npm%",
+          "description": "检查CTS",
           "isExecutable": true,
           "scope": "window"
         },
-        "typescript.check.npmIsInstalled": {
+        "ctsscript.有道翻译": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": "78781d9495793f1d",
+          "description": "指定有道翻译的应用ID"
+        },
+        "ctsscript.有道翻译密码": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": "jQJeK5dWB2n2lbc9vkYrNjztUUhLlUie",
+          "description": "指定有道翻译的密码"
+        },
+        "ctsscript.百度翻译": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": "20170410000044514",
+          "description": "指定有道翻译的应用ID"
+        },
+        "ctsscript.百度翻译密码": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": "GbDh50rb08QIYaSNMd4J",
+          "description": "指定有道翻译的密码"
+        },
+        "ctsscript.check.npmIsInstalled": {
           "type": "boolean",
           "default": true,
-          "description": "%typescript.check.npmIsInstalled%",
+          "description": "CTS-NPM是否已安装",
           "scope": "window"
         },
-        "javascript.referencesCodeLens.enabled": {
+        "ctsscript.referencesCodeLens.enabled": {
           "type": "boolean",
           "default": false,
-          "description": "%javascript.referencesCodeLens.enabled%",
+          "description": "启用/禁用在JS文件中引用代码透视",
           "scope": "window"
         },
-        "typescript.referencesCodeLens.enabled": {
+        "ctsscript.implementationsCodeLens.enabled": {
           "type": "boolean",
           "default": false,
-          "description": "%typescript.referencesCodeLens.enabled%",
+          "description": "启用/禁用实现代码透视。",
           "scope": "window"
         },
-        "typescript.implementationsCodeLens.enabled": {
-          "type": "boolean",
-          "default": false,
-          "description": "%typescript.implementationsCodeLens.enabled%",
-          "scope": "window"
-        },
-        "typescript.tsserver.log": {
+        "ctsscript.tsserver.log": {
           "type": "string",
           "enum": [
             "off",
@@ -146,10 +167,10 @@
             "verbose"
           ],
           "default": "off",
-          "description": "%typescript.tsserver.log%",
+          "description": "启用CTS服务日志",
           "scope": "window"
         },
-        "typescript.tsserver.trace": {
+        "ctsscript.tsserver.trace": {
           "type": "string",
           "enum": [
             "off",
@@ -157,244 +178,124 @@
             "verbose"
           ],
           "default": "off",
-          "description": "%typescript.tsserver.trace%",
+          "description": "开启CTS服务器跟踪",
           "scope": "window"
         },
-        "typescript.useCodeSnippetsOnMethodSuggest": {
+        "ctsscript.useCodeSnippetsOnMethodSuggest": {
           "type": "boolean",
           "default": false,
-          "description": "%typescript.useCodeSnippetsOnMethodSuggest.dec%",
+          "description": "完成函数的参数签名",
           "scope": "resource"
         },
-        "typescript.reportStyleChecksAsWarnings": {
+        "ctsscript.reportStyleChecksAsWarnings": {
           "type": "boolean",
           "default": true,
-          "description": "%typescript.reportStyleChecksAsWarnings%",
+          "description": "检查报表样式为警告",
           "scope": "window"
         },
-        "typescript.validate.enable": {
+        "ctsscript.validate.enable": {
           "type": "boolean",
           "default": true,
-          "description": "%typescript.validate.enable%",
+          "description": "启用/禁用CTS验证",
           "scope": "window"
         },
-        "typescript.format.enable": {
+        "ctsscript.format.enable": {
           "type": "boolean",
           "default": true,
-          "description": "%typescript.format.enable%",
+          "description": "启用/禁用默认CTS格式化程序",
           "scope": "window"
         },
-        "typescript.format.insertSpaceAfterCommaDelimiter": {
+        "ctsscript.format.insertSpaceAfterCommaDelimiter": {
           "type": "boolean",
           "default": true,
-          "description": "%format.insertSpaceAfterCommaDelimiter%",
+          "description": "定义逗号分隔符后面的空格处理",
           "scope": "resource"
         },
-        "typescript.format.insertSpaceAfterConstructor": {
+        "ctsscript.format.insertSpaceAfterConstructor": {
           "type": "boolean",
           "default": false,
-          "description": "%format.insertSpaceAfterConstructor%",
+          "description": "定义构造器关键字后的空格处理",
           "scope": "resource"
         },
-        "typescript.format.insertSpaceAfterSemicolonInForStatements": {
+        "ctsscript.format.insertSpaceAfterSemicolonInForStatements": {
           "type": "boolean",
           "default": true,
-          "description": "%format.insertSpaceAfterSemicolonInForStatements%",
+          "description": "在循环语句中，定义分号后面的空格处理",
           "scope": "resource"
         },
-        "typescript.format.insertSpaceBeforeAndAfterBinaryOperators": {
+        "ctsscript.format.insertSpaceBeforeAndAfterBinaryOperators": {
           "type": "boolean",
           "default": true,
-          "description": "%format.insertSpaceBeforeAndAfterBinaryOperators%",
+          "description": "定义二进制运算符后面的空格处理",
           "scope": "resource"
         },
-        "typescript.format.insertSpaceAfterKeywordsInControlFlowStatements": {
+        "ctsscript.format.insertSpaceAfterKeywordsInControlFlowStatements": {
           "type": "boolean",
           "default": true,
-          "description": "%format.insertSpaceAfterKeywordsInControlFlowStatements%",
+          "description": "定义控制流语句中关键字后面的空格处理",
           "scope": "resource"
         },
-        "typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": {
+        "ctsscript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": {
           "type": "boolean",
           "default": true,
-          "description": "%format.insertSpaceAfterFunctionKeywordForAnonymousFunctions%",
+          "description": "定义匿名函数的函数关键字后面的空格处理",
           "scope": "resource"
         },
-        "typescript.format.insertSpaceBeforeFunctionParenthesis": {
+        "ctsscript.format.insertSpaceBeforeFunctionParenthesis": {
           "type": "boolean",
           "default": false,
-          "description": "%format.insertSpaceBeforeFunctionParenthesis%",
+          "description": "在函数参数括号前定义空格处理",
           "scope": "resource"
         },
-        "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": {
+        "ctsscript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": {
           "type": "boolean",
           "default": false,
-          "description": "%format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis%",
+          "description": "定义非空圆括号的左括号后面和右括号前面的空格处理",
           "scope": "resource"
         },
-        "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": {
+        "ctsscript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": {
           "type": "boolean",
           "default": false,
-          "description": "%format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets%",
+          "description": "定义非空方括号的左括号后面和右括号前面的空格处理",
           "scope": "resource"
         },
-        "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": {
+        "ctsscript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": {
           "type": "boolean",
           "default": true,
-          "description": "%format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces%",
+          "description": "定义非空括号的左括号后面和右括号前面的空格处理",
           "scope": "resource"
         },
-        "typescript.format.insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces": {
+        "ctsscript.format.insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces": {
           "type": "boolean",
           "default": false,
-          "description": "%format.insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces%",
+          "description": "定义模板字符串的左括号后面和右括号前面的空格处理",
           "scope": "resource"
         },
-        "typescript.format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces": {
+        "ctsscript.format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces": {
           "type": "boolean",
           "default": false,
-          "description": "%format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces%",
+          "description": "定义JSX表达式左括号后面和右括号前面的空格处理",
           "scope": "resource"
         },
-        "typescript.format.insertSpaceAfterTypeAssertion": {
+        "ctsscript.format.insertSpaceAfterTypeAssertion": {
           "type": "boolean",
           "default": false,
-          "description": "%format.insertSpaceAfterTypeAssertion%",
+          "description": "定义Cts中类型断言后的空格处理",
           "scope": "resource"
         },
-        "typescript.format.placeOpenBraceOnNewLineForFunctions": {
+        "ctsscript.format.placeOpenBraceOnNewLineForFunctions": {
           "type": "boolean",
           "default": false,
-          "description": "%format.placeOpenBraceOnNewLineForFunctions%",
+          "description": "定义函数的左大括号是否放置在新的一行",
           "scope": "resource"
         },
-        "typescript.format.placeOpenBraceOnNewLineForControlBlocks": {
+        "ctsscript.format.placeOpenBraceOnNewLineForControlBlocks": {
           "type": "boolean",
           "default": false,
-          "description": "%format.placeOpenBraceOnNewLineForControlBlocks%",
+          "description": "定义控制块的左括号是否放置在新的一行",
           "scope": "resource"
         },
-        "javascript.validate.enable": {
-          "type": "boolean",
-          "default": true,
-          "description": "%javascript.validate.enable%",
-          "scope": "window"
-        },
-        "javascript.format.enable": {
-          "type": "boolean",
-          "default": true,
-          "description": "%javascript.format.enable%",
-          "scope": "window"
-        },
-        "javascript.format.insertSpaceAfterCommaDelimiter": {
-          "type": "boolean",
-          "default": true,
-          "description": "%format.insertSpaceAfterCommaDelimiter%",
-          "scope": "resource"
-        },
-        "javascript.format.insertSpaceAfterConstructor": {
-          "type": "boolean",
-          "default": false,
-          "description": "%format.insertSpaceAfterConstructor%",
-          "scope": "resource"
-        },
-        "javascript.format.insertSpaceAfterSemicolonInForStatements": {
-          "type": "boolean",
-          "default": true,
-          "description": "%format.insertSpaceAfterSemicolonInForStatements%",
-          "scope": "resource"
-        },
-        "javascript.format.insertSpaceBeforeAndAfterBinaryOperators": {
-          "type": "boolean",
-          "default": true,
-          "description": "%format.insertSpaceBeforeAndAfterBinaryOperators%",
-          "scope": "resource"
-        },
-        "javascript.format.insertSpaceAfterKeywordsInControlFlowStatements": {
-          "type": "boolean",
-          "default": true,
-          "description": "%format.insertSpaceAfterKeywordsInControlFlowStatements%",
-          "scope": "resource"
-        },
-        "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": {
-          "type": "boolean",
-          "default": true,
-          "description": "%format.insertSpaceAfterFunctionKeywordForAnonymousFunctions%",
-          "scope": "resource"
-        },
-        "javascript.format.insertSpaceBeforeFunctionParenthesis": {
-          "type": "boolean",
-          "default": false,
-          "description": "%format.insertSpaceBeforeFunctionParenthesis%",
-          "scope": "resource"
-        },
-        "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": {
-          "type": "boolean",
-          "default": false,
-          "description": "%format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis%",
-          "scope": "resource"
-        },
-        "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": {
-          "type": "boolean",
-          "default": false,
-          "description": "%format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets%",
-          "scope": "resource"
-        },
-        "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": {
-          "type": "boolean",
-          "default": true,
-          "description": "%format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces%",
-          "scope": "resource"
-        },
-        "javascript.format.insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces": {
-          "type": "boolean",
-          "default": false,
-          "description": "%format.insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces%",
-          "scope": "resource"
-        },
-        "javascript.format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces": {
-          "type": "boolean",
-          "default": false,
-          "description": "%format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces%",
-          "scope": "resource"
-        },
-        "javascript.format.placeOpenBraceOnNewLineForFunctions": {
-          "type": "boolean",
-          "default": false,
-          "description": "%format.placeOpenBraceOnNewLineForFunctions%",
-          "scope": "resource"
-        },
-        "javascript.format.placeOpenBraceOnNewLineForControlBlocks": {
-          "type": "boolean",
-          "default": false,
-          "description": "%format.placeOpenBraceOnNewLineForControlBlocks%",
-          "scope": "resource"
-        },
-        "jsDocCompletion.enabled": {
-          "type": "boolean",
-          "default": true,
-          "description": "%jsDocCompletion.enabled%",
-          "scope": "resource"
-        },
-        "javascript.implicitProjectConfig.checkJs": {
-          "type": "boolean",
-          "default": false,
-          "description": "%javascript.implicitProjectConfig.checkJs%",
-          "scope": "window"
-        },
-        "javascript.implicitProjectConfig.experimentalDecorators": {
-          "type": "boolean",
-          "default": false,
-          "description": "%javascript.implicitProjectConfig.experimentalDecorators%",
-          "scope": "window"
-        },
-        "javascript.nameSuggestions": {
-          "type": "boolean",
-          "default": true,
-          "description": "%javascript.nameSuggestions%",
-          "scope": "resource"
-        },
-        "typescript.tsc.autoDetect": {
+        "ctsscript.tsc.autoDetect": {
           "type": "string",
           "default": "on",
           "enum": [
@@ -403,134 +304,126 @@
             "build",
             "watch"
           ],
-          "description": "%typescript.tsc.autoDetect%",
+          "description": "自动检测",
           "scope": "window"
         },
-        "typescript.quickSuggestionsForPaths": {
+        "ctsscript.quickSuggestionsForPaths": {
           "type": "boolean",
           "default": true,
-          "description": "%typescript.quickSuggestionsForPaths%",
+          "description": "快速路径建议",
           "scope": "resource"
         },
-        "typescript.autoImportSuggestions.enabled": {
+        "ctsscript.autoImportSuggestions.enabled": {
           "type": "boolean",
           "default": true,
-          "description": "%typescript.autoImportSuggestions.enabled%",
+          "description": "允许导入建议",
           "scope": "resource"
         },
-        "typescript.locale": {
+        "ctsscript.locale": {
           "type": [
             "string",
             "null"
           ],
           "enum": [
-            "de",
-            "es",
-            "en",
-            "fr",
-            "it",
-            "ja",
-            "ko",
-            "ru",
             "zh-CN",
-            "zh-TW",
             null
           ],
-          "default": null,
-          "description": "%typescript.locale%",
+          "default": "zh-CN",
+          "description": "设置本地语言",
           "scope": "window"
         }
       }
     },
     "commands": [
       {
-        "command": "typescript.reloadProjects",
-        "title": "%typescript.reloadProjects.title%",
-        "category": "TypeScript"
+        "command": "ctsscript.reloadProjects",
+        "title": "加载项目",
+        "category": "CtsScript"
       },
       {
-        "command": "javascript.reloadProjects",
-        "title": "%javascript.reloadProjects.title%",
-        "category": "JavaScript"
+        "command": "ctsscript.selectTypeScriptVersion",
+        "title": "选址服务版本",
+        "category": "CtsScript"
       },
       {
-        "command": "typescript.selectTypeScriptVersion",
-        "title": "%typescript.selectTypeScriptVersion.title%",
-        "category": "TypeScript"
+        "command": "ctsscript.goToProjectConfig",
+        "title": "跳转到项目配置",
+        "category": "CtsScript"
       },
       {
-        "command": "typescript.goToProjectConfig",
-        "title": "%typescript.goToProjectConfig.title%",
-        "category": "TypeScript"
+        "command": "ctsscript.openTsServerLog",
+        "title": "打开CTS服务日志",
+        "category": "CtsScript"
       },
       {
-        "command": "javascript.goToProjectConfig",
-        "title": "%javascript.goToProjectConfig.title%",
-        "category": "JavaScript"
+        "command": "ctsscript.restartTsServer",
+        "title": "重启CTS服务",
+        "category": "CtsScript"
       },
       {
-        "command": "typescript.openTsServerLog",
-        "title": "%typescript.openTsServerLog.title%",
-        "category": "TypeScript"
-      },
-      {
-        "command": "typescript.restartTsServer",
-        "title": "%typescript.restartTsServer%",
-        "category": "TypeScript"
+        "command": "ctsscript.源码转换命令",
+        "title": "转换源码文件",
+        "category": "CtsScript"
       }
     ],
     "menus": {
       "commandPalette": [
         {
-          "command": "typescript.reloadProjects",
-          "when": "editorLangId == 'typescript'"
+          "command": "ctsscript.reloadProjects",
+          "when": "editorLangId == 'ctsscript'"
         },
         {
-          "command": "typescript.reloadProjects",
-          "when": "editorLangId == typescriptreact"
+          "command": "ctsscript.源码转换命令",
+          "when": "editorLangId == 'ctsscript'"
         },
         {
-          "command": "javascript.reloadProjects",
-          "when": "editorLangId == 'javascript'"
+          "command": "ctsscript.reloadProjects",
+          "when": "editorLangId == 'ctsscriptreact'"
         },
         {
-          "command": "javascript.reloadProjects",
-          "when": "editorLangId == javascriptreact"
+          "command": "ctsscript.goToProjectConfig",
+          "when": "editorLangId == 'ctsscript'"
         },
         {
-          "command": "typescript.goToProjectConfig",
-          "when": "editorLangId == 'typescript'"
-        },
-        {
-          "command": "typescript.goToProjectConfig",
-          "when": "editorLangId == typescriptreact"
-        },
-        {
-          "command": "javascript.goToProjectConfig",
-          "when": "editorLangId == 'javascript'"
-        },
-        {
-          "command": "javascript.goToProjectConfig",
-          "when": "editorLangId == javascriptreact"
+          "command": "ctsscript.goToProjectConfig",
+          "when": "editorLangId == 'ctsscriptreact'"
         }
       ]
     },
-    "breakpoints": [
+    "keybindings": [
       {
-        "language": "typescript"
+        "command": "ctsscript.全局词典标签插入命令",
+        "key": "F3"
       },
       {
-        "language": "typescriptreact"
+        "command": "ctsscript.局部词典标签插入命令",
+        "key": "F4"
+      },
+      {
+        "command": "ctsscript.翻转词典命令",
+        "key": "F8"
+      },
+      {
+        "command": "ctsscript.源码转换命令",
+        "key": "F12"
+      }
+    ],
+    "breakpoints": [
+      {
+        "language": "ctsscript"
+      },
+      {
+        "language": "ctsscriptreact"
       }
     ],
     "snippets": [
       {
-        "language": "typescript",
-        "path": "./snippets/typescript.json"
+        "language": "ctsscript",
+        "path": "./snippets/ctsscript.json"
       },
       {
-        "language": "typescriptreact",
-        "path": "./snippets/typescript.json"
+        "language": "ctsscriptreact",
+        "path": "./snippets/ctsscript.json"
       }
     ],
     "jsonValidation": [
@@ -557,7 +450,7 @@
     ],
     "taskDefinitions": [
       {
-        "type": "typescript",
+        "type": "ctsscript",
         "required": [
           "tsconfig"
         ],
@@ -574,7 +467,7 @@
     ],
     "problemPatterns": [
       {
-        "name": "tsc",
+        "name": "cts",
         "regexp": "^([^\\s].*)\\((\\d+|\\d+,\\d+|\\d+,\\d+,\\d+,\\d+)\\):\\s+(error|warning|info)\\s+(TS\\d+)\\s*:\\s*(.*)$",
         "file": 1,
         "location": 2,
@@ -585,26 +478,26 @@
     ],
     "problemMatchers": [
       {
-        "name": "tsc",
-        "label": "%typescript.problemMatchers.tsc.label%",
-        "owner": "typescript",
+        "name": "cts",
+        "label": "问题的匹配",
+        "owner": "ctsscript",
         "applyTo": "closedDocuments",
         "fileLocation": [
           "relative",
           "${cwd}"
         ],
-        "pattern": "$tsc"
+        "pattern": "$cts"
       },
       {
         "name": "tsc-watch",
-        "label": "%typescript.problemMatchers.tscWatch.label%",
-        "owner": "typescript",
+        "label": "CTS监控",
+        "owner": "ctsscript",
         "applyTo": "closedDocuments",
         "fileLocation": [
           "relative",
           "${cwd}"
         ],
-        "pattern": "$tsc",
+        "pattern": "$cts",
         "background": {
           "activeOnStart": true,
           "beginsPattern": {

@@ -21,7 +21,7 @@ export class TypeScriptVersion {
 	) { }
 
 	public get tsServerPath(): string {
-		return path.join(this.path, 'tsserver.js');
+		return path.join(this.path, 'ctsserver.js');
 	}
 
 	public get pathLabel(): string {
@@ -39,7 +39,7 @@ export class TypeScriptVersion {
 		}
 
 		// Allow TS developers to provide custom version
-		const tsdkVersion = workspace.getConfiguration().get<string | undefined>('typescript.tsdk_version', undefined);
+		const tsdkVersion = workspace.getConfiguration().get<string | undefined>('ctsscript.tsdk_version', undefined);
 		if (tsdkVersion) {
 			return API.fromVersionString(tsdkVersion);
 		}
@@ -141,7 +141,7 @@ export class TypeScriptVersionProvider {
 	public get bundledVersion(): TypeScriptVersion {
 		try {
 			const bundledVersion = new TypeScriptVersion(
-				path.dirname(require.resolve('typescript/lib/tsserver.js')),
+				path.dirname(require.resolve('ctsscript/lib/ctsserver.js')),
 				'');
 			if (bundledVersion.isValid) {
 				return bundledVersion;
@@ -179,7 +179,7 @@ export class TypeScriptVersionProvider {
 	}
 
 	private get localNodeModulesVersions(): TypeScriptVersion[] {
-		return this.loadTypeScriptVersionsFromPath(path.join('node_modules', 'typescript', 'lib'))
+		return this.loadTypeScriptVersionsFromPath(path.join('node_modules', 'ctsscript', 'lib'))
 			.filter(x => x.isValid);
 	}
 

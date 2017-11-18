@@ -1,2 +1,2 @@
-import * as Proto from 'typescript/lib/protocol';
+import * as Proto from './typings/types/protocol';
 export = Proto;

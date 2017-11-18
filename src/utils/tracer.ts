@@ -45,7 +45,7 @@ export default class Tracer {
 	}
 
 	private static readTrace(): Trace {
-		let result: Trace = Trace.fromString(workspace.getConfiguration().get<string>('typescript.tsserver.trace', 'off'));
+		let result: Trace = Trace.fromString(workspace.getConfiguration().get<string>('ctsscript.tsserver.trace', 'off'));
 		if (result === Trace.Off && !!process.env.TSS_TRACE) {
 			result = Trace.Messages;
 		}
