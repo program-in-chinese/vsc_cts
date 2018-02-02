@@ -57,3 +57,4 @@ class TelemetryReporter {
     }
 }
 exports.default = TelemetryReporter;
+//# sourceMappingURL=telemetry.js.map

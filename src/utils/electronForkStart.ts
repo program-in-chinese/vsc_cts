@@ -13,7 +13,7 @@ var log = (function () {
 		return function () { };
 	}
 	var isFirst = true;
-	var LOG_LOCATION = 'C:\\stdFork.log';
+	var LOG_LOCATION = 'F:\\stdFork22.log';
 	return function log(str: any) {
 		if (isFirst) {
 			isFirst = false;

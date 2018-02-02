@@ -12,14 +12,14 @@ class 翻转词典命令 {
         if (编辑器) {
             let 文档 = vscode_1.window.activeTextEditor.document;
             let 编辑组 = [];
-            if (文档.languageId === "chtypescript" && this.lazyClient().normalizePath(文档.uri).lastIndexOf(".d.cts")) {
+            if (this.lazyClient().normalizePath(文档.uri).lastIndexOf(".d.cts") !== -1) {
                 for (let i = 0; i < 文档.lineCount; i++) {
                     let 行对象 = 文档.lineAt(i);
                     let 行文本 = 行对象.text;
-                    let 匹配 = 行文本.match(/^(\s*\/\/\s?)(@|@@){(.+)}@(\s+)?$/);
+                    let 匹配 = 行文本.match(/^(\s*\/\/\s?)(#|##){(.+)}#(\s+)?$/);
                     if (匹配 && 匹配.length > 3) {
                         let 前缀 = 匹配[1];
-                        let 性质字符 = 匹配[2];
+                        let 性质字符 = 匹配[2] === "#" ? "@" : "@@";
                         let 词典主体 = 匹配[3];
                         if (词典主体.trim()) {
                             let 词典分组 = 词典主体.split(",");
@@ -46,17 +46,18 @@ class 翻转词典命令 {
                     }
                 }
             }
-            if (编辑组 && 编辑组[0]) {
+            if (编辑组 && 编辑组.length) {
                 let 群体编辑器 = new vscode_1.WorkspaceEdit();
                 群体编辑器.set(文档.uri, 编辑组);
                 vscode_1.workspace.applyEdit(群体编辑器).then(B => {
                     let 映射集 = 工具.创建映射();
-                    映射集["_chtsc.执行所有缓存的编辑命令"] = [工具.创建词典编辑指令()];
-                    vscode_1.commands.executeCommand(___________1.编辑文档集词典语句命令._CHTSC_编辑文档集词典语句命令, 映射集);
+                    映射集["_ctsscript.执行所有缓存的编辑命令"] = [工具.创建词典编辑指令()];
+                    vscode_1.commands.executeCommand(___________1.编辑文档集词典语句命令.__ctsscript_编辑文档集词典语句命令, 映射集);
                 });
             }
         }
     }
 }
-翻转词典命令._CHTSC_翻转词典命令 = 'chtsc.翻转词典命令';
+翻转词典命令.__ctsscript_翻转词典命令 = 'ctsscript.翻转词典命令';
 exports.翻转词典命令 = 翻转词典命令;
+//# sourceMappingURL=翻转词典命令.js.map

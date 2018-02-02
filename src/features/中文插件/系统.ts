@@ -62,6 +62,14 @@ function 读文件(文件名: string): string | undefined {
     return buffer.toString("utf8");
 }
 
+
+function 读文件缓存(文件名: string): Buffer | undefined {
+    if (!文件存在(文件名)) {
+        return undefined;
+    }
+    const buffer = fs.readFileSync(文件名);
+    return buffer
+}
 function 文件系统条目存在(路径: string, 条目分类: 文件系统条目分类): boolean {
     try {
         const stat = fs.statSync(路径);
@@ -98,8 +106,10 @@ function 创建哈希(data: string) {
 
 function 文件系统() {
     return {
+        新行: os.EOL,
         写文件,
         读文件,
+        读文件缓存,
         文件存在,
         目录存在,
         创建目录,

@@ -31,7 +31,7 @@ export default class TypeScriptSignatureHelpProvider implements SignatureHelpPro
 			result.activeSignature = info.selectedItemIndex;
 			result.activeParameter = info.argumentIndex;
 
-			info.items.forEach((item, i) => {
+			info.items.forEach(async (item, i) => {
 				if (!info) {
 					return;
 				}
@@ -42,24 +42,24 @@ export default class TypeScriptSignatureHelpProvider implements SignatureHelpPro
 				}
 
 				const signature = new SignatureInformation('');
-				signature.label += Previewer.plain(item.prefixDisplayParts);
+				signature.label += await Previewer.plain(item.prefixDisplayParts);
 
-				item.parameters.forEach((p, i, a) => {
+				item.parameters.forEach(async (p, i, a) => {
 					const parameter = new ParameterInformation(
-						Previewer.plain(p.displayParts),
-						Previewer.plain(p.documentation));
+					 await	Previewer.plain(p.displayParts),
+					 await		Previewer.plain(p.documentation));
 
 					signature.label += parameter.label;
 					signature.parameters.push(parameter);
 					if (i < a.length - 1) {
-						signature.label += Previewer.plain(item.separatorDisplayParts);
+						signature.label += await Previewer.plain(item.separatorDisplayParts);
 					}
 				});
-				signature.label += Previewer.plain(item.suffixDisplayParts);
-				signature.documentation = Previewer.markdownDocumentation(item.documentation, item.tags);
+				signature.label += await Previewer.plain(item.suffixDisplayParts);
+				signature.documentation =(await Previewer.markdownDocumentation(item.documentation, item.tags)).value;
 				result.signatures.push(signature);
-			});
-
+			}); 
+			
 			return result;
 		}, () => {
 			return null;

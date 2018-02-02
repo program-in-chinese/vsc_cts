@@ -11,12 +11,24 @@ import { tsTextSpanToVsRange } from '../utils/convert';
 
 function getSymbolKind(item: Proto.NavtoItem): SymbolKind {
 	switch (item.kind) {
-		case '方法': return SymbolKind.Method;
-		case '枚举': return SymbolKind.Enum;
-		case '函数': return SymbolKind.Function;
-		case '类别': return SymbolKind.Class;
-		case '接口': return SymbolKind.Interface;
-		case '值量': return SymbolKind.Variable;
+		case '方法':
+		case 'method':
+			return SymbolKind.Method;
+		case '枚举':
+		case 'enum':
+			return SymbolKind.Enum;
+		case '函数':
+		case 'function':
+			return SymbolKind.Function;
+		case '类别':
+		case 'class':
+			return SymbolKind.Class;
+		case '接口':
+		case 'interface':
+			return SymbolKind.Interface;
+		case '值量':
+		case 'var':
+			return SymbolKind.Variable;
 		default: return SymbolKind.Variable;
 	}
 }

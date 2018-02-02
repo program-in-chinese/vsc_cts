@@ -58,3 +58,4 @@ exports.jsxTags = {
         }
     ],
 };
+//# sourceMappingURL=languageConfigurations.js.map

@@ -31,7 +31,7 @@ class 源码转换命令 {
                         }
                     }
                     else {
-                        vscode_1.window.showErrorMessage('转换前请先将文件扩展名改为: ".cts", 声明文件扩展名改为: ".d.cts"');
+                        vscode_1.window.showErrorMessage('转换前请先将文件扩展名改为: ".cts", 声明文件扩展名改为: ".d.cts"。');
                     }
                 }
             }
@@ -40,7 +40,7 @@ class 源码转换命令 {
     扩展名是(路径, 比较名) {
         let 位置 = 路径.lastIndexOf(".");
         if (位置 !== -1) {
-            let 扩展名 = 路径.substr(-位置);
+            let 扩展名 = 路径.substring(位置);
             if (扩展名 === 比较名) {
                 return true;
             }
@@ -49,3 +49,4 @@ class 源码转换命令 {
     }
 }
 exports.源码转换命令 = 源码转换命令;
+//# sourceMappingURL=源码转换命令.js.map

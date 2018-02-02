@@ -138,20 +138,20 @@ class TscTaskProvider implements vscode.TaskProvider {
 		if (project.workspaceFolder) {
 			const platform = process.platform;
 			const bin = path.join(project.workspaceFolder.uri.fsPath, 'node_modules', '.bin');
-			if (platform === 'win32' && await exists(path.join(bin, 'tsc.cmd'))) {
-				return path.join(bin, 'tsc.cmd');
-			} else if ((platform === 'linux' || platform === 'darwin') && await exists(path.join(bin, 'tsc'))) {
-				return path.join(bin, 'tsc');
+			if (platform === 'win32' && await exists(path.join(bin, 'cts.cmd'))) {
+				return path.join(bin, 'cts.cmd');
+			} else if ((platform === 'linux' || platform === 'darwin') && await exists(path.join(bin, 'cts'))) {
+				return path.join(bin, 'cts');
 			}
 		}
-		return 'tsc';
+		return 'cts';
 	}
 
 	private getActiveTypeScriptFile(): string | null {
 		const editor = vscode.window.activeTextEditor;
 		if (editor) {
 			const document = editor.document;
-			if (document && (document.languageId === 'typescript' || document.languageId === 'typescriptreact')) {
+			if (document && (document.languageId === 'ctsscript' || document.languageId === 'ctsscriptreact')) {
 				return this.lazyClient().normalizePath(document.uri);
 			}
 		}
@@ -165,7 +165,7 @@ class TscTaskProvider implements vscode.TaskProvider {
 		const tasks: vscode.Task[] = [];
 
 		if (this.autoDetect === 'build' || this.autoDetect === 'on') {
-			const buildTaskidentifier: TypeScriptTaskDefinition = { type: 'typescript', tsconfig: label };
+			const buildTaskidentifier: TypeScriptTaskDefinition = { type: 'ctsscript', tsconfig: label };
 			const buildTask = new vscode.Task(
 				buildTaskidentifier,
 				project.workspaceFolder || vscode.TaskScope.Workspace,
@@ -179,7 +179,7 @@ class TscTaskProvider implements vscode.TaskProvider {
 		}
 
 		if (this.autoDetect === 'watch' || this.autoDetect === 'on') {
-			const watchTaskidentifier: TypeScriptTaskDefinition = { type: 'typescript', tsconfig: label, option: 'watch' };
+			const watchTaskidentifier: TypeScriptTaskDefinition = { type: 'ctsscript', tsconfig: label, option: 'watch' };
 			const watchTask = new vscode.Task(
 				watchTaskidentifier,
 				project.workspaceFolder || vscode.TaskScope.Workspace,

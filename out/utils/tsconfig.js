@@ -58,3 +58,4 @@ function openOrCreateConfigFile(isTypeScriptProject, rootPath, config) {
     });
 }
 exports.openOrCreateConfigFile = openOrCreateConfigFile;
+//# sourceMappingURL=tsconfig.js.map

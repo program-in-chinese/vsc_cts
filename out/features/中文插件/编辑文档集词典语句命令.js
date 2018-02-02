@@ -20,16 +20,15 @@ class 编辑文档集词典语句命令 {
         return __awaiter(this, void 0, void 0, function* () {
             if (词典数据 && vscode_1.window.activeTextEditor) {
                 let 当前文件名 = this.lazyClient().normalizePath(this.lazyClient().asUrl(vscode_1.window.activeTextEditor.document.fileName));
-                // let 当前文件编辑器 = new WorkspaceEdit()
                 let 当前文件词典标签重置指令;
                 let 新的选择位置;
                 for (let 文件名 in 词典数据) {
-                    if (文件名 === "_chtsc.执行所有缓存的编辑命令") {
+                    if (文件名 === "_ctsscript.执行所有缓存的编辑命令") {
                         let 指令数组 = 词典数据[文件名];
                         let 指令 = 指令数组[0];
                         if (工具.是词典编辑指令(指令)) {
                             let { 指令名称 } = 指令;
-                            if (指令名称 === "_chtsc.输出全部缓存编辑") {
+                            if (指令名称 === "_ctsscript.输出全部缓存编辑") {
                                 return this.全部输出();
                             }
                         }
@@ -79,7 +78,7 @@ class 编辑文档集词典语句命令 {
                                     let 行文本 = 行对象.text;
                                     if (!行对象.isEmptyOrWhitespace) {
                                         let 文本 = 行文本;
-                                        let 选择翻译体内 = 文本.match(/(\s+)?\/\/(@|@@)(\s+)?{(.+)?}/) || [];
+                                        let 选择翻译体内 = 文本.match(/(\s+)?\/\/(#|##)(\s+)?{(.+)?}/) || [];
                                         if (选择翻译体内.length >= 4) {
                                             let 词典体 = 选择翻译体内[4];
                                             let 新的词典体 = "";
@@ -93,7 +92,7 @@ class 编辑文档集词典语句命令 {
                                                     }
                                                 });
                                                 新的词典体 = 整理后的键值对组.join(", ");
-                                                新的词典语句 = 选择翻译体内[1] ? 选择翻译体内[1] + "//" + 选择翻译体内[2] + "{ " + 新的词典体 + " }@" : "//" + 选择翻译体内[2] + "{ " + 新的词典体 + " }@";
+                                                新的词典语句 = 选择翻译体内[1] ? 选择翻译体内[1] + "//" + 选择翻译体内[2] + "{ " + 新的词典体 + " }#" : "//" + 选择翻译体内[2] + "{ " + 新的词典体 + " }#";
                                             }
                                             当前文件编辑数组.push(new vscode_1.TextEdit(new vscode_1.Range(行, 0, 行, 文本.length), 新的词典语句));
                                             let 位置1 = new vscode_1.Position(行 + 1, 行对象.range.end.character);
@@ -105,11 +104,11 @@ class 编辑文档集词典语句命令 {
                                     let { 语句种类, 插入语句范围, 语句预设键 } = 编辑参数;
                                     let 行对象 = 执行编辑的文档.lineAt(插入语句范围.start.line);
                                     let 缩进 = 行对象.text.substr(0, 行对象.firstNonWhitespaceCharacterIndex);
-                                    当前文件编辑数组.push(new vscode_1.TextEdit(插入语句范围, 语句种类 === 工具.词典语句种类.全局 ? `${缩进}//@@{ ${语句预设键}: }@\n` : `${缩进}//@{ ${语句预设键}: }@\n`));
+                                    当前文件编辑数组.push(new vscode_1.TextEdit(插入语句范围, 语句种类 === 工具.词典语句种类.全局 ? `${缩进}//##{ ${语句预设键}: }#\n` : `${缩进}//#{ ${语句预设键}: }#\n`));
                                 }
                                 else if (工具.是替换词典值(编辑参数)) {
-                                    let { 替换词典值范围, 词典值 } = 编辑参数;
-                                    当前文件编辑数组.push(new vscode_1.TextEdit(替换词典值范围, 词典值));
+                                    let { 替换词典值范围, 词典值, 是字面量 } = 编辑参数;
+                                    当前文件编辑数组.push(new vscode_1.TextEdit(替换词典值范围, 是字面量 ? 词典值.slice(1, -1) : 词典值));
                                 }
                                 if (当前文件编辑数组 && 当前文件编辑数组[0]) {
                                     this.全局编辑器.set(this.lazyClient().asUrl(当前文件名), 当前文件编辑数组);
@@ -131,8 +130,8 @@ class 编辑文档集词典语句命令 {
                                     let 缩进 = 行对象.text.substr(0, 行对象.firstNonWhitespaceCharacterIndex);
                                     let 位置 = new vscode_1.Position(插入语句范围.start.line, 0);
                                     let 范围 = new vscode_1.Range(位置, 位置);
-                                    let 词典头 = 语句种类 === 工具.词典语句种类.全局 ? "//@@" : "//@";
-                                    let 编辑 = new vscode_1.TextEdit(范围, 是字面量 ? `${缩进}${词典头}{ "${词典值}":"${词典键}" }\n` : `${缩进}${词典头}{ ${词典值}:${词典键} }\n`);
+                                    let 词典头 = 语句种类 === 工具.词典语句种类.全局 ? "//##" : "//#";
+                                    let 编辑 = new vscode_1.TextEdit(范围, 是字面量 ? `${缩进}${词典头}{ "${词典键}":"${词典值}" }#\n` : `${缩进}${词典头}{ ${词典键}:${词典值} }#\n`);
                                     编辑组.push(编辑);
                                 }
                             }
@@ -152,10 +151,10 @@ class 编辑文档集词典语句命令 {
                 }
                 vscode_1.workspace.applyEdit(this.全局编辑器).then(B => {
                     if (当前文件词典标签重置指令 === 工具.词典语句种类.全局) {
-                        ______1.尝试插入词典标签("//@@{}@");
+                        ______1.尝试插入词典标签("//##{}#");
                     }
                     if (当前文件词典标签重置指令 === 工具.词典语句种类.局部) {
-                        ______1.尝试插入词典标签("//@{}@");
+                        ______1.尝试插入词典标签("//#{}#");
                     }
                     if (新的选择位置) {
                         let 文档 = vscode_1.window.activeTextEditor.document;
@@ -166,20 +165,16 @@ class 编辑文档集词典语句命令 {
                     }
                     this.全局编辑器 = new vscode_1.WorkspaceEdit();
                     let 完成时间 = new Date();
-                }, () => {
+                }, (err) => {
+                    console.log(err);
                     this.全局编辑器 = new vscode_1.WorkspaceEdit();
                 });
             }
         });
     }
     全部输出() {
-        /*
-        workspace.applyEdit(this.全局编辑器).then(B => {
-            this.全局编辑器 = new WorkspaceEdit()
-        }, err => {
-            this.全局编辑器 = new WorkspaceEdit()
-        })*/
     }
 }
-编辑文档集词典语句命令._CHTSC_编辑文档集词典语句命令 = '_chtsc.编辑文档集词典语句命令';
+编辑文档集词典语句命令.__ctsscript_编辑文档集词典语句命令 = '_ctsscript.编辑文档集词典语句命令';
 exports.编辑文档集词典语句命令 = 编辑文档集词典语句命令;
+//# sourceMappingURL=编辑文档集词典语句命令.js.map

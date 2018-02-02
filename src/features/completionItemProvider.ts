@@ -3,13 +3,13 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { CompletionItem, TextDocument, Position, CompletionItemKind, CompletionItemProvider, CancellationToken, TextEdit, Range, SnippetString, workspace, ProviderResult, CompletionContext, Uri, MarkdownString } from 'vscode';
+import { CompletionItem, TextDocument, Position, CompletionItemKind, CompletionItemProvider, CancellationToken, TextEdit, Range, SnippetString, workspace, ProviderResult, CompletionContext, Uri, MarkdownString, window, TextDocumentChangeEvent, commands } from 'vscode';
 
 import { ITypeScriptServiceClient } from '../typescriptService';
 import TypingsStatus from '../utils/typingsStatus';
 
 import * as PConst from '../protocol.const';
-import { CompletionEntry, CompletionsRequestArgs, CompletionDetailsRequestArgs, CompletionEntryDetails, CodeAction } from '../protocol';
+import { CompletionEntry, CompletionsRequestArgs, CompletionDetailsRequestArgs, CompletionEntryDetails, CodeAction, ScriptElementKind } from '../protocol';
 import * as Previewer from './previewer';
 import { tsTextSpanToVsRange, vsPositionToTsFileLocation } from '../utils/convert';
 
@@ -17,11 +17,24 @@ import * as nls from 'vscode-nls';
 import { applyCodeAction } from '../utils/codeAction';
 import * as languageModeIds from '../utils/languageModeIds';
 import { CommandManager, Command } from '../utils/commandManager';
+import { 创建对象, 映射连接 } from './\u4E2D\u6587\u63D2\u4EF6/\u5DE5\u5177';
+import { Charas } from './\u4E2D\u6587\u63D2\u4EF6/\u7FFB\u8BD1\u6807\u8BC6\u7B26';
 
 let localize = nls.loadMessageBundle();
 
+export interface 库内词 {
+	文本: string
+	频率: number
+	拼音: string
+	剩余输入?: string
+}
+
 class MyCompletionItem extends CompletionItem {
 	public readonly source: string | undefined;
+	public readonly 是中文: boolean
+	public readonly 上屏字符: string[]
+	public readonly 是输入法结果: boolean
+	public readonly 是关键字结果: boolean
 	constructor(
 		public readonly position: Position,
 		public readonly document: TextDocument,
@@ -34,9 +47,26 @@ class MyCompletionItem extends CompletionItem {
 		this.sortText = entry.sortText;
 		this.kind = MyCompletionItem.convertKind(entry.kind);
 		this.position = position;
-		this.commitCharacters = MyCompletionItem.getCommitCharacters(enableDotCompletions, !useCodeSnippetsOnMethodSuggest, entry.kind);
 
-		if (entry.replacementSpan) {
+		this.commitCharacters = MyCompletionItem.getCommitCharacters(enableDotCompletions, !useCodeSnippetsOnMethodSuggest, entry.kind);
+		if (entry.是库内中文结果) {
+			this.是中文 = true
+			this.是输入法结果 = false
+			this.是关键字结果 = true
+			this.filterText = entry.过滤文本
+			this.commitCharacters = entry.上屏字符
+			this.上屏字符 = entry.上屏字符
+		}
+		if (entry.是输入法结果) {
+			this.是中文 = true
+			this.是输入法结果 = true
+			this.是关键字结果 = false
+			this.上屏字符 = entry.上屏字符
+			this.commitCharacters = entry.上屏字符
+			this.insertText = entry.插入文本
+			this.filterText = entry.过滤文本
+			this.range = entry.范围
+		} else if (entry.replacementSpan) {
 			let span: protocol.TextSpan = entry.replacementSpan;
 			// The indexing for the range returned by the server uses 1-based indexing.
 			// We convert to 0-based indexing.
@@ -59,46 +89,72 @@ class MyCompletionItem extends CompletionItem {
 		switch (kind) {
 			case PConst.Kind.primitiveType:
 			case PConst.Kind.keyword:
+			case PConst.Kind.primitiveTypeEn:
+			case PConst.Kind.keywordEn:
 				return CompletionItemKind.Keyword;
 			case PConst.Kind.const:
+			case PConst.Kind.constEn:
 				return CompletionItemKind.Constant;
 			case PConst.Kind.let:
 			case PConst.Kind.variable:
 			case PConst.Kind.localVariable:
 			case PConst.Kind.alias:
+			case PConst.Kind.letEn:
+			case PConst.Kind.variableEn:
+			case PConst.Kind.localVariableEn:
+			case PConst.Kind.aliasEn:
 				return CompletionItemKind.Variable;
 			case PConst.Kind.memberVariable:
 			case PConst.Kind.memberGetAccessor:
 			case PConst.Kind.memberSetAccessor:
+			case PConst.Kind.memberVariableEn:
+			case PConst.Kind.memberGetAccessorEn:
+			case PConst.Kind.memberSetAccessorEn:
 				return CompletionItemKind.Field;
 			case PConst.Kind.function:
+			case PConst.Kind.functionEn:
 				return CompletionItemKind.Function;
 			case PConst.Kind.memberFunction:
 			case PConst.Kind.constructSignature:
 			case PConst.Kind.callSignature:
 			case PConst.Kind.indexSignature:
+			case PConst.Kind.memberFunctionEn:
+			case PConst.Kind.constructSignatureEn:
+			case PConst.Kind.callSignatureEn:
+			case PConst.Kind.indexSignatureEn:
 				return CompletionItemKind.Method;
 			case PConst.Kind.enum:
+			case PConst.Kind.enumEn:
 				return CompletionItemKind.Enum;
 			case PConst.Kind.module:
+			case PConst.Kind.moduleEn:
 			case PConst.Kind.externalModuleName:
+			case PConst.Kind.externalModuleNameEn:
 				return CompletionItemKind.Module;
 			case PConst.Kind.class:
 			case PConst.Kind.type:
+			case PConst.Kind.classEn:
+			case PConst.Kind.typeEn:
 				return CompletionItemKind.Class;
 			case PConst.Kind.interface:
+			case PConst.Kind.interfaceEn:
 				return CompletionItemKind.Interface;
 			case PConst.Kind.warning:
 			case PConst.Kind.file:
 			case PConst.Kind.script:
+			case PConst.Kind.warningEn:
+			case PConst.Kind.fileEn:
+			case PConst.Kind.scriptEn:
 				return CompletionItemKind.File;
 			case PConst.Kind.directory:
+			case PConst.Kind.directoryEn:
 				return CompletionItemKind.Folder;
 		}
 		return CompletionItemKind.Property;
 	}
 
 	private static getCommitCharacters(enableDotCompletions: boolean, enableCallCompletions: boolean, kind: string): string[] | undefined {
+
 		switch (kind) {
 			case PConst.Kind.memberGetAccessor:
 			case PConst.Kind.memberSetAccessor:
@@ -107,6 +163,13 @@ class MyCompletionItem extends CompletionItem {
 			case PConst.Kind.indexSignature:
 			case PConst.Kind.enum:
 			case PConst.Kind.interface:
+			case PConst.Kind.memberGetAccessorEn:
+			case PConst.Kind.memberSetAccessorEn:
+			case PConst.Kind.constructSignatureEn:
+			case PConst.Kind.callSignatureEn:
+			case PConst.Kind.indexSignatureEn:
+			case PConst.Kind.enumEn:
+			case PConst.Kind.interfaceEn:
 				return enableDotCompletions ? ['.'] : undefined;
 
 			case PConst.Kind.module:
@@ -119,6 +182,16 @@ class MyCompletionItem extends CompletionItem {
 			case PConst.Kind.class:
 			case PConst.Kind.function:
 			case PConst.Kind.memberFunction:
+			case PConst.Kind.moduleEn:
+			case PConst.Kind.aliasEn:
+			case PConst.Kind.constEn:
+			case PConst.Kind.letEn:
+			case PConst.Kind.variableEn:
+			case PConst.Kind.localVariableEn:
+			case PConst.Kind.memberVariableEn:
+			case PConst.Kind.classEn:
+			case PConst.Kind.functionEn:
+			case PConst.Kind.memberFunctionEn:
 				return enableDotCompletions ? (enableCallCompletions ? ['.', '('] : ['.']) : undefined;
 		}
 
@@ -159,7 +232,9 @@ namespace Configuration {
 
 }
 
+
 export default class TypeScriptCompletionItemProvider implements CompletionItemProvider {
+	输入匹配 = /(([\u4E00-\u9FA5A-Za-z_\$]*?)|([\u4E00-\u9FA5A-Za-z_\$]+?[\u4E00-\u9FA5A-Za-z0-9_\$]*?))(([a-z]+?[\+\-]*)|([a-z]+?[']*?[a-z]+?[\+\-]*?))$/
 	constructor(
 		private client: ITypeScriptServiceClient,
 		private readonly typingsStatus: TypingsStatus,
@@ -167,6 +242,7 @@ export default class TypeScriptCompletionItemProvider implements CompletionItemP
 	) {
 		commandManager.register(new ApplyCompletionCodeActionCommand(this.client));
 	}
+
 
 	public async provideCompletionItems(
 		document: TextDocument,
@@ -189,7 +265,6 @@ export default class TypeScriptCompletionItemProvider implements CompletionItemP
 		if (!file) {
 			return [];
 		}
-
 		const config = this.getConfiguration(document.uri);
 
 		if (context.triggerCharacter === '"' || context.triggerCharacter === '\'') {
@@ -199,7 +274,7 @@ export default class TypeScriptCompletionItemProvider implements CompletionItemP
 
 			// make sure we are in something that looks like the start of an import
 			const line = document.lineAt(position.line).text.slice(0, position.character);
-			if (!line.match(/\b(from|import)\s*["']$/) && !line.match(/\b(import|require)\(['"]$/)) {
+			if (!line.match(/\b(from|来自|导入|import)\s*["']$/) && !line.match(/\b(import|导入|需要|require)\(['"]$/)) {
 				return [];
 			}
 		}
@@ -211,7 +286,7 @@ export default class TypeScriptCompletionItemProvider implements CompletionItemP
 
 			// make sure we are in something that looks like an import path
 			const line = document.lineAt(position.line).text.slice(0, position.character);
-			if (!line.match(/\b(from|import)\s*["'][^'"]*$/) && !line.match(/\b(import|require)\(['"][^'"]*$/)) {
+			if (!line.match(/\b(from|来自|导入|import)\s*["'][^'"]*$/) && !line.match(/\b(import|导入|需要|require)\(['"][^'"]*$/)) {
 				return [];
 			}
 		}
@@ -230,6 +305,7 @@ export default class TypeScriptCompletionItemProvider implements CompletionItemP
 				includeExternalModuleExports: config.autoImportSuggestions
 			} as CompletionsRequestArgs;
 			const msg = await this.client.execute('completions', args, token);
+
 			// This info has to come from the tsserver. See https://github.com/Microsoft/TypeScript/issues/2831
 			// let isMemberCompletion = false;
 			// let requestColumn = position.character;
@@ -246,11 +322,11 @@ export default class TypeScriptCompletionItemProvider implements CompletionItemP
 			// 	isMemberCompletion = value === '.';
 			// }
 
-			const completionItems: CompletionItem[] = [];
+			let completionItems: CompletionItem[] = [];
 			const body = msg.body;
 			if (body) {
 				// Only enable dot completions in TS files for now
-				let enableDotCompletions = document && (document.languageId === languageModeIds.typescript || document.languageId === languageModeIds.typescriptreact);
+				let enableDotCompletions = document && (document.languageId === languageModeIds.typescript || document.languageId === languageModeIds.ctsscript || document.languageId === languageModeIds.typescriptreact || document.languageId === languageModeIds.ctsscriptreact);
 
 				// TODO: Workaround for https://github.com/Microsoft/TypeScript/issues/13456
 				// Only enable dot completions when previous character is an identifier.
@@ -261,6 +337,7 @@ export default class TypeScriptCompletionItemProvider implements CompletionItemP
 						position.line, position.character - 1));
 					enableDotCompletions = preText.match(/[a-z_$\)\]\}]\s*$/ig) !== null;
 				}
+				let 中文名组: string[] = []
 
 				for (const element of body) {
 					if (element.kind === PConst.Kind.warning && !config.nameSuggestions) {
@@ -269,20 +346,150 @@ export default class TypeScriptCompletionItemProvider implements CompletionItemP
 					if (!config.autoImportSuggestions && element.hasAction) {
 						continue;
 					}
-					const item = new MyCompletionItem(position, document, element, enableDotCompletions, config.useCodeSnippetsOnMethodSuggest);
+					if (this.是中文条目(element)) {
+						中文名组.push(element.name)
+						element.是库内中文结果 = true
+						element.上屏字符 = [" "]
+					}
+
+					let item = new MyCompletionItem(position, document, element, enableDotCompletions, config.useCodeSnippetsOnMethodSuggest);
 					completionItems.push(item);
+
+				}
+
+				if (中文名组 && 中文名组.length) {
+					let 拼音对象 = await commands.executeCommand<映射连接<string>>("vsc.取汉字拼音", 中文名组)
+					completionItems.forEach(v => {
+						if ((<MyCompletionItem>v).是关键字结果) {
+							let 拼音 = 拼音对象[v.label]
+							v.filterText = 拼音
+						}
+					})
 				}
 			}
 
+			if (this.是拼音启动(context.triggerCharacter)) {
+				const line = document.lineAt(position.line).text.slice(0, position.character)
+				let { 开启中文提示, 项目集, 已经输入的, 输入的拼音, 替换起始位置, 替换结束位置 } = this.计算启动条件(document, position, context.triggerCharacter, completionItems)
+
+				if (开启中文提示) {
+					const 库内词组 = await commands.executeCommand<库内词[]>("vsc.拼音输入法", 输入的拼音.toLowerCase())
+					if (库内词组 && 库内词组.length) {
+						let 位数 = 库内词组.length.toString().length
+						for (let i = 0; i < 库内词组.length; i++) {
+							const 词 = 库内词组[i]
+							const 条目: CompletionEntry = <any>{
+								name: `${i + 1}:${词.文本}`,
+								插入文本: `${已经输入的}${词.文本}`,
+								是输入法结果: true,
+								过滤文本: `${已经输入的}${词.拼音}${词.剩余输入 ? 词.剩余输入 : ""}${i + 1}`,
+								上屏字符: [" "],
+								范围: new Range(new Position(position.line, 替换起始位置), new Position(position.line, 替换结束位置)),
+								kindModifiers: "",
+								sortText: `0`,
+								kind: "文件"
+							}
+							const 项目 = new MyCompletionItem(position, document, 条目, false, config.useCodeSnippetsOnMethodSuggest);
+							completionItems.push(项目)
+						}
+					}
+				} else {
+					completionItems = 项目集
+				}
+			}
 			return completionItems;
 		} catch {
 			return [];
 		}
 	}
 
+	public 计算启动条件(文档: TextDocument, 位置: Position, 启动字符: string, 已有项目: CompletionItem[]) {
+		const line = 文档.lineAt(位置.line).text.slice(0, 位置.character)
+		let { 输入的拼音, 已经输入的 } = this.分割输入(line)
+		if (输入的拼音) {
+			let 替换起始位置 = 位置.character - 输入的拼音.length - (已经输入的 ? 已经输入的.length : 0)
+			let 替换结束位置 = 位置.character
+			return { 开启中文提示: true, 项目集: null, 已经输入的, 输入的拼音, 替换起始位置, 替换结束位置 }
+		}
+		return { 开启中文提示: false, 项目集: 已有项目, 已经输入的: null, 输入的拼音: null, 替换起始位置: null, 替换结束位置: null }
+	}
+
+	public 分割输入(文本: string) {
+		let 匹配 = 文本.match(this.输入匹配)
+		if (匹配) {
+			let 输入的拼音 = 匹配[4]
+			let 已经输入的 = 匹配[1]
+			return { 输入的拼音, 已经输入的 }
+		}
+	}
+
+	public 是拼音启动(启动字符: string) {
+		switch (启动字符) {
+			case "a":
+			case "o":
+			case "e":
+			case "i":
+			case "u":
+			case "v":
+			case "b":
+			case "p":
+			case "m":
+			case "f":
+			case "d":
+			case "t":
+			case "n":
+			case "l":
+			case "g":
+			case "k":
+			case "h":
+			case "j":
+			case "q":
+			case "x":
+			case "z":
+			case "c":
+			case "s":
+			case "r":
+			case "y":
+			case "w":
+			case "+":
+			case "-":
+				return true
+			default:
+				false
+		}
+	}
+
+	public 是中文条目(项目: CompletionEntry) {
+		for (let i = 0; i < 项目.name.length; i++) {
+			let ch = 项目.name.charCodeAt(i)
+			if (ch >= 0x4E00 && ch <= 0x9FA5) {
+				return true
+			}
+		}
+		return false
+	}
+
 	public resolveCompletionItem(item: CompletionItem, token: CancellationToken): ProviderResult<CompletionItem> {
 		if (!(item instanceof MyCompletionItem)) {
 			return null;
+		}
+
+		if ((<MyCompletionItem>item).是中文) {
+			if (item.是输入法结果) {
+				item.command = {
+					title: "输入法上屏",
+					command: "ctsscript.输入法上屏命令",
+					arguments: [undefined]
+				}
+				return item
+			} else {
+				item.command = {
+					title: "输入法上屏",
+					command: "ctsscript.输入法上屏命令",
+					arguments: [item.label]
+				}
+			}
+
 		}
 
 		const filepath = this.client.normalizePath(item.document.uri);
@@ -301,7 +508,7 @@ export default class TypeScriptCompletionItemProvider implements CompletionItemP
 				return item;
 			}
 			const detail = details[0];
-			item.detail = Previewer.plain(detail.displayParts);
+			item.detail = Previewer.不翻译部件(detail.displayParts);
 			const documentation = new MarkdownString();
 			if (item.source) {
 				let importPath = `'${item.source}'`;
@@ -404,4 +611,5 @@ export default class TypeScriptCompletionItemProvider implements CompletionItemP
 			nameSuggestions: workspace.getConfiguration('javascript', resource).get(Configuration.nameSuggestions, true)
 		};
 	}
+
 }

@@ -130,3 +130,4 @@ class FormattingProviderManager {
     }
 }
 exports.FormattingProviderManager = FormattingProviderManager;
+//# sourceMappingURL=formattingProvider.js.map

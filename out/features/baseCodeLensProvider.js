@@ -83,3 +83,4 @@ class TypeScriptBaseCodeLensProvider {
     }
 }
 exports.TypeScriptBaseCodeLensProvider = TypeScriptBaseCodeLensProvider;
+//# sourceMappingURL=baseCodeLensProvider.js.map

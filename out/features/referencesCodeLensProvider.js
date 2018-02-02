@@ -64,7 +64,7 @@ class TypeScriptReferencesCodeLensProvider extends baseCodeLensProvider_1.TypeSc
             case PConst.Kind.variable:
             case PConst.Kind.function:
                 // Only show references for exported variables
-                if (!item.kindModifiers.match(/\bexport\b/)) {
+                if (!item.kindModifiers.match(/\bexport\b/) && !item.kindModifiers.match(/\b导出\b/)) {
                     break;
                 }
             // fallthrough
@@ -87,3 +87,4 @@ class TypeScriptReferencesCodeLensProvider extends baseCodeLensProvider_1.TypeSc
     }
 }
 exports.default = TypeScriptReferencesCodeLensProvider;
+//# sourceMappingURL=referencesCodeLensProvider.js.map

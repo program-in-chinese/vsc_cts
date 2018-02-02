@@ -112,3 +112,4 @@ class Reader {
     }
 }
 exports.Reader = Reader;
+//# sourceMappingURL=wireProtocol.js.map

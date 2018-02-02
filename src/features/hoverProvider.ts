@@ -9,6 +9,7 @@ import * as Proto from '../protocol';
 import { ITypeScriptServiceClient } from '../typescriptService';
 import { tagsMarkdownPreview } from './previewer';
 import { tsTextSpanToVsRange, vsPositionToTsFileLocation } from '../utils/convert';
+import { 翻译注释 } from "./中文插件/翻译标识符"
 
 export default class TypeScriptHoverProvider implements HoverProvider {
 
@@ -26,7 +27,7 @@ export default class TypeScriptHoverProvider implements HoverProvider {
 			if (response && response.body) {
 				const data = response.body;
 				return new Hover(
-					TypeScriptHoverProvider.getContents(data),
+					await TypeScriptHoverProvider.getContents(data),
 					tsTextSpanToVsRange(data));
 			}
 		} catch (e) {
@@ -35,15 +36,15 @@ export default class TypeScriptHoverProvider implements HoverProvider {
 		return undefined;
 	}
 
-	private static getContents(data: Proto.QuickInfoResponseBody) {
+	private static async getContents(data: Proto.QuickInfoResponseBody) {
 		const parts = [];
 
 		if (data.displayString) {
-			parts.push({ language: 'typescript', value: data.displayString });
+			parts.push({ language: 'ctsscript', value: data.displayString });
 		}
 
-		const tags = tagsMarkdownPreview(data.tags);
-		parts.push(data.documentation + (tags ? '\n\n' + tags : ''));
+		const tags = await tagsMarkdownPreview(data.tags);
+		parts.push(await 翻译注释(data.documentation) + (tags ? '\n\n' + tags : ''));
 		return parts;
 	}
 }

@@ -11,3 +11,4 @@ exports.ctsscriptreact = 'ctsscriptreact';
 exports.javascript = 'javascript';
 exports.javascriptreact = 'javascriptreact';
 exports.jsxTags = 'jsx-tags';
+//# sourceMappingURL=languageModeIds.js.map

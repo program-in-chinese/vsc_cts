@@ -51,3 +51,4 @@ class TypeScriptDocumentHighlightProvider {
     }
 }
 exports.default = TypeScriptDocumentHighlightProvider;
+//# sourceMappingURL=documentHighlightProvider.js.map

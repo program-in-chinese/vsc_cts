@@ -158,7 +158,7 @@ function 是词典编辑指令(编辑参数) {
 exports.是词典编辑指令 = 是词典编辑指令;
 function 创建词典编辑指令() {
     let 基类 = 创建词典编辑(词典编辑种类.指令);
-    基类.指令名称 = "_chtsc.输出全部缓存编辑";
+    基类.指令名称 = "_ctsscript.输出全部缓存编辑";
     return 基类;
 }
 exports.创建词典编辑指令 = 创建词典编辑指令;
@@ -266,3 +266,4 @@ function 创建插入词典语句(插入语句范围, 语句种类, 词典值, �
     return 基类;
 }
 exports.创建插入词典语句 = 创建插入词典语句;
+//# sourceMappingURL=工具.js.map

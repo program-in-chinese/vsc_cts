@@ -99,3 +99,4 @@ class TypeScriptDocumentSymbolProvider {
     }
 }
 exports.default = TypeScriptDocumentSymbolProvider;
+//# sourceMappingURL=documentSymbolProvider.js.map

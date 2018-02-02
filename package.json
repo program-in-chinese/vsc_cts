@@ -21,8 +21,10 @@
     "@types/semver": "5.4.0"
   },
   "scripts": {
-    "vscode:prepublish": "node ../../node_modules/gulp/bin/gulp.js --gulpfile ../../build/gulpfile.extensions.js compile-extension:typescript ./tsconfig.json",
-    "update-grammar": "node ./build/update-grammars.js"
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install"
   },
   "activationEvents": [
     "onLanguage:ctsscript",
@@ -364,6 +366,16 @@
         "command": "ctsscript.源码转换命令",
         "title": "转换源码文件",
         "category": "CtsScript"
+      },
+      {
+        "command": "ctsscript.声明词典格式化",
+        "title": "声明词典格式化",
+        "category": "CtsScript"
+      },
+      {
+        "command": "ctsscript.输入法上屏",
+        "title": "输入法上屏",
+        "category": "CtsScript"
       }
     ],
     "menus": {
@@ -396,15 +408,11 @@
         "key": "F3"
       },
       {
-        "command": "ctsscript.局部词典标签插入命令",
+        "command": "ctsscript.翻转词典命令",
         "key": "F4"
       },
       {
-        "command": "ctsscript.翻转词典命令",
-        "key": "F8"
-      },
-      {
-        "command": "ctsscript.源码转换命令",
+        "command": "ctsscript.声明词典格式化",
         "key": "F12"
       }
     ],
@@ -489,7 +497,7 @@
         "pattern": "$cts"
       },
       {
-        "name": "tsc-watch",
+        "name": "cts-watch",
         "label": "CTS监控",
         "owner": "ctsscript",
         "applyTo": "closedDocuments",

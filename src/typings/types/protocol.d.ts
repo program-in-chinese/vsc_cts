@@ -1280,10 +1280,27 @@ declare namespace ts.server.protocol {
 
 
     interface 词典完成条目 {
+        kind:ScriptElementKind,
         name: string,
         range: Range,
         isStringLiteral: boolean
         rangeMap?:RangeMap
+    }
+
+    interface 词典完成组 {
+        file: string
+        locs: {
+            isString: boolean,
+            loc: { start: Location; end: Location }
+        }[]
+    }
+
+    interface 词典完成 {
+        file: string;
+        start: Location;
+        end?: Location;
+        name: string;
+        isInString: boolean;
     }
 
 
@@ -1305,9 +1322,6 @@ declare namespace ts.server.protocol {
     export interface 转换CTS结果 extends Response {
         body?: string;
     }
-
-
-
 
 
 
@@ -1359,6 +1373,12 @@ declare namespace ts.server.protocol {
          * Identifier (not necessarily human-readable) identifying where this completion came from.
          */
         source?: string;
+        是输入法结果?: boolean
+        是库内中文结果?: boolean
+        范围?: any
+        过滤文本?: string
+        上屏字符?: string[]
+        插入文本?: string
     }
     /**
      * Additional completion entry details, available on demand
@@ -2152,20 +2172,24 @@ declare namespace ts.server.protocol {
         moduleElement = "模块",
         /** class X {} */
         classElement = "类别",
+        classElementEn = "class",
         /** var x = class X {} */
         localClassElement = "本地类别",
         /** interface Y {} */
         interfaceElement = "接口",
+        interfaceElementEn = "interface",
         /** type T = ... */
         typeElement = "类型",
         /** enum E */
         enumElement = "枚举",
+        enumElementEn = "enum",
         enumMemberElement = "枚举成员",
         /**
          * Inside module and script only
          * const v = ..
          */
         variableElement = "值量",
+        variableElementEn = "var",
         /** Inside function */
         localVariableElement = "本地变量",
         /**
@@ -2173,10 +2197,12 @@ declare namespace ts.server.protocol {
          * function f() { }
          */
         functionElement = "函数",
+        functionElementEn = "function",
         /** Inside function */
         localFunctionElement = "本地函数",
         /** class X { [public|private]* foo() {} } */
         memberFunctionElement = "方法",
+        memberFunctionElementEn = "method",
         /** class X { [public|private]* [get|set] foo:number; } */
         memberGetAccessorElement = "获取",
         memberSetAccessorElement = "设置",
@@ -2207,6 +2233,7 @@ declare namespace ts.server.protocol {
          * <JsxTagName attribute1 attribute2={0} />
          */
         jsxAttribute = "JSX特性",
+        
     }
 
     interface TypeAcquisition {
@@ -2254,5 +2281,6 @@ declare namespace ts {
     export type ScriptTarget = never;
 }
 import protocol = ts.server.protocol;
+import { ScriptElementKind } from "../../protocol";
 export = protocol;
 export as namespace protocol;

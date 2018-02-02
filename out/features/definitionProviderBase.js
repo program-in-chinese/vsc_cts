@@ -45,3 +45,4 @@ class TypeScriptDefinitionProviderBase {
     }
 }
 exports.default = TypeScriptDefinitionProviderBase;
+//# sourceMappingURL=definitionProviderBase.js.map

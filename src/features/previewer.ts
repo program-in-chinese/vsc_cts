@@ -5,42 +5,81 @@
 
 import * as Proto from '../protocol';
 import { MarkdownString } from 'vscode';
+import { 翻译注释 } from "./中文插件/翻译标识符"
 
-export function plain(parts: Proto.SymbolDisplayPart[]): string {
+export async function plain(parts: Proto.SymbolDisplayPart[]): Promise<string> {
+	if (!parts) {
+		return '';
+	}
+	return parts.map(async part => await 翻译注释(part.text)).join('');
+}
+
+export  function 不翻译部件(parts: Proto.SymbolDisplayPart[]): string {
 	if (!parts) {
 		return '';
 	}
 	return parts.map(part => part.text).join('');
 }
 
-export function tagsMarkdownPreview(tags: Proto.JSDocTagInfo[]): string {
-	return (tags || [])
-		.map(tag => {
-			const label = `*@${tag.name}*`;
-			if (!tag.text) {
-				return label;
-			}
-			return label + (tag.text.match(/\r\n|\n/g) ? '  \n' + tag.text : ` — ${tag.text}`);
-		})
-		.join('  \n\n');
+export async function tagsMarkdownPreview(tags: Proto.JSDocTagInfo[]): Promise<string> {
+	let 返回的预设 = (tags || []).map(async tag => {
+		let 标签名 = await 翻译注释(tag.name)
+		const 标签 = `*@${标签名}*`;
+		if (!tag.text) {
+			return 标签;
+		}
+		let JsDoc文档 = tag.text.match(/\r\n|\n/g) ? '  \n' + await 翻译注释(tag.text) : ` — ` + await 翻译注释(tag.text)
+		return 标签 + JsDoc文档;
+	})
+
+	let 返回值: string[] = []
+	for (var i = 0; i < 返回的预设.length; i++) {
+		let 值 = await 返回的预设[i]
+		返回值.push(值)
+	}
+	return 返回值.join('  \n\n')
 }
 
-export function markdownDocumentation(
+export  function 不翻译标签(tags: Proto.JSDocTagInfo[]): string {
+	let 返回的预设 = (tags || []).map( tag => {
+		let 标签名 =  tag.name
+		const 标签 = `*@${标签名}*`;
+		if (!tag.text) {
+			return 标签;
+		}
+		let JsDoc文档 = tag.text.match(/\r\n|\n/g) ? '  \n' +  tag.text : ` — ` +  tag.text
+		return 标签 + JsDoc文档;
+	})
+
+	let 返回值: string[] = []
+	for (var i = 0; i < 返回的预设.length; i++) {
+		let 值 =  返回的预设[i]
+		返回值.push(值)
+	}
+	return 返回值.join('  \n\n')
+}
+
+export async function markdownDocumentation(
 	documentation: Proto.SymbolDisplayPart[],
 	tags: Proto.JSDocTagInfo[]
-): MarkdownString {
+): Promise<MarkdownString> {
 	const out = new MarkdownString();
-	addmarkdownDocumentation(out, documentation, tags);
+	out.appendMarkdown(await plain(documentation));
+	const tagsPreview = await tagsMarkdownPreview(tags);
+	if (tagsPreview) {
+		out.appendMarkdown('\n\n' + tagsPreview);
+	}
 	return out;
 }
+
 
 export function addmarkdownDocumentation(
 	out: MarkdownString,
 	documentation: Proto.SymbolDisplayPart[],
 	tags: Proto.JSDocTagInfo[]
 ): MarkdownString {
-	out.appendMarkdown(plain(documentation));
-	const tagsPreview = tagsMarkdownPreview(tags);
+	out.appendMarkdown(不翻译部件(documentation));
+	const tagsPreview = 不翻译标签(tags);
 	if (tagsPreview) {
 		out.appendMarkdown('\n\n' + tagsPreview);
 	}

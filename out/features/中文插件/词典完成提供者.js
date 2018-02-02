@@ -57,26 +57,24 @@ class 词典键自动完成项目 extends 词典自动完成项目 {
     constructor(标签名, 是字面量) {
         super(标签名, vscode_1.CompletionItemKind.Enum);
         this.种类 = 词典自动完成种类.词典键自动完成项目;
-        if (是字面量) {
-            this.label += " :=> 是字面量";
-        }
         this.insertText = "";
-        this.是字面量键 = 是字面量;
+        this.是字面量值 = 是字面量;
     }
 }
 exports.词典键自动完成项目 = 词典键自动完成项目;
 class 词典值自动完成项目 extends 词典自动完成项目 {
-    constructor(标签名, 标识符) {
+    constructor(标签名, 标识符, 是字面量) {
         super(标签名, vscode_1.CompletionItemKind.Enum);
         this.种类 = 词典自动完成种类.词典值自动完成项目;
         this.insertText = "";
         this.标识符 = 标识符;
+        this.是字面量键 = 是字面量;
     }
 }
 exports.词典值自动完成项目 = 词典值自动完成项目;
 class 词典模式切换项目 extends 词典自动完成项目 {
     constructor(是全局词典请求, 规范的文档名, 当前位置, 键名) {
-        super(是全局词典请求 ? "切换到 :=> 全局标签" : "切换到 :=> 局部标签", vscode_1.CompletionItemKind.Function);
+        super(是全局词典请求 ? "切换到 => 全局标签" : "切换到 => 局部标签", vscode_1.CompletionItemKind.Function);
         this.种类 = 词典自动完成种类.词典模式切换项目;
         this.insertText = "";
         let range = new vscode_1.Range(new vscode_1.Position(当前位置.line + 1, 0), new vscode_1.Position(当前位置.line + 1, 0));
@@ -89,7 +87,7 @@ class 词典模式切换项目 extends 词典自动完成项目 {
         // TODO 这里除了局部 词典需要手工排除的问题
         this.command = {
             title: "替换词典范围",
-            command: ___________1.编辑文档集词典语句命令._CHTSC_编辑文档集词典语句命令,
+            command: ___________1.编辑文档集词典语句命令.__ctsscript_编辑文档集词典语句命令,
             arguments: [词典编辑映射]
         };
     }
@@ -97,7 +95,7 @@ class 词典模式切换项目 extends 词典自动完成项目 {
 exports.词典模式切换项目 = 词典模式切换项目;
 class 跳过当前键项目 extends 词典自动完成项目 {
     constructor(当前位置, 排除名称) {
-        super("跳过此键 :=> 加入排除", vscode_1.CompletionItemKind.Function);
+        super("跳过此键 => 加入排除", vscode_1.CompletionItemKind.Function);
         this.种类 = 词典自动完成种类.跳过当前键项目;
         let 文档 = vscode_1.window.activeTextEditor && vscode_1.window.activeTextEditor.document;
         if (文档) {
@@ -111,18 +109,19 @@ class 跳过当前键项目 extends 词典自动完成项目 {
 }
 exports.跳过当前键项目 = 跳过当前键项目;
 class 词典分部值自动完成项目 extends 词典自动完成项目 {
-    constructor(标签名, 标识符, 父项目) {
+    constructor(标签名, 标识符, 父项目, 是字面量) {
         super(标签名, vscode_1.CompletionItemKind.EnumMember);
         this.种类 = 词典自动完成种类.词典分部值自动完成项目;
         this.insertText = "";
         this.父项目 = 父项目;
         this.标识符 = 标识符;
+        this.是字面量键 = 是字面量;
     }
 }
 exports.词典分部值自动完成项目 = 词典分部值自动完成项目;
 class 词典完成替换后更新范围项目 extends 词典自动完成项目 {
     constructor(名称, 客户端, 完成范围, 替换文本, 请求文本, 当前位置, 当前匹配文本) {
-        super(名称 === "结束目前" ? "结束目前 :=> 格式化语句" : 名称 === "自动完成" ? "自动完成 :=> 替换标识符" : 名称 === "新行全局" ? "切换到 :=> 全局标签" : "切换到 :=> 局部标签", vscode_1.CompletionItemKind.Function);
+        super(名称 === "结束目前" ? "结束目前 => 格式化语句" : 名称 === "自动完成" ? "自动完成 => 替换标识符" : 名称 === "新行全局" ? "切换到 => 全局标签" : "切换到 => 局部标签", vscode_1.CompletionItemKind.Function);
         this.种类 = 词典自动完成种类.词典完成替换后更新范围项目;
         this.编辑 = [];
         if (名称 === "新行全局") {
@@ -162,7 +161,7 @@ class 词典完成替换后更新范围项目 extends 词典自动完成项目 {
                         let 范围 = new vscode_1.Range(前位置, 后位置);
                         文件编辑数组.push(工具.创建替换词典值(范围, 替换文本, 服务器数据.isStringLiteral));
                         if (当前文件名 !== 文件名) {
-                            文件编辑数组.push(工具.创建插入词典语句(父范围, 服务器数据.isStringLiteral ? 工具.词典语句种类.局部 : 工具.词典语句种类.全局, 替换文本, 请求文本, 服务器数据.isStringLiteral || undefined));
+                            文件编辑数组.push(工具.创建插入词典语句(父范围, 工具.词典语句种类.全局, 替换文本, 请求文本, 服务器数据.isStringLiteral || undefined));
                         }
                     }
                 });
@@ -177,7 +176,7 @@ class 词典完成替换后更新范围项目 extends 词典自动完成项目 {
         }
         this.command = {
             title: "替换词典范围",
-            command: ___________1.编辑文档集词典语句命令._CHTSC_编辑文档集词典语句命令,
+            command: ___________1.编辑文档集词典语句命令.__ctsscript_编辑文档集词典语句命令,
             arguments: [词典编辑映射]
         };
     }
@@ -235,8 +234,8 @@ class 词典自动完成命令提供者 {
         }
         if (是词典完成替换后更新范围项目(this.储存的最后一个应用的项目)) {
             let 标签 = this.储存的最后一个应用的项目.label;
-            if (标签 === "结束目前 :=> 格式化语句") {
-                vscode_1.commands.executeCommand(_______1.格式化词典语句命令._CHTSC_格式化词典语句命令, this.当前位置);
+            if (标签 === "结束目前 => 格式化语句") {
+                vscode_1.commands.executeCommand(_______1.格式化词典语句命令.__ctsscript_格式化词典语句命令, this.当前位置);
                 this.储存的最后一个应用的项目.label = "已经完成了命令";
             }
         }
@@ -295,7 +294,7 @@ class 词典自动完成命令提供者 {
                 ignoreName: undefined
             };
             if (是词典值自动完成项目(this.当前值自动完成项目)) {
-                if (是词典完成替换后更新范围项目(this.储存的最后一个应用的项目) && this.储存的最后一个应用的项目.label !== "自动完成 :=> 替换标识符") {
+                if (是词典完成替换后更新范围项目(this.储存的最后一个应用的项目) && this.储存的最后一个应用的项目.label !== "自动完成 => 替换标识符") {
                     this.储存标识符(/** 使用上次的 */ true);
                 }
                 else {
@@ -312,7 +311,7 @@ class 词典自动完成命令提供者 {
         }
         if (!是请求值完成(事项) && 是请求值分部完成(事项)) {
             this.储存单词();
-            return this.相关单词组生成分部标签组(this.当前值自动完成项目);
+            return this.相关单词组生成分部标签组(this.当前值自动完成项目, this.当前值自动完成项目.是字面量键);
         }
         if (是键以输入后又重新请求(事项)) {
             return [];
@@ -320,7 +319,7 @@ class 词典自动完成命令提供者 {
     }
     resolveCompletionItem(item, _token) {
         if (是词典键自动完成项目(item)) {
-            item.insertText = item.是字面量键 ? ' "' + item.label + '"' : " " + item.label + ":";
+            item.insertText = item.是字面量值 ? ' "' + item.label + '":' : " " + item.label + ":";
             item.range = new vscode_1.Range(new vscode_1.Position(this.当前位置.line, this.当前位置.character - 工具.计算空格数量(this.光标前文本)), new vscode_1.Position(this.当前位置.line, this.当前位置.character));
         }
         if (是词典分部值自动完成项目(item)) {
@@ -329,6 +328,7 @@ class 词典自动完成命令提供者 {
         }
         else if (是词典值自动完成项目(item)) {
             item.insertText = item.label;
+            let kind = item.标识符.kind;
             item.range = new vscode_1.Range(new vscode_1.Position(this.当前位置.line, this.当前位置.character - 工具.计算空格数量(this.光标前文本)), new vscode_1.Position(this.当前位置.line, this.当前位置.character));
         }
         else if (是词典完成替换后更新范围项目(item)) {
@@ -351,17 +351,17 @@ class 词典自动完成命令提供者 {
         this.当前取消令牌 = _token;
         this.当前文档 = document;
         this.当前行文本 = document.lineAt(this.当前位置.line).text;
-        if (!(/^\s*\/\/+\s?(@|@@)\{.+}@$/g.test(this.当前行文本))) {
+        if (!(/^\s*\/\/+\s?(#|##)\{.+}#$/g.test(this.当前行文本))) {
             return 请求事项.无;
         }
         this.光标前文本 = this.当前行文本.slice(0, this.当前位置.character);
-        const 当前输入匹配 = this.光标前文本.match(/^\s*\/\/+\s?(@|@@)\{.+$/);
+        const 当前输入匹配 = this.光标前文本.match(/^\s*\/\/+\s?(#|##)\{.+$/);
         //这个用的时候在初始化
         if (当前输入匹配.length > 1) {
-            if (当前输入匹配[1] === "@@") {
+            if (当前输入匹配[1] === "##") {
                 this.是全局词典请求 = true;
             }
-            else if (当前输入匹配[1] == "@") {
+            else if (当前输入匹配[1] == "#") {
                 this.是全局词典请求 = false;
             }
             this.当前标记 = 当前输入匹配[0].trim().substr(-1);
@@ -376,7 +376,7 @@ class 词典自动完成命令提供者 {
                     this.当前有效输入 = 当前输入匹配[0].substr(当前输入匹配[0].lastIndexOf(":") + 1).trim();
                     // 分部请求  不包括值项目
                     if (this.储存的最后一个应用的项目 && 是词典分部值自动完成项目(this.储存的最后一个应用的项目)) {
-                        if (this.储存临时的分部索引.length === this.储存的最后一个应用的项目.父项目.标识符.组成索引.length) {
+                        if (this.储存临时的分部索引.length === this.储存的最后一个应用的项目.父项目.标识符.zc.length) {
                             return 请求事项.完成替换动作后更新范围;
                         }
                         // this.储存的积累分部输入 = this.当前有效输入
@@ -474,11 +474,11 @@ class 词典自动完成命令提供者 {
             else {
                 用户输入 = this.当前有效输入.substring(this.储存的积累分部输入.length);
             }
-            if (!标识符.用户选择文本) {
-                标识符.用户选择文本 = [];
+            if (!标识符.up) {
+                标识符.up = [];
             }
-            if (标识符.用户选择文本.indexOf(用户输入) === -1) {
-                标识符.用户选择文本.push(用户输入);
+            if (标识符.up.indexOf(用户输入) === -1) {
+                标识符.up.push(用户输入);
             }
             this.储存的积累分部输入 = this.当前有效输入;
             _____1.插入标识符别名数据缓存(标识符, true);
@@ -488,11 +488,11 @@ class 词典自动完成命令提供者 {
         let 别名用户选择 = 储存上次的 ? this.上次有效输入 : this.当前有效输入;
         if (this.当前值自动完成项目) {
             let 标识符 = this.当前值自动完成项目.标识符;
-            if (!标识符.用户选择文本) {
-                标识符.用户选择文本 = [];
+            if (!标识符.up) {
+                标识符.up = [];
             }
-            if (标识符.用户选择文本.indexOf(别名用户选择) === -1) {
-                标识符.用户选择文本.push(别名用户选择);
+            if (标识符.up.indexOf(别名用户选择) === -1) {
+                标识符.up.push(别名用户选择);
             }
             _____1.插入标识符别名数据缓存(标识符, true);
         }
@@ -535,7 +535,7 @@ class 词典自动完成命令提供者 {
         });
     }
     请求词典键数据() {
-        if ((!this.是全局词典请求) && this.上次有效输入 && this.上次有效输入 !== "{" && this.上次有效输入 !== "," && this.上次有效输入 !== "," && this.上次有效输入 !== " ") {
+        if (this.上次有效输入 && this.上次有效输入 !== "{" && this.上次有效输入 !== "," && this.上次有效输入 !== ":" && this.上次有效输入 !== " ") {
             this.当前词典请求参数.ignoreName = this.上次有效输入;
         }
         return this.client.execute("词典自动完成", this.当前词典请求参数, this.当前取消令牌).then(回应 => {
@@ -568,7 +568,7 @@ class 词典自动完成命令提供者 {
         let 当前行对象 = this.当前文档.lineAt(this.当前位置.line);
         if (!当前行对象.isEmptyOrWhitespace) {
             let 文本 = this.当前行文本;
-            let 选择翻译体内 = 文本.match(/(\s+)?\/\/(@|@@)(\s+)?{(.+)?}/) || [];
+            let 选择翻译体内 = 文本.match(/(\s+)?\/\/(#|##)(\s+)?{(.+)?}/) || [];
             if (选择翻译体内.length >= 4) {
                 let 词典体 = 选择翻译体内[4];
                 let 新的词典体 = "";
@@ -583,10 +583,10 @@ class 词典自动完成命令提供者 {
                     });
                     新的词典体 = 整理后的键值对组.join(", ");
                     if (this.是全局词典请求) {
-                        新的词典语句 = 选择翻译体内[1] ? 选择翻译体内[1] + "//@@{ " + 新的词典体 + " }@" : "//@@{ " + 新的词典体 + " }@";
+                        新的词典语句 = 选择翻译体内[1] ? 选择翻译体内[1] + "//##{ " + 新的词典体 + " }#" : "//##{ " + 新的词典体 + " }#";
                     }
                     else {
-                        新的词典语句 = 选择翻译体内[1] ? 选择翻译体内[1] + "//@{ " + 新的词典体 + " }@" : "//@{ " + 新的词典体 + " }@";
+                        新的词典语句 = 选择翻译体内[1] ? 选择翻译体内[1] + "//#{ " + 新的词典体 + " }#" : "//#{ " + 新的词典体 + " }#";
                     }
                 }
                 let 当前窗口编辑器 = vscode_1.window.activeTextEditor;
@@ -602,54 +602,102 @@ class 词典自动完成命令提供者 {
     请求词典值属性() {
         return __awaiter(this, void 0, void 0, function* () {
             let 标识符 = 工具.创建对象();
-            标识符.文本 = this.储存的成功请求.name;
+            标识符.t = this.储存的成功请求.name;
+            标识符.kind = this.转换标识符种类(this.储存的成功请求.kind);
             标识符 = yield _____1.翻译标识符(标识符);
-            let { 文本 } = 标识符;
+            let { t } = 标识符;
             let 项目组 = [];
             let 前缀 = "", 后缀 = "";
-            if (工具.全是大写或下划线(文本)) {
-                前缀 = "_";
-                后缀 = "_";
+            if (工具.全是大写或下划线(t)) {
+                前缀 = "__";
+                后缀 = "__";
             }
-            if (工具.是大驼峰(文本)) {
-                后缀 = "类";
-            }
-            else {
-                if (标识符.整体译文.substr(-1) === "类") {
-                    后缀 = "";
-                }
+            switch (标识符.kind) {
+                case _____1.标识符种类.后缀_:
+                    if (!后缀) {
+                        后缀 = "_";
+                    }
+                    break;
+                case _____1.标识符种类.前缀_R:
+                    if (!前缀) {
+                        前缀 = "R_";
+                    }
+                    break;
+                case _____1.标识符种类.枚举_E:
+                    if (!前缀) {
+                        前缀 = "E_";
+                    }
+                    break;
+                case _____1.标识符种类.枚举成员_e:
+                    if (!前缀) {
+                        前缀 = "e_";
+                    }
+                    break;
             }
             let 主译标签项目;
-            if (标识符.用户选择文本 && 标识符.用户选择文本[0]) {
-                标识符.用户选择文本.forEach(v => {
-                    主译标签项目 = new 词典值自动完成项目(v, 标识符);
+            if (标识符.up && 标识符.up.length) {
+                标识符.up.forEach(v => {
+                    if (!v.startsWith(前缀)) {
+                        v += 前缀;
+                    }
+                    if (!v.endsWith(后缀)) {
+                        v += 后缀;
+                    }
+                    主译标签项目 = new 词典值自动完成项目(this.储存的成功请求.isStringLiteral ? '"' + v + '"' : v, 标识符, this.储存的成功请求.isStringLiteral);
                     主译标签项目.sortText = "1";
                     项目组.push(主译标签项目);
                 });
             }
-            let 项目标签 = 前缀 + 标识符.整体译文 + 后缀;
+            if (!标识符.zht.startsWith(前缀)) {
+                标识符.zht += 前缀;
+            }
+            if (!标识符.zht.endsWith(后缀)) {
+                标识符.zht += 后缀;
+            }
+            let 项目标签 = this.储存的成功请求.isStringLiteral ? '"' + 标识符.zht + '"' : 标识符.zht;
             let 项目;
             if (主译标签项目 && 主译标签项目.label === 项目标签) {
                 项目 = 主译标签项目;
+                this.当前值自动完成项目 = undefined;
             }
             else {
-                项目 = new 词典值自动完成项目(项目标签, 标识符);
+                项目 = new 词典值自动完成项目(项目标签, 标识符, this.储存的成功请求.isStringLiteral);
                 this.当前值自动完成项目 = 项目;
                 项目.sortText = "111";
                 项目组.push(项目);
             }
-            项目组.push(...this.相关单词组生成分部标签组(项目));
+            项目组.push(...this.相关单词组生成分部标签组(项目, this.储存的成功请求.isStringLiteral));
             return 项目组;
         });
     }
-    相关单词组生成分部标签组(父项目) {
+    转换标识符种类(种类) {
+        switch (种类) {
+            case _____1.ScriptElementKind.classElement: //"类别",
+            case _____1.ScriptElementKind.classElementEn: //"class",
+            case _____1.ScriptElementKind.localClassElement: //"本地类别",
+            case _____1.ScriptElementKind.interfaceElement: //"接口",
+            case _____1.ScriptElementKind.interfaceElementEn: //"interface",
+            case _____1.ScriptElementKind.typeElement: //"类型",            
+            case _____1.ScriptElementKind.variableElement: //"值量",
+            case _____1.ScriptElementKind.variableElementEn://"var",
+                return _____1.标识符种类.后缀_;
+            case _____1.ScriptElementKind.enumElement: //"枚举",
+            case _____1.ScriptElementKind.enumElementEn://"enum",
+                return _____1.标识符种类.枚举_E;
+            case _____1.ScriptElementKind.enumMemberElement://"枚举成员",
+                return _____1.标识符种类.枚举成员_e;
+            default:
+                return _____1.标识符种类.保持原文本;
+        }
+    }
+    相关单词组生成分部标签组(父项目, 是字面量) {
         let { 标识符 } = 父项目;
         let 项目组 = [];
         let 排序基数 = 1111;
-        for (let v of 标识符.组成索引) {
+        for (let v of 标识符.zc) {
             if (this.储存临时的分部索引.lastIndexOf(v) === -1) {
-                let 子标签名 = v.用户选择文本 && v.用户选择文本[0] || v.整体译文 || v.组合译文 || v.文本;
-                let 子项目 = new 词典分部值自动完成项目(v.文本 + " :=> " + 子标签名, v, 父项目);
+                let 子标签名 = v.up && v.up[0] || v.zht || v.zuh || v.t;
+                let 子项目 = new 词典分部值自动完成项目(v.t + " => " + 子标签名, v, 父项目, 是字面量);
                 子项目.部分暂定输出 = 子标签名;
                 子项目.sortText = (排序基数++) + "";
                 项目组.push(子项目);
@@ -659,3 +707,4 @@ class 词典自动完成命令提供者 {
     }
 }
 exports.default = 词典自动完成命令提供者;
+//# sourceMappingURL=词典完成提供者.js.map

@@ -119,21 +119,21 @@ class TscTaskProvider {
             if (project.workspaceFolder) {
                 const platform = process.platform;
                 const bin = path.join(project.workspaceFolder.uri.fsPath, 'node_modules', '.bin');
-                if (platform === 'win32' && (yield exists(path.join(bin, 'tsc.cmd')))) {
-                    return path.join(bin, 'tsc.cmd');
+                if (platform === 'win32' && (yield exists(path.join(bin, 'cts.cmd')))) {
+                    return path.join(bin, 'cts.cmd');
                 }
-                else if ((platform === 'linux' || platform === 'darwin') && (yield exists(path.join(bin, 'tsc')))) {
-                    return path.join(bin, 'tsc');
+                else if ((platform === 'linux' || platform === 'darwin') && (yield exists(path.join(bin, 'cts')))) {
+                    return path.join(bin, 'cts');
                 }
             }
-            return 'tsc';
+            return 'cts';
         });
     }
     getActiveTypeScriptFile() {
         const editor = vscode.window.activeTextEditor;
         if (editor) {
             const document = editor.document;
-            if (document && (document.languageId === 'typescript' || document.languageId === 'typescriptreact')) {
+            if (document && (document.languageId === 'ctsscript' || document.languageId === 'ctsscriptreact')) {
                 return this.lazyClient().normalizePath(document.uri);
             }
         }
@@ -145,14 +145,14 @@ class TscTaskProvider {
             const label = this.getLabelForTasks(project);
             const tasks = [];
             if (this.autoDetect === 'build' || this.autoDetect === 'on') {
-                const buildTaskidentifier = { type: 'typescript', tsconfig: label };
+                const buildTaskidentifier = { type: 'ctsscript', tsconfig: label };
                 const buildTask = new vscode.Task(buildTaskidentifier, project.workspaceFolder || vscode.TaskScope.Workspace, localize('buildTscLabel', 'build - {0}', label), 'tsc', new vscode.ShellExecution(`${command} -p "${project.path}"`), '$tsc');
                 buildTask.group = vscode.TaskGroup.Build;
                 buildTask.isBackground = false;
                 tasks.push(buildTask);
             }
             if (this.autoDetect === 'watch' || this.autoDetect === 'on') {
-                const watchTaskidentifier = { type: 'typescript', tsconfig: label, option: 'watch' };
+                const watchTaskidentifier = { type: 'ctsscript', tsconfig: label, option: 'watch' };
                 const watchTask = new vscode.Task(watchTaskidentifier, project.workspaceFolder || vscode.TaskScope.Workspace, localize('buildAndWatchTscLabel', 'watch - {0}', label), 'tsc', new vscode.ShellExecution(`${command} --watch -p "${project.path}"`), '$tsc-watch');
                 watchTask.group = vscode.TaskGroup.Build;
                 watchTask.isBackground = true;
@@ -216,3 +216,4 @@ class TypeScriptTaskProviderManager {
     }
 }
 exports.default = TypeScriptTaskProviderManager;
+//# sourceMappingURL=taskProvider.js.map

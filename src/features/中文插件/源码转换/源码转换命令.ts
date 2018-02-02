@@ -1,12 +1,7 @@
 
-import {
-    window, Range, Position
-} from 'vscode';
-
+import {  window, Range, Position } from 'vscode';
 import { ITypeScriptServiceClient } from '../../../typescriptService';
-
 import { Command } from '../../../utils/commandManager';
-
 
 export class 源码转换命令 implements Command {
     readonly id = 'ctsscript.源码转换命令';
@@ -28,7 +23,7 @@ export class 源码转换命令 implements Command {
                         })
                     }
                 } else {
-                    window.showErrorMessage('转换前请先将文件扩展名改为: ".cts", 声明文件扩展名改为: ".d.cts"')
+                    window.showErrorMessage('转换前请先将文件扩展名改为: ".cts", 声明文件扩展名改为: ".d.cts"。')
                 }
             }
         }
@@ -36,7 +31,7 @@ export class 源码转换命令 implements Command {
     private 扩展名是(路径: string, 比较名: string) {
         let 位置 = 路径.lastIndexOf(".")
         if (位置 !== -1) {
-            let 扩展名 = 路径.substr(-位置)
+            let 扩展名 = 路径.substring(位置)
             if (扩展名 === 比较名) {
                 return true
             }

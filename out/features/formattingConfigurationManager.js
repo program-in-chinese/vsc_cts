@@ -108,3 +108,4 @@ class FormattingConfigurationManager {
     }
 }
 exports.default = FormattingConfigurationManager;
+//# sourceMappingURL=formattingConfigurationManager.js.map

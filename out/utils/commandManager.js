@@ -27,3 +27,4 @@ class CommandManager {
     }
 }
 exports.CommandManager = CommandManager;
+//# sourceMappingURL=commandManager.js.map

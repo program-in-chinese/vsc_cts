@@ -140,3 +140,4 @@ class TypeScriptRefactorProvider {
     }
 }
 exports.default = TypeScriptRefactorProvider;
+//# sourceMappingURL=refactorProvider.js.map

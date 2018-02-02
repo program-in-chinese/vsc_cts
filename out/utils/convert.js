@@ -19,3 +19,4 @@ exports.vsRangeToTsFileRange = (file, range) => ({
     endLine: range.end.line + 1,
     endOffset: range.end.character + 1
 });
+//# sourceMappingURL=convert.js.map

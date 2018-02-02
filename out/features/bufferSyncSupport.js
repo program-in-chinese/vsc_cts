@@ -216,3 +216,4 @@ class BufferSyncSupport {
     }
 }
 exports.default = BufferSyncSupport;
+//# sourceMappingURL=bufferSyncSupport.js.map

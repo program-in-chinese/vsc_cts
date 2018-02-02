@@ -55,3 +55,4 @@ class TypeScriptRenameProvider {
     }
 }
 exports.default = TypeScriptRenameProvider;
+//# sourceMappingURL=renameProvider.js.map

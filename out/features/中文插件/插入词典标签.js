@@ -14,7 +14,7 @@ function 尝试插入词典标签(标签名) {
         if (当前行对象.isEmptyOrWhitespace) {
             词典头 = 前部空格 + 标签名;
         }
-        if (/^\s*\/\/+\s?(@|@@)\{.+$/.test(当前行对象.text)) {
+        if (/^\s*\/\/+\s?(#|##)\{.+$/.test(当前行对象.text)) {
             位置 = new vscode_1.Position(行 + 1, 0);
         }
         当前编辑器.edit(E => {
@@ -26,3 +26,4 @@ function 尝试插入词典标签(标签名) {
     }
 }
 exports.尝试插入词典标签 = 尝试插入词典标签;
+//# sourceMappingURL=插入词典标签.js.map

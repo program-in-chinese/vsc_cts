@@ -60,3 +60,4 @@ class API {
 }
 API.defaultVersion = new API('1.0.0', '1.0.0');
 exports.default = API;
+//# sourceMappingURL=api.js.map

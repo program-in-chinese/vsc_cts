@@ -139,7 +139,7 @@ function 文本首单词为(文本) {
 exports.文本首单词为 = 文本首单词为;
 function 文本尾字母为(文本, 指定尾字母) {
     let 值 = 文本.lastIndexOf(指定尾字母);
-    return 值 != -1 && 文本.length - 指定尾字母.length === 值;
+    return 值 !== -1 && 文本.length - 指定尾字母.length === 值;
 }
 exports.文本尾字母为 = 文本尾字母为;
 function 文本是接口(文本) {
@@ -308,6 +308,102 @@ var Charas;
     Charas[Charas["tab"] = 9] = "tab";
     Charas[Charas["verticalTab"] = 11] = "verticalTab";
 })(Charas = exports.Charas || (exports.Charas = {}));
+var ScriptElementKind;
+(function (ScriptElementKind) {
+    ScriptElementKind["unknown"] = "";
+    ScriptElementKind["warning"] = "\u8B66\u544A";
+    /** predefined type (void) or keyword (class) */
+    ScriptElementKind["keyword"] = "\u5173\u952E\u5B57";
+    /** top level script node */
+    ScriptElementKind["scriptElement"] = "\u811A\u672C";
+    /** module foo {} */
+    ScriptElementKind["moduleElement"] = "\u6A21\u5757";
+    /** class X {} */
+    ScriptElementKind["classElement"] = "\u7C7B\u522B";
+    ScriptElementKind["classElementEn"] = "class";
+    /** var x = class X {} */
+    ScriptElementKind["localClassElement"] = "\u672C\u5730\u7C7B\u522B";
+    /** interface Y {} */
+    ScriptElementKind["interfaceElement"] = "\u63A5\u53E3";
+    ScriptElementKind["interfaceElementEn"] = "interface";
+    /** type T = ... */
+    ScriptElementKind["typeElement"] = "\u7C7B\u578B";
+    /** enum E */
+    ScriptElementKind["enumElement"] = "\u679A\u4E3E";
+    ScriptElementKind["enumElementEn"] = "enum";
+    ScriptElementKind["enumMemberElement"] = "\u679A\u4E3E\u6210\u5458";
+    /**
+     * Inside module and script only
+     * const v = ..
+     */
+    ScriptElementKind["variableElement"] = "\u503C\u91CF";
+    ScriptElementKind["variableElementEn"] = "var";
+    /** Inside function */
+    ScriptElementKind["localVariableElement"] = "\u672C\u5730\u53D8\u91CF";
+    /**
+     * Inside module and script only
+     * function f() { }
+     */
+    ScriptElementKind["functionElement"] = "\u51FD\u6570";
+    ScriptElementKind["functionElementEn"] = "function";
+    /** Inside function */
+    ScriptElementKind["localFunctionElement"] = "\u672C\u5730\u51FD\u6570";
+    /** class X { [public|private]* foo() {} } */
+    ScriptElementKind["memberFunctionElement"] = "\u65B9\u6CD5";
+    ScriptElementKind["memberFunctionElementEn"] = "method";
+    /** class X { [public|private]* [get|set] foo:number; } */
+    ScriptElementKind["memberGetAccessorElement"] = "\u83B7\u53D6";
+    ScriptElementKind["memberSetAccessorElement"] = "\u8BBE\u7F6E";
+    /**
+     * class X { [public|private]* foo:number; }
+     * interface Y { foo:number; }
+     */
+    ScriptElementKind["memberVariableElement"] = "\u5C5E\u6027";
+    /** class X { constructor() { } } */
+    ScriptElementKind["constructorImplementationElement"] = "\u6784\u9020\u65B9\u6CD5";
+    /** interface Y { ():number; } */
+    ScriptElementKind["callSignatureElement"] = "\u8C03\u7528";
+    /** interface Y { []:number; } */
+    ScriptElementKind["indexSignatureElement"] = "\u7D22\u5F15";
+    /** interface Y { new():Y; } */
+    ScriptElementKind["constructSignatureElement"] = "construct";
+    /** function foo(*Y*: string) */
+    ScriptElementKind["parameterElement"] = "\u53C2\u6570";
+    ScriptElementKind["typeParameterElement"] = "\u7C7B\u578B\u53C2\u6570\u5143\u7D20";
+    ScriptElementKind["primitiveType"] = "\u53C2\u6570\u7C7B\u578B";
+    ScriptElementKind["label"] = "\u6807\u7B7E";
+    ScriptElementKind["alias"] = "\u522B\u540D";
+    ScriptElementKind["constElement"] = "\u5E38\u91CF";
+    ScriptElementKind["letElement"] = "\u53D8\u91CF";
+    ScriptElementKind["directory"] = "\u76EE\u5F55";
+    ScriptElementKind["externalModuleName"] = "\u5916\u90E8\u6A21\u5757\u540D\u79F0";
+    /**
+     * <JsxTagName attribute1 attribute2={0} />
+     */
+    ScriptElementKind["jsxAttribute"] = "JSX\u7279\u6027";
+})(ScriptElementKind = exports.ScriptElementKind || (exports.ScriptElementKind = {}));
+var 标识符种类;
+(function (标识符种类) {
+    标识符种类[标识符种类["\u4FDD\u6301\u539F\u6587\u672C"] = 0] = "\u4FDD\u6301\u539F\u6587\u672C";
+    标识符种类[标识符种类["\u540E\u7F00_"] = 1] = "\u540E\u7F00_";
+    标识符种类[标识符种类["\u524D\u7F00_"] = 2] = "\u524D\u7F00_";
+    标识符种类[标识符种类["\u524D\u540E_"] = 3] = "\u524D\u540E_";
+    标识符种类[标识符种类["\u524D\u7F00_T"] = 4] = "\u524D\u7F00_T";
+    标识符种类[标识符种类["\u524D\u7F00_R"] = 5] = "\u524D\u7F00_R";
+    标识符种类[标识符种类["\u5F62\u53C2\u7F29\u5199\u5C3E____"] = 6] = "\u5F62\u53C2\u7F29\u5199\u5C3E____";
+    标识符种类[标识符种类["\u5168\u5C40\u53D8\u91CF_g"] = 7] = "\u5168\u5C40\u53D8\u91CF_g";
+    标识符种类[标识符种类["\u7A0B\u5E8F\u96C6\u53D8\u91CF_v"] = 8] = "\u7A0B\u5E8F\u96C6\u53D8\u91CF_v";
+    标识符种类[标识符种类["\u679A\u4E3E_E"] = 9] = "\u679A\u4E3E_E";
+    标识符种类[标识符种类["\u679A\u4E3E\u6210\u5458_e"] = 10] = "\u679A\u4E3E\u6210\u5458_e";
+    标识符种类[标识符种类["\u590D\u6570_s"] = 11] = "\u590D\u6570_s";
+    标识符种类[标识符种类["get_\u524D\u7F00"] = 12] = "get_\u524D\u7F00";
+    标识符种类[标识符种类["set_\u524D\u7F00"] = 13] = "set_\u524D\u7F00";
+    标识符种类[标识符种类["is_\u524D\u7F00"] = 14] = "is_\u524D\u7F00";
+    标识符种类[标识符种类["on_\u524D\u7F00"] = 15] = "on_\u524D\u7F00";
+    标识符种类[标识符种类["at_\u524D\u7F00"] = 16] = "at_\u524D\u7F00";
+    标识符种类[标识符种类["to_\u524D\u7F00"] = 17] = "to_\u524D\u7F00";
+    标识符种类[标识符种类["Of_\u5C3E\u65B9\u6CD5"] = 18] = "Of_\u5C3E\u65B9\u6CD5";
+})(标识符种类 = exports.标识符种类 || (exports.标识符种类 = {}));
 var 单词属性;
 (function (单词属性) {
     单词属性[单词属性["\u65E0"] = 0] = "\u65E0";
@@ -337,14 +433,14 @@ function 插入标识符别名数据缓存(标识符组, 是否写入库) {
         标识符组 = [标识符组];
     }
     let 总库存 = 读取别名库文件();
-    let 标识符库 = 总库存.标识符别名库;
+    let 标识符库 = 总库存.zk;
     for (let 标识符 of 标识符组) {
-        let 原内容 = 标识符库[标识符.文本];
+        let 原内容 = 标识符库[标识符.t];
         if (!原内容) {
-            标识符库[标识符.文本] = 标识符别名入库转换(标识符);
+            标识符库[标识符.t] = 标识符别名入库转换(标识符);
         }
         else {
-            标识符库[标识符.文本] = Object.assign({}, 原内容, 标识符别名入库转换(标识符));
+            标识符库[标识符.t] = Object.assign({}, 原内容, 标识符别名入库转换(标识符));
         }
     }
     if (是否写入库) {
@@ -354,11 +450,11 @@ function 插入标识符别名数据缓存(标识符组, 是否写入库) {
 exports.插入标识符别名数据缓存 = 插入标识符别名数据缓存;
 function 标识符别名入库转换(标识符) {
     if (!是库内标识符别名(标识符)) {
-        if (标识符.组成索引) {
+        if (标识符.zc) {
             let 组 = [];
-            for (let i = 0; i < 标识符.组成索引.length; i++) {
-                let v = 标识符.组成索引[i];
-                组.push(v.文本);
+            for (let i = 0; i < 标识符.zc.length; i++) {
+                let v = 标识符.zc[i];
+                组.push(v.t);
             }
             标识符 = Object.assign({}, 标识符, { 组成索引: 组 });
             return 标识符;
@@ -374,10 +470,10 @@ function 标识符别名入库转换(标识符) {
 exports.标识符别名入库转换 = 标识符别名入库转换;
 function 标识符别名出库转换(标识符) {
     if (是库内标识符别名(标识符)) {
-        if (标识符.组成索引) {
+        if (标识符.zc) {
             let 组 = [];
-            for (let i = 0; i < 标识符.组成索引.length; i++) {
-                let v = 标识符.组成索引[i];
+            for (let i = 0; i < 标识符.zc.length; i++) {
+                let v = 标识符.zc[i];
                 组.push(取标识符别名库储存(v));
             }
             标识符 = Object.assign({}, 标识符, { 组成索引: 组 });
@@ -393,7 +489,7 @@ function 标识符别名出库转换(标识符) {
 }
 exports.标识符别名出库转换 = 标识符别名出库转换;
 function 是库内标识符别名(标识符) {
-    if (标识符 && 标识符.组成索引 && (typeof 标识符.组成索引[0] === "string")) {
+    if (标识符 && 标识符.zc && (typeof 标识符.zc[0] === "string")) {
         return true;
     }
     return false;
@@ -402,9 +498,9 @@ exports.是库内标识符别名 = 是库内标识符别名;
 function 取标识符别名库储存(标识符) {
     let 索引 = 标识符;
     if (typeof 标识符 !== "string") {
-        索引 = 标识符.文本;
+        索引 = 标识符.t;
     }
-    let 值 = 读取别名库文件().标识符别名库[索引];
+    let 值 = 读取别名库文件().zk[索引];
     return 标识符别名出库转换(值);
 }
 exports.取标识符别名库储存 = 取标识符别名库储存;
@@ -412,10 +508,11 @@ function 翻译标识符(标识符) {
     return __awaiter(this, void 0, void 0, function* () {
         let 库内存在 = 取标识符别名库储存(标识符);
         if (库内存在) {
-            if (库内存在.组成索引 && 库内存在.组成索引[0]) {
-                库内存在.整体译文 = 工具.筛选标识符文本(库内存在.整体译文);
-                库内存在.组合译文 = 工具.筛选标识符文本(库内存在.组合译文);
+            if (库内存在.zc && 库内存在.zc[0]) {
+                库内存在.zht = 工具.筛选标识符文本(库内存在.zht);
+                库内存在.zuh = 工具.筛选标识符文本(库内存在.zuh);
             }
+            库内存在.kind = 标识符.kind;
             return 库内存在;
         }
         else {
@@ -429,12 +526,13 @@ function 翻译注释(文本) {
     return __awaiter(this, void 0, void 0, function* () {
         let 结果 = yield 处理注释文本(文本);
         let { 新组, 键值映射 } = 结果;
+        let 输出数组 = [];
         for (let i = 0; i < 新组.length; i++) {
             let 行值 = 新组[i];
             if (行值) {
                 行值 = yield 翻译长文本(分割为可翻译文本([行值]));
-                行值 = 行值.replace(/\[.+?\]/g, S => {
-                    S = S.replace(/\s+/g, "");
+                行值 = 行值.replace(/(\[.+?\])|(\(\d+?\))/g, S => {
+                    S = S.replace(/\s+/g, "").replace(/\(/g, "[").replace(/\)/g, "]");
                     let 库内 = 键值映射.get(S);
                     if (库内) {
                         return 库内.值;
@@ -444,53 +542,53 @@ function 翻译注释(文本) {
                     }
                 });
             }
-            新组[i] = 行值;
+            输出数组.push(行值);
         }
-        return 新组.join(" \n");
+        return 输出数组.join(" \n");
     });
 }
 exports.翻译注释 = 翻译注释;
 function 标识符分组翻译(标识符) {
     return __awaiter(this, void 0, void 0, function* () {
-        let 分割组 = 分割文本(标识符.文本);
+        let 分割组 = 分割文本(标识符.t);
         let 组索引 = [];
         if (分割组) {
             for (let i = 0; i < 分割组.length; i++) {
-                let 库内存在 = 取标识符别名库储存(分割组[i].文本);
+                let 库内存在 = 取标识符别名库储存(分割组[i].t);
                 if (库内存在) {
                     分割组[i] = 库内存在;
                 }
                 else if (不需要翻译(分割组[i])) {
-                    分割组[i].整体译文 = 分割组[i].文本;
-                    分割组[i].组合译文 = 分割组[i].文本;
+                    分割组[i].zht = 分割组[i].t;
+                    分割组[i].zuh = 分割组[i].t;
                     插入标识符别名数据缓存(分割组[i]);
                 }
-                else if (分割组[i].文本.length < 3) {
-                    let 库内 = 内置英汉键值映射.get(分割组[i].文本);
+                else if (分割组[i].t.length < 3) {
+                    let 库内 = 内置英汉键值映射.get(分割组[i].t);
                     let 大写;
-                    if ((分割组[i].属性 & 单词属性.全为字母) !== 0) {
-                        大写 = 分割组[i].文本.toUpperCase();
+                    if ((分割组[i].p & 单词属性.全为字母) !== 0) {
+                        大写 = 分割组[i].t.toUpperCase();
                     }
-                    分割组[i].整体译文 = 库内 || 大写 || 分割组[i].文本;
-                    分割组[i].组合译文 = 分割组[i].整体译文;
+                    分割组[i].zht = 库内 || 大写 || 分割组[i].t;
+                    分割组[i].zuh = 分割组[i].zht;
                     插入标识符别名数据缓存(分割组[i]);
                 }
                 else {
                     分割组[i] = yield 翻译结果(分割组[i]);
                     插入标识符别名数据缓存(分割组[i]);
                 }
-                if (分割组[i].文本 !== 标识符.文本) {
+                if (分割组[i].t !== 标识符.t) {
                     组索引.push(分割组[i]);
                 }
             }
         }
-        if (!标识符.整体译文) {
-            let 翻译 = yield 翻译结果(分割组, 标识符.文本);
-            标识符.整体译文 = 工具.筛选标识符文本(翻译.整体译文);
-            标识符.属性 = 翻译.属性;
-            标识符.组合译文 = 工具.筛选标识符文本(翻译.组合译文);
+        if (!标识符.zht) {
+            let 翻译 = yield 翻译结果(分割组, 标识符.t);
+            标识符.zht = 工具.筛选标识符文本(翻译.zht);
+            标识符.p = 翻译.p;
+            标识符.zuh = 工具.筛选标识符文本(翻译.zuh);
         }
-        标识符.组成索引 = 组索引;
+        标识符.zc = 组索引;
         return 标识符;
     });
 }
@@ -535,10 +633,10 @@ function 翻译结果(单词, 文本) {
         let 分 = "";
         let 后 = "";
         单词.forEach((v, i) => {
-            标识符属性 |= v.属性;
-            文本数组.push(v.文本);
+            标识符属性 |= v.p;
+            文本数组.push(v.t);
             if (i === 0) {
-                switch (v.文本) {
+                switch (v.t) {
                     case "is":
                         前 += "是";
                         break;
@@ -551,7 +649,7 @@ function 翻译结果(单词, 文本) {
                         前 += "在";
                         break;
                     case "to":
-                        前 += "转成";
+                        前 += "转为";
                         break;
                     case "get":
                         前 += "取";
@@ -561,24 +659,25 @@ function 翻译结果(单词, 文本) {
                         break;
                 }
                 if (!前) {
-                    中 += v.整体译文 || v.组合译文 || v.用户选择文本 && v.用户选择文本[0] || v.文本;
+                    中 += v.zht || v.zuh || v.up && v.up[0] || v.t;
                 }
             }
-            else if (v.文本 === "Of") {
+            else if (v.t === "Of") {
                 分 = "的";
             }
             else {
-                if ((v.属性 & 单词属性.是复数) !== 0) {
-                    if (!v.整体译文) {
-                        v.整体译文 = v.组合译文 || v.用户选择文本 && v.用户选择文本[0] || v.文本;
+                if ((v.p & 单词属性.是复数) !== 0) {
+                    if (!v.zht) {
+                        v.zht = v.zuh || v.up && v.up[0] || v.t;
                     }
-                    v.整体译文 += "组";
+                    if (!v.zht.endsWith("组"))
+                        v.zht += "组";
                 }
                 if (分 === "的") {
-                    后 += v.整体译文 || v.组合译文 || v.用户选择文本 && v.用户选择文本[0] || v.文本;
+                    后 += v.zht || v.zuh || v.up && v.up[0] || v.t;
                 }
                 if (!分 && !后) {
-                    中 += v.整体译文 || v.组合译文 || v.用户选择文本 && v.用户选择文本[0] || v.文本;
+                    中 += v.zht || v.zuh || v.up && v.up[0] || v.t;
                 }
             }
         });
@@ -586,15 +685,15 @@ function 翻译结果(单词, 文本) {
             值 = 前 + 后 + 分 + 中;
         }
         else {
-            值 = 前 + 中 + 后 + 分;
+            值 = 前 + 中 + 后 + 分 === "的" ? "位于" : "";
         }
         let 主译 = yield 引擎.翻译器(文本数组);
         let 整体译文 = 分析单词翻译结果(主译 ? 主译 : undefined, 文本数组.join(""));
         let 结果 = 工具.创建对象();
-        结果.文本 = 文本 || 单词[0].文本;
-        结果.属性 = 标识符属性;
-        结果.组合译文 = 值;
-        结果.整体译文 = 整体译文 && 整体译文[0] && 整体译文[0].译文;
+        结果.t = 文本 || 单词[0].t;
+        结果.p = 标识符属性;
+        结果.zuh = 值;
+        结果.zht = 整体译文 && 整体译文[0] && 整体译文[0].yw;
         return 结果;
     });
 }
@@ -608,10 +707,10 @@ function 分析单词翻译结果(结果, 原文) {
         if (数组值 && 数组值[0]) {
             数组值.forEach((值, i) => {
                 let 译文 = 工具.创建对象();
-                译文.原文 = 原文;
-                译文.译文 = 值.dst;
+                译文.yuw = 原文;
+                译文.yw = 值.dst;
                 if (i === 0) {
-                    译文.使用计数 = 1;
+                    译文.nu = 1;
                 }
                 译文组.push(译文);
             });
@@ -622,10 +721,10 @@ function 分析单词翻译结果(结果, 原文) {
         if (数组值 && 数组值.length > 0) {
             数组值.forEach((值, i) => {
                 let 译文 = 工具.创建对象();
-                译文.原文 = 原文;
-                译文.译文 = 值;
+                译文.yuw = 原文;
+                译文.yw = 值;
                 if (i === 0) {
-                    译文.使用计数 = 1;
+                    译文.nu = 1;
                 }
                 译文组.push(译文);
             });
@@ -636,13 +735,13 @@ function 分析单词翻译结果(结果, 原文) {
     }
 }
 function 创建词典库目录及文件() {
-    let 路径 = 结合路径(__1.系统.取系统临时文件目录(), "CHTypescript");
-    let 文件名 = "CTS_词典自动翻译储存库.json";
+    let 路径 = 结合路径(__1.系统.取系统临时文件目录(), "cts_扩展");
+    let 文件名 = "cts_翻译词典\.json";
     if (!__1.系统.目录存在(路径)) {
         __1.系统.创建目录(路径);
     }
     if (!__1.系统.文件存在(文件名)) {
-        __1.系统.写文件(结合路径(路径, 文件名), `{"标识符别名库":{}}`);
+        __1.系统.写文件(结合路径(路径, 文件名), `{"zk":{}}`);
     }
 }
 function 结合路径(path1, path2) {
@@ -688,8 +787,8 @@ function 取路径根长度(path) {
     return 0;
 }
 function 取词典库文件全名() {
-    let 路径 = 结合路径(__1.系统.取系统临时文件目录(), "CHTypescript");
-    let 文件名 = "CTS_词典自动翻译储存库.json";
+    let 路径 = 结合路径(__1.系统.取系统临时文件目录(), "cts_扩展");
+    let 文件名 = "CTS_翻译词典\.json";
     return 结合路径(路径, 文件名);
 }
 function 读取别名库文件() {
@@ -704,7 +803,7 @@ function 读取别名库文件() {
         }
         catch (err) {
             _CTS_已有词典库缓存 = {
-                标识符别名库: {}
+                zk: {}
             };
         }
         finally {
@@ -742,15 +841,15 @@ function 分割翻译注释括号内文本(文本) {
             let 半路结果 = "";
             for (let i = 0; i < 结果.length; i++) {
                 let 单词 = 结果[i];
-                if (((单词.属性 & 单词属性.全为字母) || (单词.属性 & 单词属性.是空白)) && 单词.文本 !== "e" && 单词.文本 !== "g" && !(单词.属性 & 单词属性.全为大写)) {
-                    半路结果 += (单词.属性 & 单词属性.是空白) ? 单词.文本 : " " + 单词.文本;
+                if (((单词.p & 单词属性.全为字母) || (单词.p & 单词属性.是空白)) && 单词.t !== "e" && 单词.t !== "g" && !(单词.p & 单词属性.全为大写)) {
+                    半路结果 += (单词.p & 单词属性.是空白) ? 单词.t : " " + 单词.t;
                 }
                 else {
                     if (半路结果) {
                         返回结果 += yield 翻译普通文本(半路结果);
                         半路结果 = "";
                     }
-                    返回结果 += 单词.文本;
+                    返回结果 += 单词.t;
                 }
             }
             if (半路结果) {
@@ -1017,35 +1116,35 @@ function 分割文本(文本) {
     let 单词组 = [];
     for (let i = 0; i < 结果集.length; i++) {
         let 单词值 = 工具.创建对象();
-        单词值.文本 = 结果集[i];
-        单词值.属性 = 单词属性.无;
+        单词值.t = 结果集[i];
+        单词值.p = 单词属性.无;
         if (文本全为字母(结果集[i])) {
-            单词值.属性 |= 单词属性.全为字母;
+            单词值.p |= 单词属性.全为字母;
             if (文本全为小写(结果集[i])) {
-                单词值.属性 |= 单词属性.全为小写;
+                单词值.p |= 单词属性.全为小写;
             }
             else if (文本全为大写(结果集[i])) {
-                单词值.属性 |= 单词属性.全为大写;
+                单词值.p |= 单词属性.全为大写;
             }
         }
         else if (文本全为数字(结果集[i])) {
-            单词值.属性 |= 单词属性.全为数字;
+            单词值.p |= 单词属性.全为数字;
         }
         else if (文本全为符号或数字(结果集[i])) {
-            单词值.属性 |= 单词属性.全为符号或数字;
+            单词值.p |= 单词属性.全为符号或数字;
         }
         if (文本第一个字母为大写(结果集[i])) {
-            单词值.属性 |= 单词属性.第一个字母为大写;
+            单词值.p |= 单词属性.第一个字母为大写;
             if (文本除首字母后无大写(结果集[i])) {
-                单词值.属性 |= 单词属性.除首字母后无大写;
+                单词值.p |= 单词属性.除首字母后无大写;
             }
         }
         if (文本是空白文字(结果集[i])) {
-            单词值.属性 |= 单词属性.是空白;
+            单词值.p |= 单词属性.是空白;
         }
         if ((文本尾字母为(结果集[i], "s") && 结果集[i].length > 3 && !(文本尾字母为(结果集[i], "fves") || 文本尾字母为(结果集[i], "ss") || 文本尾字母为(结果集[i], "xs")
             || 文本尾字母为(结果集[i], "chs") || 文本尾字母为(结果集[i], "shs") || 文本尾字母为(结果集[i], "zhs")))) {
-            单词值.属性 |= 单词属性.是复数;
+            单词值.p |= 单词属性.是复数;
         }
         单词组.push(单词值);
     }
@@ -1134,7 +1233,7 @@ function 分割为可翻译文本(文本组) {
         let 结果 = 分割文本(文本);
         let 总 = [];
         结果.forEach(v => {
-            总.push(v.文本);
+            总.push(v.t);
         });
         总组.push(总);
     });
@@ -1164,22 +1263,22 @@ function 分割长文本(文本, 长度 = 1900) {
     return 文本组;
 }
 function 不需要翻译(单词) {
-    return (单词.属性 & 单词属性.不需要翻译) !== 0;
+    return (单词.p & 单词属性.不需要翻译) !== 0;
 }
 function 需要翻译时确定(单词) {
-    return (单词.属性 & 单词属性.需要翻译时确定) !== 0;
+    return (单词.p & 单词属性.需要翻译时确定) !== 0;
 }
 function 需要前缀(单词) {
-    return (单词.属性 & 单词属性.需要前缀) !== 0;
+    return (单词.p & 单词属性.需要前缀) !== 0;
 }
 function 需要后缀(单词) {
-    return (单词.属性 & 单词属性.需要后缀) !== 0;
+    return (单词.p & 单词属性.需要后缀) !== 0;
 }
 function 需要范围检查(单词) {
-    return (单词.属性 & 单词属性.需要范围检查) !== 0;
+    return (单词.p & 单词属性.需要范围检查) !== 0;
 }
 function 需要语言服务支持(单词) {
-    return (单词.属性 & 单词属性.需要语言服务支持) !== 0;
+    return (单词.p & 单词属性.需要语言服务支持) !== 0;
 }
 function 是数组(value) {
     return Array.isArray ? Array.isArray(value) : value instanceof Array;
@@ -1294,3 +1393,4 @@ function 创建内置词典(参数) {
     }
     return 值;
 }
+//# sourceMappingURL=翻译标识符.js.map

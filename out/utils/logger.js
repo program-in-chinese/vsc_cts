@@ -11,7 +11,7 @@ const localize = nls.loadMessageBundle();
 class Logger {
     get output() {
         if (!this._output) {
-            this._output = vscode_1.window.createOutputChannel(localize('channelName', 'TypeScript'));
+            this._output = vscode_1.window.createOutputChannel("CTS_中文TS");
         }
         return this._output;
     }
@@ -51,3 +51,4 @@ class Logger {
     }
 }
 exports.default = Logger;
+//# sourceMappingURL=logger.js.map

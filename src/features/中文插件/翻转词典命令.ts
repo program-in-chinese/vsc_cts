@@ -8,7 +8,7 @@ import { 编辑文档集词典语句命令 } from './编辑文档集词典语句
 import * as 工具 from './工具';
 
 export class 翻转词典命令 {
-    static _CHTSC_翻转词典命令 = 'chtsc.翻转词典命令';
+    static __ctsscript_翻转词典命令 = 'ctsscript.翻转词典命令';
     constructor(
         private lazyClient: () => ITypeScriptServiceClient
     ) { }
@@ -17,14 +17,14 @@ export class 翻转词典命令 {
         if (编辑器) {
             let 文档 = window.activeTextEditor.document
             let 编辑组: TextEdit[] = []
-            if (文档.languageId === "chtypescript" && this.lazyClient().normalizePath(文档.uri).lastIndexOf(".d.cts")) {
+            if (this.lazyClient().normalizePath(文档.uri).lastIndexOf(".d.cts")!==-1) {
                 for (let i = 0; i < 文档.lineCount; i++) {
                     let 行对象 = 文档.lineAt(i)
                     let 行文本 = 行对象.text
-                    let 匹配 = 行文本.match(/^(\s*\/\/\s?)(@|@@){(.+)}@(\s+)?$/)
+                    let 匹配 = 行文本.match(/^(\s*\/\/\s?)(#|##){(.+)}#(\s+)?$/)
                     if (匹配 && 匹配.length > 3) {
                         let 前缀 = 匹配[1]
-                        let 性质字符 = 匹配[2]
+                        let 性质字符 = 匹配[2]==="#"?"@":"@@"
                         let 词典主体 = 匹配[3]
                         if (词典主体.trim()) {
                             let 词典分组 = 词典主体.split(",")
@@ -50,13 +50,13 @@ export class 翻转词典命令 {
                     }
                 }
             }
-            if (编辑组 && 编辑组[0]) {
+            if (编辑组 && 编辑组.length) {
                 let 群体编辑器 = new WorkspaceEdit()
                 群体编辑器.set(文档.uri, 编辑组)
                 workspace.applyEdit(群体编辑器).then(B => {
                     let 映射集 = 工具.创建映射<工具.词典编辑[]>()
-                    映射集["_chtsc.执行所有缓存的编辑命令"] = [工具.创建词典编辑指令()]
-                    commands.executeCommand(编辑文档集词典语句命令._CHTSC_编辑文档集词典语句命令, 映射集)
+                    映射集["_ctsscript.执行所有缓存的编辑命令"] = [工具.创建词典编辑指令()]
+                    commands.executeCommand(编辑文档集词典语句命令.__ctsscript_编辑文档集词典语句命令, 映射集)
                 })
             }
         }

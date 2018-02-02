@@ -1,17 +1,37 @@
+import { window, Range, Position, workspace, TextDocumentChangeEvent, Disposable, TextEdit, commands } from "vscode";
 
+export class 输入法上屏命令 {
+    static __ctsscript_输入法上屏命令 = 'ctsscript.输入法上屏命令';
+    清理: Disposable
+    需要删除上屏字符 = false
+    清理字符: string
+    constructor() {
+        let 处理垃圾: Disposable[] = []
+        workspace.onDidChangeTextDocument(this.监听输入, this, 处理垃圾)
+        this.清理 = Disposable.from(...处理垃圾)
+    }
 
-export const 声母 = ["b", " p", "m", "f", "d", "t", "n", "l", "g", "k", "h", "j", "q", "x", "zh", "ch", "sh", "r", "z", "c", "s"]
-export const 单韵母 = ["a", "o", "e", "i", "u", "v"]
-export const 韵母 = ["ai", "ei", "ui", "ao", "ou", "iu", "ie", "ve", "er", "an", "en", "in", "un", "vn", "ang", "eng", "ing", "ong"]
+    public 输入法上屏命令(文本: string) {
+        if (文本) {
+            commands.executeCommand("vsc.保存用户词典", 文本)
+        }
+        this.需要删除上屏字符 = true
+    }
 
-// 假设输入为 jiasheshuruwei
-export function 取输出数组(参数: string): string[] {
-    for (let 索引 = 0; 索引 < 参数.length; 索引++) {
-        const 值 = 参数[索引]
-        if (值) {
+    dispose() {
+        this.清理.dispose();
+    }
 
+    监听输入(事件: TextDocumentChangeEvent) {
+        if (this.需要删除上屏字符 && 事件) {
+            if (/^\s+$/g.test(事件.contentChanges[0].text)) {
+                window.activeTextEditor.edit(编辑 => {
+                    编辑.delete(new Range(事件.contentChanges[0].range.start,
+                        new Position(事件.contentChanges[0].range.end.line, 事件.contentChanges[0].range.end.character + 事件.contentChanges[0].text.length)))
+                })
+            }
+            this.需要删除上屏字符 = false
         }
     }
 
-    return []
 }

@@ -11,3 +11,4 @@ class TypeScriptTypeDefinitionProvider extends definitionProviderBase_1.default 
     }
 }
 exports.default = TypeScriptTypeDefinitionProvider;
+//# sourceMappingURL=typeDefinitionProvider.js.map

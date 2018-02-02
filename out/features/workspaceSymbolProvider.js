@@ -16,12 +16,24 @@ const vscode_1 = require("vscode");
 const convert_1 = require("../utils/convert");
 function getSymbolKind(item) {
     switch (item.kind) {
-        case '方法': return vscode_1.SymbolKind.Method;
-        case '枚举': return vscode_1.SymbolKind.Enum;
-        case '函数': return vscode_1.SymbolKind.Function;
-        case '类别': return vscode_1.SymbolKind.Class;
-        case '接口': return vscode_1.SymbolKind.Interface;
-        case '值量': return vscode_1.SymbolKind.Variable;
+        case '方法':
+        case 'method':
+            return vscode_1.SymbolKind.Method;
+        case '枚举':
+        case 'enum':
+            return vscode_1.SymbolKind.Enum;
+        case '函数':
+        case 'function':
+            return vscode_1.SymbolKind.Function;
+        case '类别':
+        case 'class':
+            return vscode_1.SymbolKind.Class;
+        case '接口':
+        case 'interface':
+            return vscode_1.SymbolKind.Interface;
+        case '值量':
+        case 'var':
+            return vscode_1.SymbolKind.Variable;
         default: return vscode_1.SymbolKind.Variable;
     }
 }
@@ -84,3 +96,4 @@ class TypeScriptWorkspaceSymbolProvider {
     }
 }
 exports.default = TypeScriptWorkspaceSymbolProvider;
+//# sourceMappingURL=workspaceSymbolProvider.js.map

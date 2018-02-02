@@ -2,7 +2,7 @@ import {
     Position, window, Selection
 } from 'vscode';
 
-export function 尝试插入词典标签(标签名: "//@@{}@" | "//@{}@") {
+export function 尝试插入词典标签(标签名: "//##{}#" | "//#{}#") {
     if (window.activeTextEditor) {
         let 当前编辑器 = window.activeTextEditor
         let 当前文档 = window.activeTextEditor.document
@@ -17,7 +17,7 @@ export function 尝试插入词典标签(标签名: "//@@{}@" | "//@{}@") {
         if (当前行对象.isEmptyOrWhitespace) {
             词典头 = 前部空格 + 标签名
         }
-        if (/^\s*\/\/+\s?(@|@@)\{.+$/.test(当前行对象.text)) {
+        if (/^\s*\/\/+\s?(#|##)\{.+$/.test(当前行对象.text)) {
             位置 = new Position(行 + 1, 0)
         }
 

@@ -131,3 +131,4 @@ class TryCompleteJsDocCommand {
     }
 }
 TryCompleteJsDocCommand.COMMAND_NAME = '_ctsScript.tryCompleteJsDoc';
+//# sourceMappingURL=jsDocCompletionProvider.js.map

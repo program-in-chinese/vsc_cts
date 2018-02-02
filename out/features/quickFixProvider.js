@@ -71,3 +71,4 @@ class TypeScriptQuickFixProvider {
     }
 }
 exports.default = TypeScriptQuickFixProvider;
+//# sourceMappingURL=quickFixProvider.js.map

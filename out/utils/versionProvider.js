@@ -126,8 +126,8 @@ class TypeScriptVersionProvider {
         catch (e) {
             // noop
         }
-        vscode_1.window.showErrorMessage(localize('noBundledServerFound', 'VS Code\'s tsserver was deleted by another application such as a misbehaving virus detection tool. Please reinstall VS Code.'));
-        throw new Error('Could not find bundled tsserver.js');
+        vscode_1.window.showErrorMessage(localize('noBundledServerFound', 'VS Code\'s ctsserver was deleted by another application such as a misbehaving virus detection tool. Please reinstall VS Code.'));
+        throw new Error('Could not find bundled ctsserver.js');
     }
     get localTsdkVersions() {
         const localTsdk = this.configuration.localTsdk;
@@ -168,3 +168,4 @@ class TypeScriptVersionProvider {
     }
 }
 exports.TypeScriptVersionProvider = TypeScriptVersionProvider;
+//# sourceMappingURL=versionProvider.js.map

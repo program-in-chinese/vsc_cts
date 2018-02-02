@@ -95,3 +95,4 @@ class TypeScriptServiceConfiguration {
     }
 }
 exports.TypeScriptServiceConfiguration = TypeScriptServiceConfiguration;
+//# sourceMappingURL=configuration.js.map

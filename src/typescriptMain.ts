@@ -39,7 +39,16 @@ import * as languageConfigurations from './utils/languageConfigurations';
 import { CommandManager, Command } from './utils/commandManager';
 import DiagnosticsManager from './features/diagnostics';
 
-import {源码转换命令} from "./features/中文插件/源码转换/源码转换命令"
+import { 源码转换命令 } from "./features/中文插件/源码转换/源码转换命令"
+import { 声明词典格式化 } from "./features/中文插件/源码转换/声明词典格式化"
+
+import { 输入法上屏命令 } from './features/\u4E2D\u6587\u63D2\u4EF6/\u8F93\u5165\u6CD5\u6A21\u5757/\u8F93\u5165\u6CD5';
+import { 词典标签插入命令 } from './features/\u4E2D\u6587\u63D2\u4EF6/\u8BCD\u5178\u6807\u7B7E\u63D2\u5165\u547D\u4EE4';
+import { 全局词典标签插入命令 } from './features/\u4E2D\u6587\u63D2\u4EF6/\u5168\u5C40\u8BCD\u5178\u63D2\u5165\u547D\u4EE4';
+import { 局部词典标签插入命令 } from './features/\u4E2D\u6587\u63D2\u4EF6/\u5C40\u90E8\u8BCD\u5178\u63D2\u5165\u547D\u4EE4';
+import { 格式化词典语句命令 } from './features/\u4E2D\u6587\u63D2\u4EF6/\u683C\u5F0F\u5316\u8BCD\u5178\u8BED\u53E5';
+import { 编辑文档集词典语句命令 } from './features/\u4E2D\u6587\u63D2\u4EF6/\u7F16\u8F91\u6587\u6863\u96C6\u8BCD\u5178\u8BED\u53E5\u547D\u4EE4';
+import { 翻转词典命令 } from './features/\u4E2D\u6587\u63D2\u4EF6/\u7FFB\u8F6C\u8BCD\u5178\u547D\u4EE4';
 
 interface LanguageDescription {
 	id: string;
@@ -156,8 +165,33 @@ export function activate(context: ExtensionContext): void {
 	commandManager.register(new TypeScriptGoToProjectConfigCommand(lazyClientHost));
 	context.subscriptions.push(new TypeScriptTaskProviderManager(() => lazyClientHost().serviceClient));
 
-	let mingling = new 源码转换命令(() => lazyClientHost().serviceClient)
-	context.subscriptions.push(commands.registerCommand('ctsscript.源码转换命令', mingling.execute, mingling));
+	let 转换为Cts命令 = new 源码转换命令(() => lazyClientHost().serviceClient)
+	context.subscriptions.push(commands.registerCommand('ctsscript.源码转换命令', 转换为Cts命令.execute, 转换为Cts命令));
+	let 声明词典格命令 = new 声明词典格式化(() => lazyClientHost().serviceClient)
+	context.subscriptions.push(commands.registerCommand('ctsscript.声明词典格式化', 声明词典格命令.execute, 声明词典格命令));
+	let 输入法上屏 = new 输入法上屏命令()
+	context.subscriptions.push(commands.registerCommand('ctsscript.输入法上屏命令', 输入法上屏.输入法上屏命令, 输入法上屏));
+
+
+	const 词典标签插入换命令 = new 词典标签插入命令()
+	const 全局词典标签插入换命令 = new 全局词典标签插入命令()
+	const 局部词典标签插入换命令 = new 局部词典标签插入命令()
+	const 格式化词典语句执行命令 = new 格式化词典语句命令()
+
+	const 词典值替换命令 = new 编辑文档集词典语句命令(() => lazyClientHost().serviceClient)
+	const 词典翻转命令 = new 翻转词典命令(() => lazyClientHost().serviceClient)
+
+	context.subscriptions.push(commands.registerCommand(格式化词典语句命令.__ctsscript_格式化词典语句命令, 格式化词典语句执行命令.格式化词典语句命令, 格式化词典语句执行命令));
+
+	context.subscriptions.push(commands.registerCommand(词典标签插入命令.__ctsscript_词典标签插入命令, 词典标签插入换命令.尝试插入词典标签, 词典标签插入换命令));
+
+	context.subscriptions.push(commands.registerCommand(局部词典标签插入命令.__ctsscript_局部词典标签插入命令, 局部词典标签插入换命令.尝试插入局部词典标签));
+	context.subscriptions.push(commands.registerCommand(全局词典标签插入命令.__ctsscript_全局词典标签插入命令, 全局词典标签插入换命令.尝试插入全局词典标签));
+
+	context.subscriptions.push(commands.registerCommand(编辑文档集词典语句命令.__ctsscript_编辑文档集词典语句命令, 词典值替换命令.尝试插入全局词典标签, 词典值替换命令));
+
+	context.subscriptions.push(commands.registerCommand(翻转词典命令.__ctsscript_翻转词典命令, 词典翻转命令.翻转词典命令, 词典翻转命令));
+
 
 	context.subscriptions.push(languages.setLanguageConfiguration(languageModeIds.jsxTags, languageConfigurations.jsxTags));
 
@@ -247,12 +281,11 @@ class LanguageProvider {
 	): Promise<void> {
 		const selector = this.description.modeIds;
 		const config = workspace.getConfiguration(this.id);
-
 		this.disposables.push(languages.registerCompletionItemProvider(selector,
 			new (await import('./features/completionItemProvider')).default(client, typingsStatus, commandManager),
-			'.', '"', '\'', '/', '@'));
-
-		this.disposables.push(languages.registerCompletionItemProvider(selector, new (await import('./features/directiveCommentCompletionProvider')).default(client), '@'));
+			'.', '"', '\'', '/', '@', "a", "o", "e", "i", "u", "v", "b", "p", "m", "f", "d", "t", "n", "l", "g", "k", "h", "j", "q", "x", "z", "c", "s", "r", "y", "w", "+", "-"));
+		//this.disposables.push(languages.registerCompletionItemProvider(selector, new (await import('./features/directiveCommentCompletionProvider')).default(client), '@'));
+		this.disposables.push(languages.registerCompletionItemProvider(selector, new (await import('./features/中文插件/词典完成提供者')).default(client), ' '));
 
 		const { TypeScriptFormattingProvider, FormattingProviderManager } = await import('./features/formattingProvider');
 		const formattingProvider = new TypeScriptFormattingProvider(client, this.formattingOptionsManager);
@@ -696,9 +729,12 @@ class TypeScriptServiceClientHost implements ITypeScriptServiceClientHost {
 
 		switch (diagnostic.category) {
 			case PConst.DiagnosticCategory.error:
+
+			case PConst.DiagnosticCategory.errorEn:
 				return DiagnosticSeverity.Error;
 
 			case PConst.DiagnosticCategory.warning:
+			case PConst.DiagnosticCategory.warningEn:
 				return DiagnosticSeverity.Warning;
 
 			default:

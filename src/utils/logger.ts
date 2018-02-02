@@ -14,7 +14,7 @@ export default class Logger {
 
 	private get output(): OutputChannel {
 		if (!this._output) {
-			this._output = window.createOutputChannel(localize('channelName', 'TypeScript'));
+			this._output = window.createOutputChannel("CTS_中文TS");
 		}
 		return this._output;
 	}

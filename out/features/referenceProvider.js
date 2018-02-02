@@ -39,3 +39,4 @@ class TypeScriptReferenceSupport {
     }
 }
 exports.default = TypeScriptReferenceSupport;
+//# sourceMappingURL=referenceProvider.js.map

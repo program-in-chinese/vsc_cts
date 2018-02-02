@@ -5,16 +5,17 @@
 
 import {
     Position, CompletionItemProvider, CompletionItemKind, TextDocument,
-    CancellationToken, CompletionItem, TextEdit, ProviderResult, Range, window,  Selection, commands
+    CancellationToken, CompletionItem, TextEdit, ProviderResult, Range, window, Selection, commands
 } from 'vscode';
 
 import { 词典完成请求参数 } from '../../protocol';
 import { ITypeScriptServiceClient } from '../../typescriptService';
+import * as PConst from '../../protocol.const';
 
 import { 编辑文档集词典语句命令 } from "./编辑文档集词典语句命令"
 import * as 工具 from "./工具"
-import { 翻译标识符, 标识符别名, 插入标识符别名数据缓存 } from "./翻译标识符"
-import {格式化词典语句命令 }from "./格式化词典语句"
+import { 翻译标识符, 标识符别名, 插入标识符别名数据缓存, 标识符种类, ScriptElementKind } from "./翻译标识符"
+import { 格式化词典语句命令 } from "./格式化词典语句"
 
 export enum 词典自动完成种类 {
     词典键自动完成项目 = 1,
@@ -53,24 +54,23 @@ export abstract class 词典自动完成项目 extends CompletionItem {
 
 export class 词典键自动完成项目 extends 词典自动完成项目 {
     种类: 词典自动完成种类 = 词典自动完成种类.词典键自动完成项目
-    是字面量键: boolean
+    是字面量值: boolean
     constructor(标签名: string, 是字面量: boolean) {
         super(标签名, CompletionItemKind.Enum)
-        if (是字面量) {
-            this.label += " :=> 是字面量"
-        }
         this.insertText = ""
-        this.是字面量键 = 是字面量
+        this.是字面量值 = 是字面量
     }
 }
 
 export class 词典值自动完成项目 extends 词典自动完成项目 {
     种类: 词典自动完成种类 = 词典自动完成种类.词典值自动完成项目
     标识符: 标识符别名
-    constructor(标签名: string, 标识符: 标识符别名) {
+    是字面量键: boolean
+    constructor(标签名: string, 标识符: 标识符别名, 是字面量: boolean) {
         super(标签名, CompletionItemKind.Enum)
         this.insertText = ""
         this.标识符 = 标识符
+        this.是字面量键 = 是字面量
     }
 }
 
@@ -78,7 +78,7 @@ export class 词典模式切换项目 extends 词典自动完成项目 {
     种类: 词典自动完成种类 = 词典自动完成种类.词典模式切换项目
     模式: 工具.词典语句种类
     constructor(是全局词典请求: boolean, 规范的文档名: string, 当前位置: Position, 键名: string) {
-        super(是全局词典请求 ? "切换到 :=> 全局标签" : "切换到 :=> 局部标签", CompletionItemKind.Function)
+        super(是全局词典请求 ? "切换到 => 全局标签" : "切换到 => 局部标签", CompletionItemKind.Function)
         this.insertText = ""
         let range = new Range(new Position(当前位置.line + 1, 0), new Position(当前位置.line + 1, 0))
 
@@ -93,7 +93,7 @@ export class 词典模式切换项目 extends 词典自动完成项目 {
         // TODO 这里除了局部 词典需要手工排除的问题
         this.command = {
             title: "替换词典范围",
-            command: 编辑文档集词典语句命令._CHTSC_编辑文档集词典语句命令,
+            command: 编辑文档集词典语句命令.__ctsscript_编辑文档集词典语句命令,
             arguments: [词典编辑映射]
         }
     }
@@ -103,7 +103,7 @@ export class 跳过当前键项目 extends 词典自动完成项目 {
     种类: 词典自动完成种类 = 词典自动完成种类.跳过当前键项目
     排除名称: string
     constructor(当前位置: Position, 排除名称: string) {
-        super("跳过此键 :=> 加入排除", CompletionItemKind.Function)
+        super("跳过此键 => 加入排除", CompletionItemKind.Function)
 
         let 文档 = window.activeTextEditor && window.activeTextEditor.document
         if (文档) {
@@ -121,11 +121,13 @@ export class 词典分部值自动完成项目 extends 词典自动完成项目 
     父项目: 词典值自动完成项目
     部分暂定输出: string
     标识符: 标识符别名
-    constructor(标签名: string, 标识符: 标识符别名, 父项目: 词典值自动完成项目) {
+    是字面量键: boolean
+    constructor(标签名: string, 标识符: 标识符别名, 父项目: 词典值自动完成项目, 是字面量: boolean) {
         super(标签名, CompletionItemKind.EnumMember)
         this.insertText = ""
         this.父项目 = 父项目
         this.标识符 = 标识符
+        this.是字面量键 = 是字面量
     }
 }
 
@@ -134,14 +136,14 @@ export class 词典完成替换后更新范围项目 extends 词典自动完成�
     编辑: TextEdit[] = []
     重启词典: 工具.词典语句种类
     constructor(名称: "新行全局" | "新行局部" | "自动完成" | "结束目前", 客户端: ITypeScriptServiceClient, 完成范围: protocol.RangeMap, 替换文本: string, 请求文本: string, 当前位置: Position, 当前匹配文本: string) {
-        super(名称 === "结束目前" ? "结束目前 :=> 格式化语句" : 名称 === "自动完成" ? "自动完成 :=> 替换标识符" : 名称 === "新行全局" ? "切换到 :=> 全局标签" : "切换到 :=> 局部标签", CompletionItemKind.Function)
+        super(名称 === "结束目前" ? "结束目前 => 格式化语句" : 名称 === "自动完成" ? "自动完成 => 替换标识符" : 名称 === "新行全局" ? "切换到 => 全局标签" : "切换到 => 局部标签", CompletionItemKind.Function)
         if (名称 === "新行全局") {
             this.重启词典 = 工具.词典语句种类.全局
         } else if (名称 === "新行局部") {
             this.重启词典 = 工具.词典语句种类.局部
         }
 
-        let 当前文件名 = window.activeTextEditor&&window.activeTextEditor.document.fileName
+        let 当前文件名 = window.activeTextEditor && window.activeTextEditor.document.fileName
         当前文件名 = 客户端.normalizePath(客户端.asUrl(当前文件名))
 
         this.insertText = ""
@@ -160,7 +162,6 @@ export class 词典完成替换后更新范围项目 extends 词典自动完成�
                 文件名 = 客户端.normalizePath(客户端.asUrl(文件名))
                 let 编辑区域 = 完成范围[文件名]
                 let 文件编辑数组: 工具.词典编辑[] = []
-
                 编辑区域.forEach(服务器数据 => {
                     if (服务器数据.start && 服务器数据.end) {
                         let 位置: Position
@@ -175,7 +176,7 @@ export class 词典完成替换后更新范围项目 extends 词典自动完成�
                         let 范围 = new Range(前位置, 后位置)
                         文件编辑数组.push(工具.创建替换词典值(范围, 替换文本, 服务器数据.isStringLiteral))
                         if (当前文件名 !== 文件名) {
-                            文件编辑数组.push(工具.创建插入词典语句(父范围, 服务器数据.isStringLiteral ? 工具.词典语句种类.局部 : 工具.词典语句种类.全局, 替换文本, 请求文本, 服务器数据.isStringLiteral || undefined))
+                            文件编辑数组.push(工具.创建插入词典语句(父范围, 工具.词典语句种类.全局, 替换文本, 请求文本, 服务器数据.isStringLiteral || undefined))
                         }
                     }
                 })
@@ -190,7 +191,7 @@ export class 词典完成替换后更新范围项目 extends 词典自动完成�
         }
         this.command = {
             title: "替换词典范围",
-            command: 编辑文档集词典语句命令._CHTSC_编辑文档集词典语句命令,
+            command: 编辑文档集词典语句命令.__ctsscript_编辑文档集词典语句命令,
             arguments: [词典编辑映射]
         }
     }
@@ -206,6 +207,7 @@ export enum 请求事项 {
     值以输入后又重新请求 = 1 << 5,
     完成替换动作后更新范围 = 1 << 6,
 }
+
 export function 是请求键完成(请求: 请求事项) {
     return 请求 && ((请求 & 请求事项.请求键完成项目) !== 0)
 }
@@ -246,26 +248,26 @@ export default class 词典自动完成命令提供者 implements CompletionItem
     当前有效输入: string
 
     上次有效输入: string
-    是全局词典请求: boolean = false    
+    是全局词典请求: boolean = false
     光标前文本: string
-    
+
     constructor(private client: ITypeScriptServiceClient) { }
 
     provideCompletionItems(document: TextDocument, position: Position, _token: CancellationToken): ProviderResult<CompletionItem[]> {
-       
-        
+
+
         let 事项 = this.初始(document, position, _token)
         if (!事项) {
             return [];
         }
+
         if (是词典完成替换后更新范围项目(this.储存的最后一个应用的项目)) {
             let 标签 = this.储存的最后一个应用的项目.label
-            if (标签 === "结束目前 :=> 格式化语句") {
-                commands.executeCommand(格式化词典语句命令._CHTSC_格式化词典语句命令, this.当前位置)
+            if (标签 === "结束目前 => 格式化语句") {
+                commands.executeCommand(格式化词典语句命令.__ctsscript_格式化词典语句命令, this.当前位置)
                 this.储存的最后一个应用的项目.label = "已经完成了命令"
             }
         }
-        
 
         if (是词典分部值自动完成项目(this.储存的最后一个应用的项目)) {
             this.储存临时的分部索引.push(this.储存的最后一个应用的项目.标识符)
@@ -297,7 +299,7 @@ export default class 词典自动完成命令提供者 implements CompletionItem
                 键名称: this.储存的成功请求.name
             }
             const RM = this.储存的成功请求.rangeMap || undefined
-            
+
             let 项目组: 词典自动完成项目[] = []
             if (RM) {
                 if (this.是全局词典请求) {
@@ -323,7 +325,7 @@ export default class 词典自动完成命令提供者 implements CompletionItem
                 ignoreName: undefined
             }
             if (是词典值自动完成项目(this.当前值自动完成项目)) {
-                if (是词典完成替换后更新范围项目(this.储存的最后一个应用的项目) && this.储存的最后一个应用的项目.label !== "自动完成 :=> 替换标识符") {
+                if (是词典完成替换后更新范围项目(this.储存的最后一个应用的项目) && this.储存的最后一个应用的项目.label !== "自动完成 => 替换标识符") {
                     this.储存标识符(/** 使用上次的 */true)
                 } else {
                     this.储存标识符()
@@ -339,7 +341,7 @@ export default class 词典自动完成命令提供者 implements CompletionItem
         }
         if (!是请求值完成(事项) && 是请求值分部完成(事项)) {
             this.储存单词()
-            return this.相关单词组生成分部标签组(this.当前值自动完成项目)
+            return this.相关单词组生成分部标签组(this.当前值自动完成项目, this.当前值自动完成项目.是字面量键)
         }
         if (是键以输入后又重新请求(事项)) {
             return []
@@ -347,7 +349,7 @@ export default class 词典自动完成命令提供者 implements CompletionItem
     }
     resolveCompletionItem(item: 词典自动完成项目, _token: CancellationToken) {
         if (是词典键自动完成项目(item)) {
-            item.insertText = item.是字面量键 ? ' "' + item.label + '"' : " " + item.label + ":"
+            item.insertText = item.是字面量值 ? ' "' + item.label + '":' : " " + item.label + ":"
             item.range = new Range(new Position(this.当前位置.line, this.当前位置.character - 工具.计算空格数量(this.光标前文本)), new Position(this.当前位置.line, this.当前位置.character))
         }
         if (是词典分部值自动完成项目(item)) {
@@ -356,6 +358,7 @@ export default class 词典自动完成命令提供者 implements CompletionItem
 
         } else if (是词典值自动完成项目(item)) {
             item.insertText = item.label
+            let kind = item.标识符.kind
             item.range = new Range(new Position(this.当前位置.line, this.当前位置.character - 工具.计算空格数量(this.光标前文本)), new Position(this.当前位置.line, this.当前位置.character))
 
         } else if (是词典完成替换后更新范围项目(item)) {
@@ -377,16 +380,16 @@ export default class 词典自动完成命令提供者 implements CompletionItem
         this.当前取消令牌 = _token
         this.当前文档 = document
         this.当前行文本 = document.lineAt(this.当前位置.line).text;
-        if (!(/^\s*\/\/+\s?(@|@@)\{.+}@$/g.test(this.当前行文本))) {
+        if (!(/^\s*\/\/+\s?(#|##)\{.+}#$/g.test(this.当前行文本))) {
             return 请求事项.无;
         }
         this.光标前文本 = this.当前行文本.slice(0, this.当前位置.character);
-        const 当前输入匹配 = this.光标前文本.match(/^\s*\/\/+\s?(@|@@)\{.+$/);
+        const 当前输入匹配 = this.光标前文本.match(/^\s*\/\/+\s?(#|##)\{.+$/);
         //这个用的时候在初始化
         if (当前输入匹配.length > 1) {
-            if (当前输入匹配[1] === "@@") {
+            if (当前输入匹配[1] === "##") {
                 this.是全局词典请求 = true
-            } else if (当前输入匹配[1] == "@") {
+            } else if (当前输入匹配[1] == "#") {
                 this.是全局词典请求 = false
             }
             this.当前标记 = 当前输入匹配[0].trim().substr(-1)
@@ -403,7 +406,7 @@ export default class 词典自动完成命令提供者 implements CompletionItem
 
                     // 分部请求  不包括值项目
                     if (this.储存的最后一个应用的项目 && 是词典分部值自动完成项目(this.储存的最后一个应用的项目)) {
-                        if (this.储存临时的分部索引.length === this.储存的最后一个应用的项目.父项目.标识符.组成索引.length) {
+                        if (this.储存临时的分部索引.length === this.储存的最后一个应用的项目.父项目.标识符.zc.length) {
                             return 请求事项.完成替换动作后更新范围
                         }
                         // this.储存的积累分部输入 = this.当前有效输入
@@ -501,11 +504,11 @@ export default class 词典自动完成命令提供者 implements CompletionItem
             } else {
                 用户输入 = this.当前有效输入.substring(this.储存的积累分部输入.length)
             }
-            if (!标识符.用户选择文本) {
-                标识符.用户选择文本 = []
+            if (!标识符.up) {
+                标识符.up = []
             }
-            if (标识符.用户选择文本.indexOf(用户输入) === -1) {
-                标识符.用户选择文本.push(用户输入)
+            if (标识符.up.indexOf(用户输入) === -1) {
+                标识符.up.push(用户输入)
             }
             this.储存的积累分部输入 = this.当前有效输入
             插入标识符别名数据缓存(标识符, true)
@@ -515,11 +518,11 @@ export default class 词典自动完成命令提供者 implements CompletionItem
         let 别名用户选择 = 储存上次的 ? this.上次有效输入 : this.当前有效输入
         if (this.当前值自动完成项目) {
             let 标识符 = this.当前值自动完成项目.标识符;
-            if (!标识符.用户选择文本) {
-                标识符.用户选择文本 = []
+            if (!标识符.up) {
+                标识符.up = []
             }
-            if (标识符.用户选择文本.indexOf(别名用户选择) === -1) {
-                标识符.用户选择文本.push(别名用户选择)
+            if (标识符.up.indexOf(别名用户选择) === -1) {
+                标识符.up.push(别名用户选择)
             }
             插入标识符别名数据缓存(标识符, true)
         }
@@ -562,7 +565,7 @@ export default class 词典自动完成命令提供者 implements CompletionItem
         })
     }
     private 请求词典键数据() {
-        if ((!this.是全局词典请求) && this.上次有效输入 && this.上次有效输入 !== "{" && this.上次有效输入 !== "," && this.上次有效输入 !== "," && this.上次有效输入 !== " ") {
+        if (this.上次有效输入 && this.上次有效输入 !== "{" && this.上次有效输入 !== "," && this.上次有效输入 !== ":" && this.上次有效输入 !== " ") {
             this.当前词典请求参数.ignoreName = this.上次有效输入
         }
         return this.client.execute("词典自动完成", this.当前词典请求参数, this.当前取消令牌).then(回应 => {
@@ -596,7 +599,7 @@ export default class 词典自动完成命令提供者 implements CompletionItem
         let 当前行对象 = this.当前文档.lineAt(this.当前位置.line)
         if (!当前行对象.isEmptyOrWhitespace) {
             let 文本 = this.当前行文本
-            let 选择翻译体内 = 文本.match(/(\s+)?\/\/(@|@@)(\s+)?{(.+)?}/) || [];
+            let 选择翻译体内 = 文本.match(/(\s+)?\/\/(#|##)(\s+)?{(.+)?}/) || [];
             if (选择翻译体内.length >= 4) {
                 let 词典体 = 选择翻译体内[4]
                 let 新的词典体 = ""
@@ -611,9 +614,9 @@ export default class 词典自动完成命令提供者 implements CompletionItem
                     })
                     新的词典体 = 整理后的键值对组.join(", ")
                     if (this.是全局词典请求) {
-                        新的词典语句 = 选择翻译体内[1] ? 选择翻译体内[1] + "//@@{ " + 新的词典体 + " }@" : "//@@{ " + 新的词典体 + " }@"
+                        新的词典语句 = 选择翻译体内[1] ? 选择翻译体内[1] + "//##{ " + 新的词典体 + " }#" : "//##{ " + 新的词典体 + " }#"
                     } else {
-                        新的词典语句 = 选择翻译体内[1] ? 选择翻译体内[1] + "//@{ " + 新的词典体 + " }@" : "//@{ " + 新的词典体 + " }@"
+                        新的词典语句 = 选择翻译体内[1] ? 选择翻译体内[1] + "//#{ " + 新的词典体 + " }#" : "//#{ " + 新的词典体 + " }#"
                     }
                 }
                 let 当前窗口编辑器 = window.activeTextEditor
@@ -628,53 +631,114 @@ export default class 词典自动完成命令提供者 implements CompletionItem
     }
     private async 请求词典值属性() {
         let 标识符 = 工具.创建对象<标识符别名>()
+
         标识符.文本 = this.储存的成功请求.name
+        标识符.kind = this.转换标识符种类(this.储存的成功请求.kind)
+        
         标识符 = await 翻译标识符(标识符)
+
         let { 文本 } = 标识符
         let 项目组: 词典自动完成项目[] = []
         let 前缀 = "", 后缀 = ""
+
         if (工具.全是大写或下划线(文本)) {
-            前缀 = "_"; 后缀 = "_"
+            前缀 = "__"; 后缀 = "__"
         }
-        if (工具.是大驼峰(文本)) {
-            后缀 = "类"
-        } else {
-            if (标识符.整体译文.substr(-1) === "类") {
-                后缀 = ""
-            }
+
+        switch (标识符.kind) {
+            case 标识符种类.后缀_:
+                if (!后缀) {
+                    后缀 = "_"
+                }
+                break
+            case 标识符种类.前缀_R:
+                if (!前缀) {
+                    前缀 = "R_"
+                }
+                break
+            case 标识符种类.枚举_E:
+                if (!前缀) {
+                    前缀 = "E_"
+                }
+                break
+            case 标识符种类.枚举成员_e:
+                if (!前缀) {
+                    前缀 = "e_"
+                }
+                break
         }
+
+
         let 主译标签项目: 词典值自动完成项目
-        if (标识符.用户选择文本 && 标识符.用户选择文本[0]) {
-            标识符.用户选择文本.forEach(v => {
-                主译标签项目 = new 词典值自动完成项目(v, 标识符)
+        if (标识符.up && 标识符.up.length) {
+            标识符.up.forEach(v => {
+                if (!v.startsWith(前缀)) {
+                    v += 前缀
+                }
+                if (!v.endsWith(后缀)) {
+                    v += 后缀
+                }
+
+                主译标签项目 = new 词典值自动完成项目(this.储存的成功请求.isStringLiteral ? '"' + v + '"' : v, 标识符, this.储存的成功请求.isStringLiteral)
                 主译标签项目.sortText = "1"
                 项目组.push(主译标签项目)
             })
         }
-        let 项目标签 = 前缀 + 标识符.整体译文 + 后缀
+
+        if (!标识符.整体.startsWith(前缀)) {
+            标识符.整体 += 前缀
+        }
+        if (!标识符.整体.endsWith(后缀)) {
+            标识符.整体 += 后缀
+        }
+        let 项目标签 = this.储存的成功请求.isStringLiteral ? '"' + 标识符.整体 + '"' : 标识符.整体
 
         let 项目: 词典值自动完成项目
         if (主译标签项目 && 主译标签项目.label === 项目标签) {
             项目 = 主译标签项目
+            this.当前值自动完成项目 = undefined
         } else {
-            项目 = new 词典值自动完成项目(项目标签, 标识符)
+            项目 = new 词典值自动完成项目(项目标签, 标识符, this.储存的成功请求.isStringLiteral)
             this.当前值自动完成项目 = 项目
             项目.sortText = "111"
             项目组.push(项目)
         }
 
-        项目组.push(...this.相关单词组生成分部标签组(项目))
+        项目组.push(...this.相关单词组生成分部标签组(项目, this.储存的成功请求.isStringLiteral))
 
         return 项目组
     }
-    private 相关单词组生成分部标签组(父项目: 词典值自动完成项目) {
+
+    转换标识符种类(种类: ScriptElementKind): 标识符种类 {
+        switch (种类) {
+            case ScriptElementKind.classElement:          //"类别",
+            case ScriptElementKind.classElementEn:          //"class",
+            case ScriptElementKind.localClassElement:          //"本地类别",
+            case ScriptElementKind.interfaceElement:          //"接口",
+            case ScriptElementKind.interfaceElementEn:          //"interface",
+            case ScriptElementKind.typeElement:          //"类型",            
+            case ScriptElementKind.variableElement:          //"值量",
+            case ScriptElementKind.variableElementEn:          //"var",
+                return 标识符种类.后缀_
+            case ScriptElementKind.enumElement:          //"枚举",
+            case ScriptElementKind.enumElementEn:          //"enum",
+                return 标识符种类.枚举_E
+            case ScriptElementKind.enumMemberElement:          //"枚举成员",
+                return 标识符种类.枚举成员_e
+            default:
+                return 标识符种类.保持原文本
+        }
+
+    }
+
+    private 相关单词组生成分部标签组(父项目: 词典值自动完成项目, 是字面量: boolean) {
         let { 标识符 } = 父项目
         let 项目组: 词典分部值自动完成项目[] = []
         let 排序基数 = 1111
-        for (let v of 标识符.组成索引) {
+        for (let v of 标识符.zc) {
             if (this.储存临时的分部索引.lastIndexOf(v) === -1) {
-                let 子标签名 = v.用户选择文本 && v.用户选择文本[0] || v.整体译文 || v.组合译文 || v.文本
-                let 子项目 = new 词典分部值自动完成项目(v.文本 + " :=> " + 子标签名, v, 父项目)
+                let 子标签名 = v.up && v.up[0] || v.整体 || v.组合 || v.文本
+                let 子项目 = new 词典分部值自动完成项目(v.文本 + " => " + 子标签名, v, 父项目, 是字面量)
                 子项目.部分暂定输出 = 子标签名
                 子项目.sortText = (排序基数++) + ""
                 项目组.push(子项目)

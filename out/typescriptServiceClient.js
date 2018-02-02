@@ -760,3 +760,4 @@ exports.default = TypeScriptServiceClient;
 const getTsLocale = (configuration) => (configuration.locale
     ? configuration.locale
     : vscode_1.env.language);
+//# sourceMappingURL=typescriptServiceClient.js.map
